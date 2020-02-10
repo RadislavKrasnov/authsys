@@ -40,23 +40,26 @@ class Router implements RouterInterface
     public function route(RequestInterface $request, ResponseInterface $response)
     {
         if ($request->getRequestMethod() === RouterInterface::GET_REQUEST) {
-            return $this->findRoute($this->routes, $request);
+            return $this->findRoute($this->routes, $request, $response);
         }
 
         if ($request->getRequestMethod() === RouterInterface::POST_REQUEST) {
-            return $this->findRoute($this->postRoutes, $request);
+            return $this->findRoute($this->postRoutes, $request, $response);
         }
 
-        $response->addHeader('404 Page Not Found')->send();
-        throw new \OutOfRangeException('The request doesn\'t match any URL');
+        $response->addHeader('405 Method Not Allowed')->send();
+        throw new \OutOfRangeException('The request method not allowed');
     }
 
-    private function findRoute($routes, RequestInterface $request)
+    private function findRoute($routes, RequestInterface $request, ResponseInterface $response)
     {
         foreach ($routes as $route) {
             if ($route->match($request)) {
                 return $route;
             }
         }
+
+        $response->addHeader('404 Page Not Found')->send();
+        throw new \OutOfRangeException('The request doesn\'t match any URL');
     }
 }

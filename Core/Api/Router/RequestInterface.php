@@ -8,9 +8,11 @@ interface RequestInterface
 
     public function getParam($key);
 
-    public function getParams() :array;
+    public function getParams(): ?array;
 
-    public function getPostValues() :array;
+    public function getPostValues(): ?array;
+
+    public function getGetValues(): ?array;
 
     public function getRequestMethod();
 

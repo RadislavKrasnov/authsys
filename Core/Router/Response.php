@@ -6,7 +6,7 @@ use Core\Api\Router\ResponseInterface;
 
 class Response implements ResponseInterface
 {
-    private $version;
+    private $version = 'HTTP/1.1';
 
     private $headers;
 

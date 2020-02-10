@@ -3,12 +3,17 @@
 namespace Core\Router;
 
 use Core\Api\Router\RequestInterface;
+use Core\Model\Url\Url;
 
 class Request implements RequestInterface
 {
     private $url;
 
     private $params;
+
+    public function __construct() {
+        $this->setUrl(Url::parseUrl());
+    }
 
     public function getUrl()
     {
@@ -24,14 +29,19 @@ class Request implements RequestInterface
         return $this->params[$key];
     }
 
-    public function getParams() :array
+    public function getParams(): ?array
     {
         return $this->params;
     }
 
-    public function getPostValues() :array
+    public function getPostValues(): ?array
     {
         return $_POST;
+    }
+
+    public function getGetValues(): ?array
+    {
+        return $_GET;
     }
 
     public function getRequestMethod()

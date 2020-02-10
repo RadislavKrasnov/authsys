@@ -18,7 +18,7 @@ class Routes
     {
         $this->router->addGet(
             new Route(
-            '/profile',
+            '/{id}',
             '\App\Controller\Profile\Index',
             'index'
             )
@@ -26,7 +26,7 @@ class Routes
 
         $this->router->addGet(
             new Route(
-                '/users/user/show',
+                '/',
                 '\App\Controller\Users\User',
                 'show'
             )

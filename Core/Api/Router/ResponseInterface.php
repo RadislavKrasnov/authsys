@@ -4,8 +4,6 @@ namespace Core\Api\Router;
 
 interface ResponseInterface
 {
-    const VERSION = 'HTTP/1.1';
-
     public function getVersion();
 
     public function getHeaders();
