@@ -8,7 +8,13 @@ class Url implements UrlInterface
 {
     public static function parseUrl() :string
     {
-        return rtrim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
+        $url = rtrim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
+
+        if (empty($url)) {
+            return '/';
+        }
+
+        return $url;
     }
 
     public static function matchPathAndRequestUrl($path, $requestUrl): bool
@@ -30,6 +36,10 @@ class Url implements UrlInterface
 
                 break;
             }
+        }
+
+        if (empty($pathChecker[0]) && empty($pathChecker[1])) {
+            $pathChecker = $pathElements;
         }
         $pathChecker = implode('/', $pathChecker);
 
