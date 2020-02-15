@@ -4,8 +4,17 @@ namespace Core\Model\Url;
 
 use Core\Api\Url\UrlInterface;
 
+/**
+ * Class Url
+ * @package Core\Model\Url
+ */
 class Url implements UrlInterface
 {
+    /**
+     * Parse Url
+     *
+     * @return string
+     */
     public static function parseUrl() :string
     {
         $url = rtrim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
@@ -17,6 +26,13 @@ class Url implements UrlInterface
         return $url;
     }
 
+    /**
+     * Match requested Url with path Url form routes
+     *
+     * @param $path
+     * @param $requestUrl
+     * @return bool
+     */
     public static function matchPathAndRequestUrl($path, $requestUrl): bool
     {
         $pathElements = explode('/', $path);
@@ -46,6 +62,13 @@ class Url implements UrlInterface
         return $pathChecker === $requestUrl;
     }
 
+    /**
+     * Parse parameters from Url
+     *
+     * @param $path
+     * @param $requestUrl
+     * @return array
+     */
     public static function parseParams($path, $requestUrl): array
     {
         $pathElements = explode('/', $path);

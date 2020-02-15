@@ -7,16 +7,35 @@ use Core\Router\Dispatcher;
 use Core\Router\Response;
 use Core\Router\Request;
 
+/**
+ * Class Bootstrap
+ * @package Core
+ */
 class Bootstrap implements BootstrapInterface
 {
+    /**
+     * @var Request
+     */
     private $request;
 
+    /**
+     * @var Response
+     */
     private $response;
 
+    /**
+     * @var \Routes\Routes
+     */
     private $router;
 
+    /**
+     * @var Dispatcher
+     */
     private $dispatcher;
 
+    /**
+     * Bootstrap constructor.
+     */
     public function __construct()
     {
         $this->request = new Request();
@@ -25,6 +44,11 @@ class Bootstrap implements BootstrapInterface
         $this->dispatcher = new Dispatcher();
     }
 
+    /**
+     * Run bootstrap (Front Controller)
+     *
+     * @return mixed|void
+     */
     public function run()
     {
         $router = $this->router->getRouter();

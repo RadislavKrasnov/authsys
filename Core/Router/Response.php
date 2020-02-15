@@ -4,34 +4,76 @@ namespace Core\Router;
 
 use Core\Api\Router\ResponseInterface;
 
+/**
+ * Class Response
+ * @package Core\Router
+ */
 class Response implements ResponseInterface
 {
+    /**
+     * Http version
+     *
+     * @var string
+     */
     private $version = 'HTTP/1.1';
 
-    private $headers;
+    /**
+     * Http headers
+     *
+     * @var
+     */
+    private $headers = [];
 
-    public function getVersion()
+    /**
+     * Get Http version
+     *
+     * @return string
+     */
+    public function getVersion() :string
     {
         return $this->version;
     }
 
-    public function getHeaders()
+    /**
+     * Get Http headers
+     *
+     * @return array
+     */
+    public function getHeaders() :array
     {
         return $this->headers;
     }
 
-    public function setVersion($version)
+    /**
+     * Set Http version
+     *
+     * @param $version
+     * @return mixed|void
+     */
+    public function setVersion(string $version)
     {
         $this->version = $version;
     }
 
-    public function addHeader($header)
+    /**
+     * Add Http header
+     *
+     * @param $header
+     * @return \Core\Api\Router\ResponseInterface
+     */
+    public function addHeader(string $header)
     {
         $this->headers[] = $header;
 
         return $this;
     }
 
+    /**
+     * Add Http headers
+     *
+     * @param array $headers
+     * @return \Core\Api\Router\ResponseInterface
+     */
     public function addHeaders(array $headers)
     {
         foreach ($headers as $header) {
@@ -41,6 +83,11 @@ class Response implements ResponseInterface
         return $this;
     }
 
+    /**
+     * Send a Http header
+     *
+     * @return mixed|void
+     */
     public function send()
     {
         if(!headers_sent()) {
