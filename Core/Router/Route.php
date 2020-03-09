@@ -15,36 +15,61 @@ class Route implements RouteInterface
     /**
      * Route path
      *
-     * @var
+     * @var string
      */
     private $path;
 
     /**
      * Controller class
      *
-     * @var
+     * @var string
      */
     private $controller;
 
     /**
      * Controller action
      *
-     * @var
+     * @var string
      */
     private $action;
 
     /**
-     * Route constructor.
+     * Set path
      *
-     * @param $path
-     * @param $controller
-     * @param $action
+     * @param string $path
+     * @return \Core\Api\Router\RouteInterface
      */
-    public function __construct($path, $controller, $action)
+    public function setPath(string $path): object
     {
         $this->path = $path;
+
+        return $this;
+    }
+
+    /**
+     * Set controller
+     *
+     * @param string $controller
+     * @return \Core\Api\Router\RouteInterface
+     */
+    public function setController(string $controller): object
+    {
         $this->controller = $controller;
+
+        return $this;
+    }
+
+    /**
+     * Set action
+     *
+     * @param string $action
+     * @return \Core\Api\Router\RouteInterface
+     */
+    public function setAction(string $action): object
+    {
         $this->action = $action;
+
+        return $this;
     }
 
     /**

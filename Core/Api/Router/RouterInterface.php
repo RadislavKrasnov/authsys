@@ -39,11 +39,19 @@ interface RouterInterface
     public function addPost(RouteInterface $route);
 
     /**
+     * Set routes
+     *
+     * @param array $routes
+     * @return \Core\Api\Router\RouterInterface
+     */
+    public function setRoutes(array $routes): object;
+
+    /**
      * Get routes for Get request
      *
      * @return array
      */
-    public function getRoutes() :array;
+    public function getGetRoutes() :array;
 
     /**
      * Get routes for Post request

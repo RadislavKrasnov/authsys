@@ -1,10 +1,10 @@
 <?php
 
-namespace Core\Di;
+namespace Config\Di;
 
 /**
  * Class Definitions
- * @package Core\Di
+ * @package Config\Di
  */
 class Definitions
 {
@@ -19,24 +19,24 @@ class Definitions
             \Core\Api\Router\DispatcherInterface::class => function () {
                 return new \Core\Router\Dispatcher();
             },
-            \Core\Api\Router\RouterInterface::class => function () {
-                return new \Core\Router\Router();
-            },
             \Core\Api\Router\RouteInterface::class => function () {
-                return new \Core\Router\Route(
-                    '/profile',
-                    '\App\Controller\Users\User',
-                    'show'
-                );
+                return new \Core\Router\Route();
+            },
+            \Core\Api\Router\RouteFactoryInterface::class => function () {
+                $route = self::getDefinitions()[\Core\Api\Router\RouteInterface::class]();
+                return new \Core\Router\RouteFactory($route);
+            },
+            \Core\Api\Router\RouterInterface::class => function () {
+                $routeFactory = self::getDefinitions()[\Core\Api\Router\RouteFactoryInterface::class]();
+                return new \Core\Router\Router($routeFactory);
             },
             \Core\Api\BootstrapInterface::class => function () {
-                $dispatcher = new \Core\Router\Dispatcher();
-                $request = new \Core\Router\Request();
-                $response = new \Core\Router\Response();
-                $router = new \Core\Router\Router();
-                $routes = new \Routes\Routes($router);
+                $dispatcher =self::getDefinitions()[\Core\Api\Router\DispatcherInterface::class]();
+                $request = self::getSingletons()[\Core\Api\Router\RequestInterface::class]();
+                $response = self::getSingletons()[\Core\Api\Router\ResponseInterface::class]();
+                $router = self::getDefinitions()[\Core\Api\Router\RouterInterface::class]();
 
-                return new \Core\Bootstrap($dispatcher, $request, $response, $routes);
+                return new \Core\Bootstrap($dispatcher, $request, $response, $router);
             }
         ];
     }

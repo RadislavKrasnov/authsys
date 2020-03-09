@@ -11,6 +11,30 @@ use Core\Api\Router\RequestInterface;
 interface RouteInterface
 {
     /**
+     * Set path
+     *
+     * @param string $path
+     * @return \Core\Api\Router\RouteInterface
+     */
+    public function setPath(string $path): object ;
+
+    /**
+     * Set controller
+     *
+     * @param string $controller
+     * @return \Core\Api\Router\RouteInterface
+     */
+    public function setController(string $controller): object ;
+
+    /**
+     * Set action
+     *
+     * @param string $action
+     * @return \Core\Api\Router\RouteInterface
+     */
+    public function setAction(string $action): object ;
+
+    /**
      * Create controller
      *
      * @return mixed

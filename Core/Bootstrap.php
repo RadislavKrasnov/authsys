@@ -6,7 +6,8 @@ use Core\Api\BootstrapInterface;
 use Core\Api\Router\DispatcherInterface;
 use Core\Api\Router\ResponseInterface;
 use Core\Api\Router\RequestInterface;
-use Routes\Routes;
+use Core\Api\Router\RouterInterface;
+use Routes\RouteList;
 
 /**
  * Class Bootstrap
@@ -25,9 +26,9 @@ class Bootstrap implements BootstrapInterface
     private $response;
 
     /**
-     * @var Routes
+     * @var RouterInterface
      */
-    private $routes;
+    private $router;
 
     /**
      * @var DispatcherInterface
@@ -39,18 +40,18 @@ class Bootstrap implements BootstrapInterface
      * @param DispatcherInterface $dispatcher
      * @param RequestInterface $request
      * @param ResponseInterface $response
-     * @param Routes $routes
+     * @param RouterInterface $router
      */
     public function __construct(
         DispatcherInterface $dispatcher,
         RequestInterface $request,
         ResponseInterface $response,
-        Routes $routes
+        RouterInterface $router
     ) {
         $this->request = $request;
         $this->response = $response;
         $this->dispatcher = $dispatcher;
-        $this->routes = $routes;
+        $this->router = $router;
     }
 
     /**
@@ -60,8 +61,9 @@ class Bootstrap implements BootstrapInterface
      */
     public function run()
     {
-        $router = $this->routes->getRouter();
-        $route = $router->route($this->request, $this->response);
+        $routes = RouteList::getRoutes();
+        $this->router->setRoutes($routes);
+        $route = $this->router->route($this->request, $this->response);
         $this->dispatcher->dispatch($route, $this->request, $this->response);
     }
 }

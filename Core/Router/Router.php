@@ -6,6 +6,7 @@ use Core\Api\Router\RouterInterface;
 use Core\Api\Router\RequestInterface;
 use Core\Api\Router\ResponseInterface;
 use Core\Api\Router\RouteInterface;
+use Core\Api\Router\RouteFactoryInterface;
 
 /**
  * Class Router
@@ -18,7 +19,7 @@ class Router implements RouterInterface
      *
      * @var
      */
-    private $routes;
+    private $getRoutes;
 
     /**
      * Post routes
@@ -28,6 +29,20 @@ class Router implements RouterInterface
     private $postRoutes;
 
     /**
+     * @var RouteFactoryInterface
+     */
+    private $routeFactory;
+
+    /**
+     * Router constructor.
+     * @param RouteFactoryInterface $routeFactory
+     */
+    public function __construct(RouteFactoryInterface $routeFactory)
+    {
+        $this->routeFactory = $routeFactory;
+    }
+
+    /**
      * Add get route
      *
      * @param RouteInterface $route
@@ -35,7 +50,7 @@ class Router implements RouterInterface
      */
     public function addGet(RouteInterface $route)
     {
-        $this->routes[] = $route;
+        $this->getRoutes[] = $route;
 
         return $this;
     }
@@ -54,13 +69,49 @@ class Router implements RouterInterface
     }
 
     /**
+     * Set routes
+     *
+     * @param array $routes
+     * @return \Core\Api\Router\RouterInterface
+     */
+    public function setRoutes(array $routes): object
+    {
+        foreach ($routes as $routeData) {
+
+            if (
+                !array_key_exists('request_method', $routeData) ||
+                !array_key_exists('path', $routeData) ||
+                !array_key_exists('controller', $routeData) ||
+                !array_key_exists('action', $routeData)
+            ) {
+                continue;
+            }
+
+            $route = $this->routeFactory->create();
+            $route->setPath($routeData['path']);
+            $route->setController($routeData['controller']);
+            $route->setAction($routeData['action']);
+
+            if ($routeData['request_method'] === RouterInterface::GET_REQUEST) {
+                $this->addGet($route);
+            }
+
+            if ($routeData['request_method'] === RouterInterface::POST_REQUEST) {
+                $this->addPost($route);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
      * Get routes for Get request
      *
      * @return array
      */
-    public function getRoutes() :array
+    public function getGetRoutes() :array
     {
-        return $this->routes;
+        return $this->getRoutes;
     }
 
     /**
@@ -83,11 +134,11 @@ class Router implements RouterInterface
     public function route(RequestInterface $request, ResponseInterface $response)
     {
         if ($request->getRequestMethod() === RouterInterface::GET_REQUEST) {
-            return $this->findRoute($this->routes, $request, $response);
+            return $this->findRoute($this->getGetRoutes(), $request, $response);
         }
 
         if ($request->getRequestMethod() === RouterInterface::POST_REQUEST) {
-            return $this->findRoute($this->postRoutes, $request, $response);
+            return $this->findRoute($this->getPostRoutes(), $request, $response);
         }
 
         $response->addHeader('405 Method Not Allowed')->send();
