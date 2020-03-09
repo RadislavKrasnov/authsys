@@ -16,6 +16,12 @@ class Definitions
     public static function getDefinitions()
     {
         return [
+            \Core\Api\Url\UrlInterface::class => function () {
+                return new \Core\Model\Url\Url();
+            },
+            \Core\Api\Di\NotFoundExceptionInterface::class => function () {
+                return new \Core\Di\NotFoundException();
+            },
             \Core\Api\Router\DispatcherInterface::class => function () {
                 return new \Core\Router\Dispatcher();
             },

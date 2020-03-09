@@ -4,8 +4,17 @@ namespace Routes;
 
 use Core\Api\Router\RouterInterface;
 
+/**
+ * Class RouteList
+ * @package Routes
+ */
 class RouteList
 {
+    /**
+     * Routes in application
+     *
+     * @return array
+     */
     public static function getRoutes()
     {
         return [
