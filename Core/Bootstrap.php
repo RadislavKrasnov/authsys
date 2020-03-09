@@ -3,9 +3,10 @@
 namespace Core;
 
 use Core\Api\BootstrapInterface;
-use Core\Router\Dispatcher;
-use Core\Router\Response;
-use Core\Router\Request;
+use Core\Api\Router\DispatcherInterface;
+use Core\Api\Router\ResponseInterface;
+use Core\Api\Router\RequestInterface;
+use Routes\Routes;
 
 /**
  * Class Bootstrap
@@ -14,34 +15,42 @@ use Core\Router\Request;
 class Bootstrap implements BootstrapInterface
 {
     /**
-     * @var Request
+     * @var RequestInterface
      */
     private $request;
 
     /**
-     * @var Response
+     * @var ResponseInterface
      */
     private $response;
 
     /**
-     * @var \Routes\Routes
+     * @var Routes
      */
-    private $router;
+    private $routes;
 
     /**
-     * @var Dispatcher
+     * @var DispatcherInterface
      */
     private $dispatcher;
 
     /**
      * Bootstrap constructor.
+     * @param DispatcherInterface $dispatcher
+     * @param RequestInterface $request
+     * @param ResponseInterface $response
+     * @param Routes $routes
      */
-    public function __construct()
-    {
-        $this->request = new Request();
-        $this->response = new Response();
-        $this->router = new \Routes\Routes();
-        $this->dispatcher = new Dispatcher();
+    public function __construct(
+        DispatcherInterface $dispatcher,
+        RequestInterface $request,
+        ResponseInterface $response,
+        Routes $routes
+    ) {
+        $this->request = $request;
+        $this->response = $response;
+        $this->dispatcher = $dispatcher;
+        $this->routes = $routes;
     }
 
     /**
@@ -51,7 +60,7 @@ class Bootstrap implements BootstrapInterface
      */
     public function run()
     {
-        $router = $this->router->getRouter();
+        $router = $this->routes->getRouter();
         $route = $router->route($this->request, $this->response);
         $this->dispatcher->dispatch($route, $this->request, $this->response);
     }

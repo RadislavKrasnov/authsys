@@ -2,7 +2,7 @@
 
 namespace Routes;
 
-use Core\Router\Router;
+use Core\Api\Router\RouterInterface;
 use Core\Router\Route;
 
 /**
@@ -12,22 +12,21 @@ use Core\Router\Route;
 class Routes
 {
     /**
-     * @var Router
+     * @var RouterInterface
      */
     private $router;
 
     /**
      * Routes constructor.
+     * @param RouterInterface $router
      */
-    public function __construct()
+    public function __construct(RouterInterface $router)
     {
-        $this->router = new Router();
+        $this->router = $router;
     }
 
     /**
-     * Get routes of application
-     *
-     * @return Router
+     * @return RouterInterface
      */
     public function getRouter()
     {
