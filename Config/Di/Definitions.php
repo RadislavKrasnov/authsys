@@ -2,6 +2,8 @@
 
 namespace Config\Di;
 
+use Core\Di\Container;
+
 /**
  * Class Definitions
  * @package Config\Di
@@ -9,61 +11,62 @@ namespace Config\Di;
 class Definitions
 {
     /**
-     * Get array of definitions
-     *
-     * @return array
+     * @return Container
      */
-    public static function getDefinitions()
+    public function getContainerWithDefinitions()
     {
-        return [
-            \Core\Api\Url\UrlInterface::class => function () {
-                return new \Core\Model\Url\Url();
-            },
-            \Core\Api\Di\NotFoundExceptionInterface::class => function () {
-                return new \Core\Di\NotFoundException();
-            },
-            \Core\Api\Router\DispatcherInterface::class => function () {
-                return new \Core\Router\Dispatcher();
-            },
-            \Core\Api\Router\RouteInterface::class => function () {
-                return new \Core\Router\Route();
-            },
-            \Core\Api\Router\RouteFactoryInterface::class => function () {
-                $route = self::getDefinitions()[\Core\Api\Router\RouteInterface::class]();
-                return new \Core\Router\RouteFactory($route);
-            },
-            \Core\Api\Router\RouterInterface::class => function () {
-                $routeFactory = self::getDefinitions()[\Core\Api\Router\RouteFactoryInterface::class]();
-                return new \Core\Router\Router($routeFactory);
-            },
-            \Core\Api\BootstrapInterface::class => function () {
-                $dispatcher =self::getDefinitions()[\Core\Api\Router\DispatcherInterface::class]();
-                $request = self::getSingletons()[\Core\Api\Router\RequestInterface::class]();
-                $response = self::getSingletons()[\Core\Api\Router\ResponseInterface::class]();
-                $router = self::getDefinitions()[\Core\Api\Router\RouterInterface::class]();
+        $container = new Container();
+        $container = $this->setDefinitions($container);
 
-                return new \Core\Bootstrap($dispatcher, $request, $response, $router);
-            }
-        ];
+        return $container;
     }
 
     /**
-     * Get array of singletons
-     *
-     * @return array
+     * @param Container $container
+     * @return Container
      */
-    public static function getSingletons()
+    protected function setDefinitions($container)
     {
-        return [
-            \Core\Api\Di\ContainerInterface::class => function () {
-                return new \Core\Di\Container();
-            },
-            \Core\Api\Router\RequestInterface::class => function () {
-                return new \Core\Router\Request();
-            },
-            \Core\Api\Router\ResponseInterface::class => function () {
-                return new \Core\Router\Response();
-            }
-        ];
+        $container->set(\Core\Api\Url\UrlInterface::class, function () {
+            return new \Core\Model\Url\Url();
+        });
+        $container->set(\Core\Api\Di\NotFoundExceptionInterface::class, function () {
+            return new \Core\Di\NotFoundException();
+        });
+        $container->set(\Core\Api\Router\DispatcherInterface::class, function () {
+            return new \Core\Router\Dispatcher();
+        });
+        $container->set(\Core\Api\Router\RouteInterface::class, function () {
+            return new \Core\Router\Route();
+        });
+        $container->set(\Core\Api\Router\RouteFactoryInterface::class, function (Container $container) {
+            $route = $container->get(\Core\Api\Router\RouteInterface::class);
+
+            return new \Core\Router\RouteFactory($route);
+        });
+        $container->set(\Core\Api\Router\RouterInterface::class, function (Container $container) {
+            $routeFactory = $container->get(\Core\Api\Router\RouteFactoryInterface::class);
+
+            return new \Core\Router\Router($routeFactory);
+        });
+        $container->set(\Core\Api\BootstrapInterface::class, function (Container $container) {
+            $dispatcher = $container->get(\Core\Api\Router\DispatcherInterface::class);
+            $request = $container->get(\Core\Api\Router\RequestInterface::class);
+            $response = $container->get(\Core\Api\Router\ResponseInterface::class);
+            $router = $container->get(\Core\Api\Router\RouterInterface::class);
+
+            return new \Core\Bootstrap($dispatcher, $request, $response, $router);
+        });
+        $container->share(\Core\Api\Di\ContainerInterface::class, function () {
+            return new \Core\Di\Container();
+        });
+        $container->share(\Core\Api\Router\RequestInterface::class, function () {
+            return new \Core\Router\Request();
+        });
+        $container->share(\Core\Api\Router\ResponseInterface::class, function () {
+            return new \Core\Router\Response();
+        });
+
+        return $container;
     }
 }

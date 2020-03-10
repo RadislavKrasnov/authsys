@@ -82,16 +82,6 @@ class Container implements ContainerInterface, \ArrayAccess
     }
 
     /**
-     * @param array $definitions
-     */
-    public function setDefinitions(array $definitions)
-    {
-        foreach ($definitions as $id => $value) {
-            $this->set($id, $value);
-        }
-    }
-
-    /**
      * @param string $id
      * @param \Closure $value
      */
@@ -106,16 +96,6 @@ class Container implements ContainerInterface, \ArrayAccess
 
             return $object;
         };
-    }
-
-    /**
-     * @param array $singletons
-     */
-    public function setSingletons(array $singletons)
-    {
-        foreach ($singletons as $id => $value) {
-            $this->share($id, $value);
-        }
     }
 
     /**
