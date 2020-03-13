@@ -4,7 +4,7 @@ namespace Core\Router;
 
 use Core\Api\Router\RouteInterface;
 use Core\Api\Router\RequestInterface;
-use Core\Model\Url\Url;
+use Core\Api\Url\UrlInterface;
 
 /**
  * Class Route
@@ -32,6 +32,21 @@ class Route implements RouteInterface
      * @var string
      */
     private $action;
+
+    /**
+     * @var UrlInterface
+     */
+    private $urlParser;
+
+    /**
+     * Route constructor.
+     * @param UrlInterface $urlParser
+     */
+    public function __construct(
+        UrlInterface $urlParser
+    ) {
+        $this->urlParser = $urlParser;
+    }
 
     /**
      * Set path
@@ -100,8 +115,8 @@ class Route implements RouteInterface
      */
     public function match(RequestInterface $request) :bool
     {
-        if (Url::matchPathAndRequestUrl($this->path, $request->getUrl())) {
-            $urlParams = Url::parseParams($this->path, $request->getUrl());
+        if ($this->urlParser->matchPathAndRequestUrl($this->path, $request->getUrl())) {
+            $urlParams =  $this->urlParser->parseParams($this->path, $request->getUrl());
             $request->setParams($urlParams);
 
             return true;

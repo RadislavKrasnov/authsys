@@ -36,13 +36,16 @@ class Definitions
         $container->set(\Core\Api\Router\DispatcherInterface::class, function () {
             return new \Core\Router\Dispatcher();
         });
-        $container->set(\Core\Api\Router\RouteInterface::class, function () {
-            return new \Core\Router\Route();
+        $container->set(\Core\Api\Router\RouteInterface::class, function (Container $container) {
+            $urlParser = $container->get(\Core\Api\Url\UrlInterface::class);
+
+            return new \Core\Router\Route($urlParser);
         });
         $container->set(\Core\Api\Router\RouteFactoryInterface::class, function (Container $container) {
             $route = $container->get(\Core\Api\Router\RouteInterface::class);
+            $urlParser = $container->get(\Core\Api\Url\UrlInterface::class);
 
-            return new \Core\Router\RouteFactory($route);
+            return new \Core\Router\RouteFactory($route, $urlParser);
         });
         $container->set(\Core\Api\Router\RouterInterface::class, function (Container $container) {
             $routeFactory = $container->get(\Core\Api\Router\RouteFactoryInterface::class);
@@ -60,8 +63,10 @@ class Definitions
         $container->share(\Core\Api\Di\ContainerInterface::class, function () {
             return new \Core\Di\Container();
         });
-        $container->share(\Core\Api\Router\RequestInterface::class, function () {
-            return new \Core\Router\Request();
+        $container->share(\Core\Api\Router\RequestInterface::class, function (Container $container) {
+            $urlParser = $container->get(\Core\Api\Url\UrlInterface::class);
+
+            return new \Core\Router\Request($urlParser);
         });
         $container->share(\Core\Api\Router\ResponseInterface::class, function () {
             return new \Core\Router\Response();

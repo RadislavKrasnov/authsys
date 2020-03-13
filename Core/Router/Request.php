@@ -3,7 +3,7 @@
 namespace Core\Router;
 
 use Core\Api\Router\RequestInterface;
-use Core\Model\Url\Url;
+use Core\Api\Url\UrlInterface;
 
 /**
  * Class Request
@@ -26,10 +26,19 @@ class Request implements RequestInterface
     private $params;
 
     /**
-     * Request constructor.
+     * @var UrlInterface
      */
-    public function __construct() {
-        $this->setUrl(Url::parseUrl());
+    private $urlParser;
+
+    /**
+     * Request constructor.
+     * @param UrlInterface $urlParser
+     */
+    public function __construct(
+        UrlInterface $urlParser
+    ) {
+        $this->urlParser = $urlParser;
+        $this->setUrl($this->urlParser->parseUrl());
     }
 
     /**

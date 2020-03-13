@@ -13,7 +13,7 @@ interface UrlInterface
      *
      * @return string
      */
-    public static function parseUrl() :string;
+    public function parseUrl() :string;
 
     /**
      * Match requested Url with path Url form routes
@@ -22,7 +22,7 @@ interface UrlInterface
      * @param $requestUrl
      * @return bool
      */
-    public static function matchPathAndRequestUrl($path, $requestUrl) :bool;
+    public function matchPathAndRequestUrl($path, $requestUrl) :bool;
 
     /**
      * Parse parameters from Url
@@ -31,5 +31,5 @@ interface UrlInterface
      * @param $requestUrl
      * @return array
      */
-    public static function parseParams($path, $requestUrl) :array;
+    public function parseParams($path, $requestUrl) :array;
 }

@@ -4,6 +4,7 @@ namespace Core\Router;
 
 use Core\Api\Router\RouteFactoryInterface;
 use Core\Api\Router\RouteInterface;
+use Core\Api\Url\UrlInterface;
 
 /**
  * Class RouteFactory
@@ -17,12 +18,20 @@ class RouteFactory implements RouteFactoryInterface
     private $routeClassName;
 
     /**
+     * @var UrlInterface
+     */
+    private $urlParser;
+
+    /**
      * RouteFactory constructor.
      * @param RouteInterface $routeClass
+     * @param UrlInterface $urlParser
      */
     public function __construct(
-        RouteInterface $routeClass
+        RouteInterface $routeClass,
+        UrlInterface $urlParser
     ) {
+        $this->urlParser = $urlParser;
         $this->routeClassName = get_class($routeClass);
     }
 
@@ -33,6 +42,6 @@ class RouteFactory implements RouteFactoryInterface
      */
     public function create(): object
     {
-        return new $this->routeClassName;
+        return new $this->routeClassName($this->urlParser);
     }
 }

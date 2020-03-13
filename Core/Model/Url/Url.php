@@ -15,7 +15,7 @@ class Url implements UrlInterface
      *
      * @return string
      */
-    public static function parseUrl() :string
+    public function parseUrl() :string
     {
         $url = rtrim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
 
@@ -33,7 +33,7 @@ class Url implements UrlInterface
      * @param $requestUrl
      * @return bool
      */
-    public static function matchPathAndRequestUrl($path, $requestUrl): bool
+    public function matchPathAndRequestUrl($path, $requestUrl): bool
     {
         $pathElements = explode('/', $path);
         $urlElements = explode('/', $requestUrl);
@@ -69,7 +69,7 @@ class Url implements UrlInterface
      * @param $requestUrl
      * @return array
      */
-    public static function parseParams($path, $requestUrl): array
+    public function parseParams($path, $requestUrl): array
     {
         $pathElements = explode('/', $path);
         $urlElements = explode('/', $requestUrl);
