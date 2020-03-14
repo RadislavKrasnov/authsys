@@ -7,6 +7,7 @@ use Core\Api\Router\RequestInterface;
 use Core\Api\Router\RouteInterface;
 use Core\Api\Router\RouterInterface;
 use Core\Api\Router\ResponseInterface;
+use Core\Api\Di\DiManagerInterface;
 
 /**
  * Class Dispatcher
@@ -14,6 +15,20 @@ use Core\Api\Router\ResponseInterface;
  */
 class Dispatcher implements DispatcherInterface
 {
+    /**
+     * @var DiManagerInterface
+     */
+    private $diManager;
+
+    /**
+     * Dispatcher constructor.
+     * @param DiManagerInterface $diManager
+     */
+    public function __construct(DiManagerInterface $diManager)
+    {
+        $this->diManager = $diManager;
+    }
+
     /**
      * Dispatcher of requests to controller's action
      *
@@ -24,7 +39,8 @@ class Dispatcher implements DispatcherInterface
      */
     public function dispatch(RouteInterface $route, RequestInterface $request, ResponseInterface $response)
     {
-        $controller = $route->createController();
+        $container = $this->diManager->create();
+        $controller = $container->get($route->createController());
         $action = $route->getAction();
 
         if ($request->getRequestMethod() === RouterInterface::POST_REQUEST) {

@@ -2,57 +2,63 @@
 
 namespace Config\Di;
 
-use Core\Di\Container;
+use Core\Api\Di\ContainerInterface;
+use Core\Api\Di\DefinitionsInterface;
 
 /**
  * Class Definitions
  * @package Config\Di
  */
-class Definitions
+class Definitions implements DefinitionsInterface
 {
     /**
-     * @return Container
+     * @param ContainerInterface $container
+     * @return ContainerInterface
      */
-    public function getContainerWithDefinitions()
+    public function getContainerWithDefinitions(ContainerInterface $container): object
     {
-        $container = new Container();
         $container = $this->setDefinitions($container);
 
         return $container;
     }
 
     /**
-     * @param Container $container
-     * @return Container
+     * @param ContainerInterface $container
+     * @return ContainerInterface
      */
-    protected function setDefinitions($container)
+    private function setDefinitions(ContainerInterface $container): object
     {
+        $container->set(\Core\Api\Di\DefinitionsInterface::class, function () {
+            return new \Config\Di\Definitions();
+        });
         $container->set(\Core\Api\Url\UrlInterface::class, function () {
             return new \Core\Model\Url\Url();
         });
         $container->set(\Core\Api\Di\NotFoundExceptionInterface::class, function () {
             return new \Core\Di\NotFoundException();
         });
-        $container->set(\Core\Api\Router\DispatcherInterface::class, function () {
-            return new \Core\Router\Dispatcher();
+        $container->set(\Core\Api\Router\DispatcherInterface::class, function (ContainerInterface $container) {
+            $diManager = $container->get(\Core\Api\Di\DiManagerInterface::class);
+
+            return new \Core\Router\Dispatcher($diManager);
         });
-        $container->set(\Core\Api\Router\RouteInterface::class, function (Container $container) {
+        $container->set(\Core\Api\Router\RouteInterface::class, function (ContainerInterface $container) {
             $urlParser = $container->get(\Core\Api\Url\UrlInterface::class);
 
             return new \Core\Router\Route($urlParser);
         });
-        $container->set(\Core\Api\Router\RouteFactoryInterface::class, function (Container $container) {
+        $container->set(\Core\Api\Router\RouteFactoryInterface::class, function (ContainerInterface $container) {
             $route = $container->get(\Core\Api\Router\RouteInterface::class);
             $urlParser = $container->get(\Core\Api\Url\UrlInterface::class);
 
             return new \Core\Router\RouteFactory($route, $urlParser);
         });
-        $container->set(\Core\Api\Router\RouterInterface::class, function (Container $container) {
+        $container->set(\Core\Api\Router\RouterInterface::class, function (ContainerInterface $container) {
             $routeFactory = $container->get(\Core\Api\Router\RouteFactoryInterface::class);
 
             return new \Core\Router\Router($routeFactory);
         });
-        $container->set(\Core\Api\BootstrapInterface::class, function (Container $container) {
+        $container->set(\Core\Api\BootstrapInterface::class, function (ContainerInterface $container) {
             $dispatcher = $container->get(\Core\Api\Router\DispatcherInterface::class);
             $request = $container->get(\Core\Api\Router\RequestInterface::class);
             $response = $container->get(\Core\Api\Router\ResponseInterface::class);
@@ -63,13 +69,22 @@ class Definitions
         $container->share(\Core\Api\Di\ContainerInterface::class, function () {
             return new \Core\Di\Container();
         });
-        $container->share(\Core\Api\Router\RequestInterface::class, function (Container $container) {
+        $container->share(\Core\Api\Router\RequestInterface::class, function (ContainerInterface $container) {
             $urlParser = $container->get(\Core\Api\Url\UrlInterface::class);
 
             return new \Core\Router\Request($urlParser);
         });
         $container->share(\Core\Api\Router\ResponseInterface::class, function () {
             return new \Core\Router\Response();
+        });
+        $container->set(\App\Api\User\UserInterface::class, function() {
+            return new \App\Model\User();
+        });
+        $container->set(\Core\Api\Di\DiManagerInterface::class, function (ContainerInterface $container) {
+            $definitions = $container->get(\Core\Api\Di\DefinitionsInterface::class);
+            $container = $container->get(\Core\Api\Di\ContainerInterface::class);
+
+            return new \Core\Di\DiManager($definitions, $container);
         });
 
         return $container;

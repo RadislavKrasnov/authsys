@@ -94,7 +94,7 @@ class Route implements RouteInterface
      */
     public function createController()
     {
-        return new $this->controller();
+        return $this->controller;
     }
 
     /**
