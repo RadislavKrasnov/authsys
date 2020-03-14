@@ -11,5 +11,5 @@ interface DiManagerInterface
     /**
      * @return \Core\Api\Di\ContainerInterface
      */
-    public function create(): object;
+    public function getContainer(): object;
 }

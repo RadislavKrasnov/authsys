@@ -38,7 +38,7 @@ class DiManager implements  DiManagerInterface
     /**
      * @return ContainerInterface
      */
-    public function create(): object
+    public function getContainer(): object
     {
          $container = $this->definitions->getContainerWithDefinitions($this->container);
 

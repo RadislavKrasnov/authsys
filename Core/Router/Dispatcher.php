@@ -39,7 +39,7 @@ class Dispatcher implements DispatcherInterface
      */
     public function dispatch(RouteInterface $route, RequestInterface $request, ResponseInterface $response)
     {
-        $container = $this->diManager->create();
+        $container = $this->diManager->getContainer();
         $controller = $container->get($route->createController());
         $action = $route->getAction();
 
