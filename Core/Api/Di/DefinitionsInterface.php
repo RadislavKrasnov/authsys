@@ -10,9 +10,12 @@ use \Core\Api\Di\ContainerInterface;
  */
 interface DefinitionsInterface
 {
+    const DEFINITIONS_CONFIG_FILE = '../etc/definitions.php';
+
     /**
      * @param ContainerInterface $container
      * @return ContainerInterface
+     * @throws \Exception
      */
     public function getContainerWithDefinitions(ContainerInterface $container): object;
 }
