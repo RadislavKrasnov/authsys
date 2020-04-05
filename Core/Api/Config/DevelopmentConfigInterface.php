@@ -8,7 +8,7 @@ namespace Core\Api\Config;
  */
 interface DevelopmentConfigInterface
 {
-    const CONFIG_FOLDER = '../etc/env.php';
+    const ENV_FILE = '../etc/env.php';
 
     /**
      * Get configuration from config file

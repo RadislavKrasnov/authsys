@@ -18,7 +18,7 @@ class DevelopmentConfig implements DevelopmentConfigInterface
      * @return array|string|null
      * @throws \Exception
      */
-    public function get(string $key, string $configFile = DevelopmentConfigInterface::CONFIG_FOLDER)
+    public function get(string $key, string $configFile = DevelopmentConfigInterface::ENV_FILE)
     {
         $result = [];
 
