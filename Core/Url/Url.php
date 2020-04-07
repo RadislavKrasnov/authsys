@@ -1,12 +1,12 @@
 <?php
 
-namespace Core\Model\Url;
+namespace Core\Url;
 
 use Core\Api\Url\UrlInterface;
 
 /**
  * Class Url
- * @package Core\Model\Url
+ * @package Core\Url
  */
 class Url implements UrlInterface
 {

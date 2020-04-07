@@ -4,13 +4,18 @@ return [
     \Core\Api\Config\DevelopmentConfigInterface::class => function () {
         return new \Core\Config\DevelopmentConfig();
     },
+    \Core\Api\Router\RouteListInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
+        $developmentConfig = $container->get(\Core\Api\Config\DevelopmentConfigInterface::class);
+
+        return new \Core\Router\RouteList($developmentConfig);
+    },
     \Core\Api\Di\DefinitionsInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
         $developmentConfig = $container->get(\Core\Api\Config\DevelopmentConfigInterface::class);
 
         return new \Core\Di\Definitions($developmentConfig);
     },
     \Core\Api\Url\UrlInterface::class => function () {
-        return new \Core\Model\Url\Url();
+        return new \Core\Url\Url();
     },
     \Core\Api\Di\NotFoundExceptionInterface::class => function () {
         return new \Core\Di\NotFoundException();
@@ -41,8 +46,9 @@ return [
         $request = $container->get(\Core\Api\Router\RequestInterface::class);
         $response = $container->get(\Core\Api\Router\ResponseInterface::class);
         $router = $container->get(\Core\Api\Router\RouterInterface::class);
+        $routeList = $container->get(\Core\Api\Router\RouteListInterface::class);
 
-        return new \Core\Bootstrap($dispatcher, $request, $response, $router);
+        return new \Core\Bootstrap($dispatcher, $request, $response, $router, $routeList);
     },
     \Core\Api\Di\ContainerInterface::class => function () {
         return new \Core\Di\Container();

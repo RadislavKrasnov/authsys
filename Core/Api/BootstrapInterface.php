@@ -11,7 +11,8 @@ interface BootstrapInterface
     /**
      * Run bootstrap (Front Controller)
      *
-     * @return mixed
+     * @return void
+     * @throws \Exception
      */
-    public function run();
+    public function run(): void;
 }
