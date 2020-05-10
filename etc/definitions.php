@@ -1,6 +1,14 @@
 <?php
 
 return [
+    \Core\Api\Database\QueryBuilder\MySqlQueryBuilderInterface::class => function () {
+        return new \Core\Database\QueryBuilder\MySqlQueryBuilder();
+    },
+    \Core\Api\Database\Connection\MySqlConnectionInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
+        $mySqlQueryBuilder = $container->get(\Core\Api\Database\QueryBuilder\MySqlQueryBuilderInterface::class);
+
+        return new \Core\Database\Connection\MySqlConnection($mySqlQueryBuilder);
+    },
     \Core\Api\Config\DevelopmentConfigInterface::class => function () {
         return new \Core\Config\DevelopmentConfig();
     },
@@ -47,8 +55,18 @@ return [
         $response = $container->get(\Core\Api\Router\ResponseInterface::class);
         $router = $container->get(\Core\Api\Router\RouterInterface::class);
         $routeList = $container->get(\Core\Api\Router\RouteListInterface::class);
+        $developmentConfig = $container->get(\Core\Api\Config\DevelopmentConfigInterface::class);
+        $mySqlConnection = $container->get(\Core\Api\Database\Connection\MySqlConnectionInterface::class);
 
-        return new \Core\Bootstrap($dispatcher, $request, $response, $router, $routeList);
+        return new \Core\Bootstrap(
+            $dispatcher,
+            $request,
+            $response,
+            $router,
+            $routeList,
+            $developmentConfig,
+            $mySqlConnection
+        );
     },
     \Core\Api\Di\ContainerInterface::class => function () {
         return new \Core\Di\Container();

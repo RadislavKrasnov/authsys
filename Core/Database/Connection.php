@@ -22,9 +22,9 @@ class Connection
      * @param string $database
      * @param string $username
      * @param string $password
-     * @return void
+     * @return Connection
      */
-    public function connection($driver, $host, $database, $username, $password): void
+    public function connection($driver, $host, $database, $username, $password): object
     {
         try {
             $this->pdo = new \PDO(
@@ -32,6 +32,8 @@ class Connection
                 $username,
                 $password
             );
+
+            return $this;
         } catch (\PDOException $exception) {
             echo $exception->getMessage();
         }

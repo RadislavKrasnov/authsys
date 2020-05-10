@@ -18,7 +18,7 @@ interface DevelopmentConfigInterface
      * @return array|string|null
      * @throws \Exception
      */
-    public function get(string $key, string $configFile);
+    public function get(string $key, string $configFile = self::ENV_FILE);
 
     /**
      * Load configuration file

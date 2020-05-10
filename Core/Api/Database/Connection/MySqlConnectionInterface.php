@@ -17,9 +17,9 @@ interface MySqlConnectionInterface
      * @param string $database
      * @param string $username
      * @param string $password
-     * @return void
+     * @return MySqlConnectionInterface
      */
-    public function connection($driver, $host, $database, $username, $password): void;
+    public function connection($driver, $host, $database, $username, $password): object;
 
     /**
      * Get QueryBuilder
