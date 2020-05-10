@@ -23,7 +23,6 @@ class ConnectionResolver
      * @param DevelopmentConfigInterface $developmentConfig
      * @param MySqlConnectionInterface $mySqlConnection
      * @return bool|void
-     * @throws \Exception
      */
     public static function initializeConnections(
         DevelopmentConfigInterface $developmentConfig,
