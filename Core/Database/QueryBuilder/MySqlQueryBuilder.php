@@ -206,6 +206,8 @@ class MySqlQueryBuilder implements MySqlQueryBuilderInterface
 
             if ($i === 0) {
                 $this->sql .= "`$field`" . ' ' . $operator . ' ' . "'$value'";
+                $i++;
+                continue;
             }
 
             $this->sql .= " AND `$field`" . ' ' . $operator . ' ' . "'$value'";

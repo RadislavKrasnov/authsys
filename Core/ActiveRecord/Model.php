@@ -7,6 +7,7 @@ use Core\Database\ConnectionResolver;
 use Core\Api\Database\QueryBuilder\MySqlQueryBuilderInterface;
 use Core\Api\Database\Connection\MySqlConnectionInterface;
 use Core\ActiveRecord\Collection;
+use Core\ActiveRecord\Builder;
 
 /**
  * Class Model
@@ -49,6 +50,13 @@ class Model
      * @var string
      */
     protected $connectionName = 'default';
+
+    /**
+     * If model exists in database or not
+     *
+     * @var bool
+     */
+    protected $exists = false;
 
     /**
      * Model constructor.
@@ -183,7 +191,7 @@ class Model
      *
      * @return MySqlQueryBuilderInterface
      */
-    protected function getQuery()
+    public function getQuery()
     {
         return $this->getConnection()->query()->table($this->table);
     }
@@ -198,7 +206,13 @@ class Model
         $fields = array_keys($this->attributes);
         $values = array_values($this->attributes);
         $query = $this->getQuery();
-        $query->insert($fields, $values);
+
+        if ($this->exists) {
+            $query->where([[$this->primaryKey, '=', $this->id]])
+                  ->update($fields, $values);
+        } else {
+            $query->insert($fields, $values);
+        }
 
         return $this;
     }
@@ -214,7 +228,7 @@ class Model
         $items = $query->select()->get();
 
         return $this->newCollection(array_map(function ($item) {
-            return $this->newInstance($item);
+            return $this->newInstance($item, true);
         }, $items));
     }
 
@@ -222,11 +236,15 @@ class Model
      * Get new instance of an entity
      *
      * @param array $attributes
+     * @param bool $exists
      * @return Model
      */
-    public function newInstance(array $attributes = []): object
+    public function newInstance(array $attributes = [], bool $exists = false): object
     {
-        return new static($attributes);
+        $model = new static($attributes);
+        $model->exists = $exists;
+
+        return $model;
     }
 
     /**
@@ -241,45 +259,15 @@ class Model
     }
 
     /**
-     * Select model attributes to get
-     *
-     * @param string|array $columns
-     * @return Model
+     * @param string $name
+     * @param array $arguments
+     * @return mixed
      */
-    public function select($columns = '*'): object
+    public function __call($name, $arguments)
     {
-        $query = $this->getQuery();
-        $query->select($columns);
+        $builder = new Builder;
+        $builder->setModel($this);
 
-        return $this;
-    }
-
-    /**
-     * Get result of query
-     *
-     * @return Connection
-     */
-    public function get(): object
-    {
-        $query = $this->getQuery();
-        $items = $query->get();
-
-        return $this->newCollection(array_map(function ($item) {
-            return $this->newInstance($item);
-        }, $items));
-    }
-
-    /**
-     * Where clause
-     *
-     * @param array $conditions
-     * @return Model
-     */
-    public function where(array $conditions)
-    {
-        $query = $this->getQuery();
-        $query->where($conditions);
-
-        return $this;
+        return call_user_func_array([$builder, $name], $arguments);
     }
 }
