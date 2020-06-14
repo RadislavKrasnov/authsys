@@ -233,6 +233,19 @@ class Model
     }
 
     /**
+     * Delete model
+     *
+     * @return Model
+     */
+    public function delete()
+    {
+        $query = $this->getQuery();
+        $query->where([[$this->primaryKey, '=', $this->id]])->delete();
+
+        return $this;
+    }
+
+    /**
      * Get new instance of an entity
      *
      * @param array $attributes
@@ -269,5 +282,35 @@ class Model
         $builder->setModel($this);
 
         return call_user_func_array([$builder, $name], $arguments);
+    }
+
+    /**
+     * Get primary key
+     *
+     * @return string
+     */
+    public function getPrimaryKey(): string
+    {
+        return $this->primaryKey;
+    }
+
+    /**
+     * Get table name
+     *
+     * @return string
+     */
+    public function getTable(): string
+    {
+        return $this->table;
+    }
+
+    /**
+     * Get connection name
+     *
+     * @return string
+     */
+    public function getConnectionName(): string
+    {
+        return $this->connectionName;
     }
 }

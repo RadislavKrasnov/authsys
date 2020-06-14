@@ -87,4 +87,53 @@ class Builder
 
         return $this;
     }
+
+    /**
+     * Get first model of query result
+     *
+     * @return Model|boolean
+     */
+    public function first()
+    {
+        $query = $this->model->getQuery();
+        $model = $query->first();
+
+        if (!$model) {
+            return false;
+        }
+
+        return $this->model->newInstance($model);
+    }
+
+    /**
+     * Get model by primary key
+     *
+     * @param int $id
+     * @return Model|null
+     */
+    public function find(int $id): ?object
+    {
+        $query = $this->model->getQuery();
+        $primaryKey = $this->model->getPrimaryKey();
+        $models = $query->select()->where([[$primaryKey, '=', $id]])->get();
+
+        if(empty($models)) {
+            return null;
+        }
+
+        return $this->model->newInstance($models[0]);
+    }
+
+    /**
+     * Truncate table
+     *
+     * @return Builder
+     */
+    public function truncate()
+    {
+        $query = $this->model->getQuery();
+        $query->truncate();
+
+        return $this;
+    }
 }

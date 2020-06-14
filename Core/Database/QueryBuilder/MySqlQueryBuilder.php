@@ -220,6 +220,20 @@ class MySqlQueryBuilder implements MySqlQueryBuilderInterface
     }
 
     /**
+     * Get first row of result
+     *
+     * @return array|boolean
+     */
+    public function first()
+    {
+        $this->sql .= ' LIMIT 1';
+        $stmt = $this->executeSqlQuery();
+        $stmt->setFetchMode(\PDO::FETCH_ASSOC);
+
+        return $stmt->fetch();
+    }
+
+    /**
      * Inner join clause
      *
      * @param string $mainTable

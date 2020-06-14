@@ -75,6 +75,13 @@ interface MySqlQueryBuilderInterface
     public function orWhere($conditions, $and = false): object;
 
     /**
+     * Get first row of result
+     *
+     * @return array|boolean
+     */
+    public function first();
+
+    /**
      * Inner join clause
      *
      * @param string $mainTable
