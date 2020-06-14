@@ -2,12 +2,12 @@
 
 namespace Core\ActiveRecord;
 
-use Core\Database\Connection;
 use Core\Database\ConnectionResolver;
 use Core\Api\Database\QueryBuilder\MySqlQueryBuilderInterface;
 use Core\Api\Database\Connection\MySqlConnectionInterface;
 use Core\ActiveRecord\Collection;
 use Core\ActiveRecord\Builder;
+use Core\Api\Di\DiManagerInterface;
 
 /**
  * Class Model
@@ -59,13 +59,21 @@ class Model
     protected $exists = false;
 
     /**
+     * Dependency Injection manager
+     *
+     * @var DiManagerInterface
+     */
+    protected $diManager;
+
+    /**
      * Model constructor.
      *
-     * @param array $attributes
+     * @param DiManagerInterface $diManager
      */
-    public function __construct(array $attributes = [])
-    {
-        $this->fill($attributes);
+    public function __construct(
+        DiManagerInterface $diManager
+    ) {
+        $this->diManager = $diManager;
     }
 
     /**
@@ -113,9 +121,9 @@ class Model
      * Set attributes in model
      *
      * @param array $attributes
-     * @return void
+     * @return Model
      */
-    protected function fill(array $attributes): void
+    public function fill(array $attributes): object
     {
         foreach ($this->getFillableAttributes($attributes) as $key => $value) {
 
@@ -123,6 +131,8 @@ class Model
                 $this->setAttribute($key, $value);
             }
         }
+
+        return $this;
     }
 
     /**
@@ -254,7 +264,18 @@ class Model
      */
     public function newInstance(array $attributes = [], bool $exists = false): object
     {
-        $model = new static($attributes);
+        $container = $this->diManager->getContainer();
+        $interfaces = class_implements($this);
+        $model = null;
+
+        if (!empty($interfaces)) {
+            $interface = reset($interfaces);
+            $model = $container->get($interface);
+        } else {
+            $model = $container->get(get_class($this));
+        }
+
+        $model->fill($attributes);
         $model->exists = $exists;
 
         return $model;
@@ -264,7 +285,7 @@ class Model
      * Get new collection of the entities
      *
      * @param array $models
-     * @return Connection
+     * @return Collection
      */
     public function newCollection(array $models = []): object
     {

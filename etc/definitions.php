@@ -79,8 +79,11 @@ return [
     \Core\Api\Router\ResponseInterface::class => function () {
         return new \Core\Router\Response();
     },
-    \App\Api\User\UserInterface::class => function() {
-        return new \App\Model\User();
+    \App\Api\User\UserInterface::class => function(\Core\Api\Di\ContainerInterface $container) {
+        $postUser = new \App\Controller\Users\UserPost();
+        $diManager = $container->get(\Core\Api\Di\DiManagerInterface::class);
+
+        return new \App\Model\User($diManager, $postUser);
     },
     \Core\Api\Di\DiManagerInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
         $definitions = $container->get(\Core\Api\Di\DefinitionsInterface::class);
