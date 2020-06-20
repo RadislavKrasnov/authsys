@@ -4,13 +4,15 @@ namespace Core\ActiveRecord;
 
 use Core\ActiveRecord\Model;
 use Core\ActiveRecord\Collection;
+use Core\Api\ActiveRecord\BuilderInterface;
+use Core\Api\Di\DiManagerInterface;
 
 /**
  * Class Builder
  *
  * @package Core\ActiveRecord
  */
-class Builder
+class Builder implements BuilderInterface
 {
     /**
      * @var Model
@@ -18,10 +20,25 @@ class Builder
     private $model;
 
     /**
+     * @var DiManagerInterface
+     */
+    private $diManager;
+
+    /**
+     * Builder constructor.
+     *
+     * @param DiManagerInterface $diManager
+     */
+    public function __construct(DiManagerInterface $diManager)
+    {
+        $this->diManager = $diManager;
+    }
+
+    /**
      * Set model
      *
      * @param Model $model
-     * @return Builder
+     * @return BuilderInterface
      */
     public function setModel(Model $model): object
     {
@@ -33,8 +50,8 @@ class Builder
     /**
      * Select query
      *
-     * @param string $columns
-     * @return Builder
+     * @param string|array $columns
+     * @return BuilderInterface
      */
     public function select($columns = '*'): object
     {
@@ -63,7 +80,7 @@ class Builder
      * Where clause
      *
      * @param array $conditions
-     * @return Builder
+     * @return BuilderInterface
      */
     public function where(array $conditions): object
     {
@@ -78,7 +95,7 @@ class Builder
      *
      * @param array $conditions
      * @param bool $and
-     * @return Builder
+     * @return BuilderInterface
      */
     public function orWhere(array $conditions, bool $and = false): object
     {
@@ -127,9 +144,9 @@ class Builder
     /**
      * Truncate table
      *
-     * @return Builder
+     * @return BuilderInterface
      */
-    public function truncate()
+    public function truncate(): object
     {
         $query = $this->model->getQuery();
         $query->truncate();

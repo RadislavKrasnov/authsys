@@ -1,6 +1,11 @@
 <?php
 
 return [
+    \Core\Api\ActiveRecord\BuilderInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
+        $diManager = $container->get(\Core\Api\Di\DiManagerInterface::class);
+
+        return new \Core\ActiveRecord\Builder($diManager);
+    },
     \Core\Api\Database\QueryBuilder\MySqlQueryBuilderInterface::class => function () {
         return new \Core\Database\QueryBuilder\MySqlQueryBuilder();
     },
@@ -82,8 +87,9 @@ return [
     \App\Api\User\UserInterface::class => function(\Core\Api\Di\ContainerInterface $container) {
         $postUser = new \App\Controller\Users\UserPost();
         $diManager = $container->get(\Core\Api\Di\DiManagerInterface::class);
+        $builder = $container->get(\Core\Api\ActiveRecord\BuilderInterface::class);
 
-        return new \App\Model\User($diManager, $postUser);
+        return new \App\Model\User($diManager, $builder, $postUser);
     },
     \Core\Api\Di\DiManagerInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
         $definitions = $container->get(\Core\Api\Di\DefinitionsInterface::class);

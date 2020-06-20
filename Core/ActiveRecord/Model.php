@@ -6,7 +6,7 @@ use Core\Database\ConnectionResolver;
 use Core\Api\Database\QueryBuilder\MySqlQueryBuilderInterface;
 use Core\Api\Database\Connection\MySqlConnectionInterface;
 use Core\ActiveRecord\Collection;
-use Core\ActiveRecord\Builder;
+use Core\Api\ActiveRecord\BuilderInterface;
 use Core\Api\Di\DiManagerInterface;
 
 /**
@@ -66,14 +66,22 @@ class Model
     protected $diManager;
 
     /**
+     * @var BuilderInterface
+     */
+    private $builder;
+
+    /**
      * Model constructor.
      *
      * @param DiManagerInterface $diManager
+     * @param BuilderInterface $builder
      */
     public function __construct(
-        DiManagerInterface $diManager
+        DiManagerInterface $diManager,
+        BuilderInterface $builder
     ) {
         $this->diManager = $diManager;
+        $this->builder = $builder;
     }
 
     /**
@@ -299,10 +307,9 @@ class Model
      */
     public function __call($name, $arguments)
     {
-        $builder = new Builder;
-        $builder->setModel($this);
+        $this->builder->setModel($this);
 
-        return call_user_func_array([$builder, $name], $arguments);
+        return call_user_func_array([$this->builder, $name], $arguments);
     }
 
     /**
