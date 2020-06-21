@@ -68,4 +68,14 @@ interface BuilderInterface
      * @return BuilderInterface
      */
     public function truncate(): object;
+
+    /**
+     * Get related model
+     *
+     * @param string $relatedModel
+     * @param string $localKey
+     * @param string $foreignKey
+     * @return boolean|Model
+     */
+    public function hasOne(string $relatedModel, string $localKey, string $foreignKey);
 }

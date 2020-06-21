@@ -161,11 +161,11 @@ class MySqlQueryBuilder implements MySqlQueryBuilderInterface
             $value = $condition[2];
 
             if (strpos($this->sql, 'WHERE') === false) {
-                $this->sql .= " WHERE `$field`" . ' ' . $operator . ' ' . "'$value'";
+                $this->sql .= " WHERE $field" . ' ' . $operator . ' ' . "'$value'";
                 continue;
             }
 
-            $this->sql .= " AND `$field`" . ' ' . $operator . ' ' . "'$value'";
+            $this->sql .= " AND $field" . ' ' . $operator . ' ' . "'$value'";
         }
 
         return $this;
@@ -190,7 +190,7 @@ class MySqlQueryBuilder implements MySqlQueryBuilderInterface
                 $operator = $condition[1];
                 $value = $condition[2];
 
-                $this->sql .= " OR `$field`" . ' ' . $operator . ' ' . "'$value'";
+                $this->sql .= " OR $field" . ' ' . $operator . ' ' . "'$value'";
             }
 
             return $this;
@@ -205,12 +205,12 @@ class MySqlQueryBuilder implements MySqlQueryBuilderInterface
             $value = $condition[2];
 
             if ($i === 0) {
-                $this->sql .= "`$field`" . ' ' . $operator . ' ' . "'$value'";
+                $this->sql .= "$field" . ' ' . $operator . ' ' . "'$value'";
                 $i++;
                 continue;
             }
 
-            $this->sql .= " AND `$field`" . ' ' . $operator . ' ' . "'$value'";
+            $this->sql .= " AND $field" . ' ' . $operator . ' ' . "'$value'";
             $i++;
         }
 

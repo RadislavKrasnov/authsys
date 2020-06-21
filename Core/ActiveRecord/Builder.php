@@ -153,4 +153,32 @@ class Builder implements BuilderInterface
 
         return $this;
     }
+
+    /**
+     * Get related model
+     *
+     * @param string $relatedModel
+     * @param string $localKey
+     * @param string $foreignKey
+     * @return bool|Model
+     */
+    public function hasOne(string $relatedModel, string $localKey, string $foreignKey)
+    {
+        $container = $this->diManager->getContainer();
+        $relatedModel = $container->get($relatedModel);
+        $query = $this->model->getQuery();
+        $mainTable = $this->model->getTable();
+        $joinTable = $relatedModel->getTable();
+        $primaryKey = $this->model->getPrimaryKey();
+        $model = $query->select()
+            ->join($mainTable, $joinTable, $localKey, '=', $foreignKey)
+            ->where([[$mainTable . '.' . $primaryKey, '=', $this->model->{$primaryKey}]])
+            ->first();
+
+        if (!$model) {
+            return false;
+        }
+
+        return $relatedModel->newInstance($model, true);
+    }
 }
