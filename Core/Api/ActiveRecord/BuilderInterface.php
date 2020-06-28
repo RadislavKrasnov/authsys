@@ -124,4 +124,20 @@ interface BuilderInterface
      * @return Collection|boolean
      */
     public function hasMany(string $relatedModel, string $localKey, string $foreignKey);
+
+    /**
+     * Get collection of related models with many to many relationship
+     *
+     * @param string $relatedModel
+     * @param string $pivotTable
+     * @param string $localModelKey
+     * @param string $relatedModelKey
+     * @return Collection|bool
+     */
+    public function hasManyToMany(
+        string $relatedModel,
+        string $pivotTable,
+        string $localModelKey,
+        string $relatedModelKey
+    );
 }

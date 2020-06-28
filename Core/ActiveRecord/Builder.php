@@ -198,7 +198,7 @@ class Builder implements BuilderInterface
             return null;
         }
 
-        return $this->model->newInstance($models[0]);
+        return $this->model->newInstance($models[0], true);
     }
 
     /**
@@ -262,6 +262,51 @@ class Builder implements BuilderInterface
         $models = $query->select()
             ->join($mainTable, $joinTable, $localKey, '=', $foreignKey)
             ->where([[$mainTable . '.' . $primaryKey, '=', $this->model->{$primaryKey}]])
+            ->get();
+
+        if (empty($models)) {
+            return false;
+        }
+
+        return $relatedModel->newCollection(array_map(function ($model) use ($relatedModel) {
+            return $relatedModel->newInstance($model, true);
+        }, $models));
+    }
+
+    /**
+     * Get collection of related models with many to many relationship
+     *
+     * @param string $relatedModel
+     * @param string $pivotTable
+     * @param string $localModelKey
+     * @param string $relatedModelKey
+     * @return Collection|bool
+     */
+    public function hasManyToMany(
+        string $relatedModel,
+        string $pivotTable,
+        string $localModelKey,
+        string $relatedModelKey
+    ) {
+        $query = $this->model->getQuery();
+        $localPrimaryKey = $this->model->getPrimaryKey();
+        $container = $this->diManager->getContainer();
+        $relatedModel = $container->get($relatedModel);
+        $relatePrimaryKey = $relatedModel->getPrimaryKey();
+
+        $relatedModelItems = $query->table($pivotTable)
+            ->select($relatedModelKey)
+            ->where([[$localModelKey, '=', $this->model->{$localPrimaryKey}]])
+            ->get();
+
+        if (empty($relatedModelItems)) {
+            return false;
+        }
+
+        $relatedModelIds = array_column($relatedModelItems, $relatedModelKey);
+
+        $models = $query->table($relatedModel->getTable())->select()
+            ->whereIn($relatePrimaryKey, $relatedModelIds)
             ->get();
 
         if (empty($models)) {
