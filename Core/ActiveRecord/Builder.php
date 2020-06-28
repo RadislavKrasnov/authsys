@@ -91,6 +91,66 @@ class Builder implements BuilderInterface
     }
 
     /**
+     * Where in clause
+     *
+     * @param string $field
+     * @param array $values
+     * @return BuilderInterface
+     */
+    public function whereIn(string $field, array $values): object
+    {
+        $query = $this->model->getQuery();
+        $query->whereIn($field, $values);
+
+        return $this;
+    }
+
+    /**
+     * Or where in clause
+     *
+     * @param string $field
+     * @param array $values
+     * @return BuilderInterface
+     */
+    public function orWhereIn(string $field, array $values): object
+    {
+        $query = $this->model->getQuery();
+        $query->orWhereIn($field, $values);
+
+        return $this;
+    }
+
+    /**
+     * Where not in clause
+     *
+     * @param string $field
+     * @param array $values
+     * @return BuilderInterface
+     */
+    public function whereNotIn(string $field, array $values): object
+    {
+        $query = $this->model->getQuery();
+        $query->whereNotIn($field, $values);
+
+        return $this;
+    }
+
+    /**
+     * Or where not in clause
+     *
+     * @param string $field
+     * @param array $values
+     * @return BuilderInterface
+     */
+    public function orWhereNotIn(string $field, array $values): object
+    {
+        $query = $this->model->getQuery();
+        $query->orWhereNotIn($field, $values);
+
+        return $this;
+    }
+
+    /**
      * Or where clause
      *
      * @param array $conditions
@@ -119,7 +179,7 @@ class Builder implements BuilderInterface
             return false;
         }
 
-        return $this->model->newInstance($model);
+        return $this->model->newInstance($model, true);
     }
 
     /**
@@ -180,5 +240,36 @@ class Builder implements BuilderInterface
         }
 
         return $relatedModel->newInstance($model, true);
+    }
+
+    /**
+     * Get collection of related models
+     *
+     * @param string $relatedModel
+     * @param string $localKey
+     * @param string $foreignKey
+     * @return Collection|boolean
+     */
+    public function hasMany(string $relatedModel, string $localKey, string $foreignKey)
+    {
+        $container  = $this->diManager->getContainer();
+        $relatedModel = $container->get($relatedModel);
+        $mainTable = $this->model->getTable();
+        $primaryKey = $this->model->getPrimaryKey();
+        $joinTable = $relatedModel->getTable();
+        $query = $this->model->getQuery();
+
+        $models = $query->select()
+            ->join($mainTable, $joinTable, $localKey, '=', $foreignKey)
+            ->where([[$mainTable . '.' . $primaryKey, '=', $this->model->{$primaryKey}]])
+            ->get();
+
+        if (empty($models)) {
+            return false;
+        }
+
+        return $relatedModel->newCollection(array_map(function ($model) use ($relatedModel) {
+            return $relatedModel->newInstance($model, true);
+        }, $models));
     }
 }

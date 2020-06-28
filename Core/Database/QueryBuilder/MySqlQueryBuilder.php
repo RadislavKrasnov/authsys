@@ -220,6 +220,92 @@ class MySqlQueryBuilder implements MySqlQueryBuilderInterface
     }
 
     /**
+     * Where In clause
+     *
+     * @param string $field
+     * @param array $values
+     * @return MySqlQueryBuilderInterface
+     */
+    public function whereIn(string $field, array $values): object
+    {
+        if (empty($field) || empty($values)) {
+            return $this;
+        }
+
+        $values = implode(', ', $values);
+
+        if (strpos($this->sql, 'WHERE') === false) {
+            $this->sql .= " WHERE $field IN ($values)";
+        } else {
+            $this->sql .= " AND $field IN ($values)";
+        }
+
+        return $this;
+    }
+
+    /**
+     * Or where in clause
+     *
+     * @param string $field
+     * @param array $values
+     * @return MySqlQueryBuilderInterface
+     */
+    public function orWhereIn(string $field, array $values): object
+    {
+        if (empty($field) || empty($values)) {
+            return $this;
+        }
+
+        $values = implode(', ', $values);
+        $this->sql .= " OR $field IN ($values)";
+
+        return $this;
+    }
+
+    /**
+     * Where not in clause
+     *
+     * @param string $field
+     * @param array $values
+     * @return MySqlQueryBuilderInterface
+     */
+    public function whereNotIn(string $field, array $values): object
+    {
+        if (empty($field) || empty($values)) {
+            return $this;
+        }
+
+        $values = implode(', ', $values);
+
+        if (strpos($this->sql, 'WHERE') === false) {
+            $this->sql .= " WHERE $field NOT IN ($values)";
+        } else {
+            $this->sql .= " AND $field NOT IN ($values)";
+        }
+
+        return $this;
+    }
+
+    /**
+     * Or where not in clause
+     *
+     * @param string $field
+     * @param array $values
+     * @return MySqlQueryBuilderInterface
+     */
+    public function orWhereNotIn(string $field, array $values): object
+    {
+        if (empty($field) || empty($values)) {
+            return $this;
+        }
+
+        $values = implode(', ', $values);
+        $this->sql .= " OR $field NOT IN ($values)";
+
+        return $this;
+    }
+
+    /**
      * Get first row of result
      *
      * @return array|boolean

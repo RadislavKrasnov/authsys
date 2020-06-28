@@ -75,6 +75,42 @@ interface MySqlQueryBuilderInterface
     public function orWhere($conditions, $and = false): object;
 
     /**
+     * Where In clause
+     *
+     * @param string $field
+     * @param array $values
+     * @return MySqlQueryBuilderInterface
+     */
+    public function whereIn(string $field, array $values): object;
+
+    /**
+     * Or where in clause
+     *
+     * @param string $field
+     * @param array $values
+     * @return MySqlQueryBuilderInterface
+     */
+    public function orWhereIn(string $field, array $values): object;
+
+    /**
+     * Where not in clause
+     *
+     * @param string $field
+     * @param array $values
+     * @return MySqlQueryBuilderInterface
+     */
+    public function whereNotIn(string $field, array $values): object;
+
+    /**
+     * Or where not in clause
+     *
+     * @param string $field
+     * @param array $values
+     * @return MySqlQueryBuilderInterface
+     */
+    public function orWhereNotIn(string $field, array $values): object;
+
+    /**
      * Get first row of result
      *
      * @return array|boolean

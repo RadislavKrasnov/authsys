@@ -48,6 +48,42 @@ interface BuilderInterface
     public function orWhere(array $conditions, bool $and = false): object;
 
     /**
+     * Where in clause
+     *
+     * @param string $field
+     * @param array $values
+     * @return BuilderInterface
+     */
+    public function whereIn(string $field, array $values): object;
+
+    /**
+     * Or where in clause
+     *
+     * @param string $field
+     * @param array $values
+     * @return BuilderInterface
+     */
+    public function orWhereIn(string $field, array $values): object;
+
+    /**
+     * Where not in clause
+     *
+     * @param string $field
+     * @param array $values
+     * @return BuilderInterface
+     */
+    public function whereNotIn(string $field, array $values): object;
+
+    /**
+     * Or where not in clause
+     *
+     * @param string $field
+     * @param array $values
+     * @return BuilderInterface
+     */
+    public function orWhereNotIn(string $field, array $values): object;
+
+    /**
      * Get first model of query result
      *
      * @return Model|boolean
@@ -78,4 +114,14 @@ interface BuilderInterface
      * @return boolean|Model
      */
     public function hasOne(string $relatedModel, string $localKey, string $foreignKey);
+
+    /**
+     * Get collection of related models
+     *
+     * @param string $relatedModel
+     * @param string $localKey
+     * @param string $foreignKey
+     * @return Collection|boolean
+     */
+    public function hasMany(string $relatedModel, string $localKey, string $foreignKey);
 }
