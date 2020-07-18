@@ -1,6 +1,15 @@
 <?php
 
 return [
+    \Core\Api\View\ViewServiceProviderInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
+        return new \App\Provider\View\ViewServiceProvider();
+    },
+    \Core\Api\View\ViewInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
+        $diManager = $container->get(\Core\Api\Di\DiManagerInterface::class);
+        $viewServiceProvider = $container->get(\Core\Api\View\ViewServiceProviderInterface::class);
+
+        return new \Core\View\View($diManager, $viewServiceProvider);
+    },
     \Core\Api\ActiveRecord\BuilderInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
         $diManager = $container->get(\Core\Api\Di\DiManagerInterface::class);
 
