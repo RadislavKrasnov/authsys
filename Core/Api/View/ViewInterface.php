@@ -10,6 +10,7 @@ interface ViewInterface
 {
     const TEMPLATE_PATH = '../App/view/templates/';
     const DEFAULT_TEMPLATE = 'main.php';
+    const DEFAULT_HEAD_FILES_PATH = '../App/view/templates/head/';
 
     /**
      * Render view
@@ -75,4 +76,12 @@ interface ViewInterface
      * @return ViewInterface
      */
     public function composer(string $view, string $composer): object;
+
+    /**
+     * Set head html tag for view
+     *
+     * @param string $view
+     * @return void
+     */
+    public function head(string $view): void;
 }

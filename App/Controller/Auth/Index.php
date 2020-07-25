@@ -14,6 +14,12 @@ class Index extends Controller
 {
     const AUTH_TEMPLATE = 'auth/auth.php';
 
+    /**
+     * Show form for sign in
+     *
+     * @param RequestInterface $request
+     * @param ResponseInterface $response
+     */
     public function index(RequestInterface $request, ResponseInterface $response)
     {
         $this->view('auth/signin.php', [], self::AUTH_TEMPLATE);

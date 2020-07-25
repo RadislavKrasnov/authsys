@@ -168,4 +168,20 @@ class View implements ViewInterface
 
         return $view;
     }
+
+    /**
+     * Set head html tag for view
+     *
+     * @param string $view
+     * @return void
+     */
+    public function head(string $view): void
+    {
+        $headFile = self::DEFAULT_HEAD_FILES_PATH . $view;
+        if (!file_exists($headFile)) {
+            return;
+        }
+
+        include $headFile;
+    }
 }

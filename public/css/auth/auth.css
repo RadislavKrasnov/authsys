@@ -6,14 +6,6 @@ body, h2 {
     margin: 0;
 }
 
-.wrapper {
-    width: 36%;
-    margin-left: 32%;
-    margin-right: 32%;
-    position: absolute;
-    top: 50%;
-}
-
 .auth-block .fieldset, .auth-block .auth-links {
     display: flex;
 }
@@ -30,18 +22,11 @@ body, h2 {
     padding-left: 10px;
     width: 100%;
     font-size: 16px;
+    box-sizing: border-box;
 }
 
 .auth-block .field {
     flex-grow: 1;
-}
-
-.auth-block {
-    background-color: #ffff;
-    font-family: 'Freight Sans Bold', Helvetica, Arial, sans-serif;
-    font-size: 19px;
-    position: relative;
-    margin-top: -151px;
 }
 
 .auth-block .title, .auth-block .link {
@@ -60,7 +45,6 @@ body, h2 {
 .auth-block div.label {
     padding-top: 8px;
     margin-bottom: 8px;
-    width: 16%;
 }
 
 .auth-block .auth-links {
@@ -80,12 +64,44 @@ body, h2 {
     text-decoration: none;
 }
 
+.auth-block,
+.auth-block .create-account button,
+.auth-block .signin-button-block button {
+    font-size: 19px;
+}
+
+.auth-block div.label,
+.auth-block .fieldset select,
+.auth-block .create-account button,
+.auth-block .signin-button-block button {
+    width: 100%;
+}
+
+.auth-block .fieldset select,
+.auth-block .create-account button,
+.auth-block .signin-button-block button {
+    border: solid 1px #c4c4ca;
+}
+
+.auth-block .create-account, .auth-block .signin-button-block {
+    padding: 12px 10px;
+    text-align: center;
+}
+
+.auth-block .create-account button, .auth-block .signin-button-block button {
+    background-color: #8290f7;
+    color: #ffff;
+    font-family: 'Freight Sans Bold', Helvetica, Arial, sans-serif;
+    padding: 12px;
+}
+
+.auth-block .link,
+.auth-block .create-account button,
+.auth-block .signin-button-block button {
+    border-radius: 5px;
+}
+
 @media only screen and (min-width: 320px) and (max-width: 767px) {
-    .wrapper {
-        width: 90%;
-        margin-left: 5%;
-        margin-right: 5%;
-    }
 
     .auth-block {
         font-size: 14px;
@@ -114,11 +130,6 @@ body, h2 {
 }
 
 @media only screen and (min-width: 768px) and (max-width: 1200px) {
-    .wrapper {
-        width: 62%;
-        margin-left: 19%;
-        margin-right: 19%;
-    }
 
     .auth-block, .auth-block .fieldset input {
         font-size: 22px;
