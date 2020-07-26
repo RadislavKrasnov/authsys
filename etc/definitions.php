@@ -1,6 +1,24 @@
 <?php
 
 return [
+    \App\Api\Geo\CityInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
+        $diManager = $container->get(\Core\Api\Di\DiManagerInterface::class);
+        $builder = $container->get(\Core\Api\ActiveRecord\BuilderInterface::class);
+
+        return new \App\Model\Geo\City($diManager, $builder);
+    },
+    \App\Api\Geo\RegionInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
+        $diManager = $container->get(\Core\Api\Di\DiManagerInterface::class);
+        $builder = $container->get(\Core\Api\ActiveRecord\BuilderInterface::class);
+
+        return new \App\Model\Geo\Region($diManager, $builder);
+    },
+    \App\Api\Geo\CountryInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
+        $diManager = $container->get(\Core\Api\Di\DiManagerInterface::class);
+        $builder = $container->get(\Core\Api\ActiveRecord\BuilderInterface::class);
+
+        return new \App\Model\Geo\Country($diManager, $builder);
+    },
     \Core\Api\View\ViewServiceProviderInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
         return new \App\Provider\View\ViewServiceProvider();
     },
@@ -92,13 +110,6 @@ return [
     },
     \Core\Api\Router\ResponseInterface::class => function () {
         return new \Core\Router\Response();
-    },
-    \App\Api\User\UserInterface::class => function(\Core\Api\Di\ContainerInterface $container) {
-        $postUser = new \App\Controller\Users\UserPost();
-        $diManager = $container->get(\Core\Api\Di\DiManagerInterface::class);
-        $builder = $container->get(\Core\Api\ActiveRecord\BuilderInterface::class);
-
-        return new \App\Model\User($diManager, $builder, $postUser);
     },
     \Core\Api\Di\DiManagerInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
         $definitions = $container->get(\Core\Api\Di\DefinitionsInterface::class);

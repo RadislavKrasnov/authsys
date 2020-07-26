@@ -54,11 +54,14 @@
             </div>
             <div class="fieldset">
                 <div class="label">
-                    <label for="city">City, Town</label>
+                    <label for="country">Country</label>
                 </div>
                 <div class="field">
-                    <select name="city" id="city">
+                    <select name="country" id="country">
                         <option value="">--Please choose an option--</option>
+                        <?php foreach ($countries as $country): ?>
+                            <option value="<?= $country->id ?>"><?= $country->name ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
             </div>
@@ -74,10 +77,10 @@
             </div>
             <div class="fieldset">
                 <div class="label">
-                    <label for="country">Country</label>
+                    <label for="city">City, Town</label>
                 </div>
                 <div class="field">
-                    <select name="country" id="country">
+                    <select name="city" id="city">
                         <option value="">--Please choose an option--</option>
                     </select>
                 </div>

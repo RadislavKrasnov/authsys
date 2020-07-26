@@ -13,4 +13,16 @@ return [
         'controller' => '\App\Controller\Auth\Signup',
         'action' => 'showForm'
     ],
+    [
+        'request_method' => \Core\Api\Router\RouterInterface::POST_REQUEST,
+        'path' => '/regions',
+        'controller' => '\App\Controller\Geo\Region',
+        'action' => 'getRegions'
+    ],
+    [
+        'request_method' => \Core\Api\Router\RouterInterface::POST_REQUEST,
+        'path' => '/cities',
+        'controller' => '\App\Controller\Geo\City',
+        'action' => 'getCities'
+    ],
 ];
