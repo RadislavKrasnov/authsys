@@ -19,6 +19,9 @@ return [
 
         return new \App\Model\Geo\Country($diManager, $builder);
     },
+    \Core\Api\Validation\ValidatorInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
+        return new \Core\Validation\Validator();
+    },
     \Core\Api\View\ViewServiceProviderInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
         return new \App\Provider\View\ViewServiceProvider();
     },
