@@ -1,6 +1,12 @@
 <?php
 
 return [
+    \App\Api\User\UserInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
+        $diManager = $container->get(\Core\Api\Di\DiManagerInterface::class);
+        $builder = $container->get(\Core\Api\ActiveRecord\BuilderInterface::class);
+
+        return new \App\Model\User($diManager, $builder);
+    },
     \App\Api\Geo\CityInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
         $diManager = $container->get(\Core\Api\Di\DiManagerInterface::class);
         $builder = $container->get(\Core\Api\ActiveRecord\BuilderInterface::class);
@@ -18,6 +24,20 @@ return [
         $builder = $container->get(\Core\Api\ActiveRecord\BuilderInterface::class);
 
         return new \App\Model\Geo\Country($diManager, $builder);
+    },
+    \Core\Api\Messages\MessageManagerInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
+        $session = $container->get(\Core\Api\Session\SessionInterface::class);
+
+        return new \Core\Messages\MessageManager($session);
+    },
+    \Core\Api\Session\SessionInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
+        return new \Core\Session\Session();
+    },
+    \Core\Api\Url\RedirectInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
+        return new \Core\Url\Redirect();
+    },
+    \Core\Api\Psr\Log\LoggerInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
+        return new \Core\Psr\Log\Logger();
     },
     \Core\Api\Validation\ValidatorInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
         return new \Core\Validation\Validator();
@@ -92,6 +112,7 @@ return [
         $routeList = $container->get(\Core\Api\Router\RouteListInterface::class);
         $developmentConfig = $container->get(\Core\Api\Config\DevelopmentConfigInterface::class);
         $mySqlConnection = $container->get(\Core\Api\Database\Connection\MySqlConnectionInterface::class);
+        $session = $container->get(\Core\Api\Session\SessionInterface::class);
 
         return new \Core\Bootstrap(
             $dispatcher,
@@ -100,7 +121,8 @@ return [
             $router,
             $routeList,
             $developmentConfig,
-            $mySqlConnection
+            $mySqlConnection,
+            $session
         );
     },
     \Core\Api\Di\ContainerInterface::class => function () {

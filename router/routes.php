@@ -25,4 +25,16 @@ return [
         'controller' => '\App\Controller\Geo\City',
         'action' => 'getCities'
     ],
+    [
+        'request_method' => \Core\Api\Router\RouterInterface::POST_REQUEST,
+        'path' => '/auth/account/create',
+        'controller' => '\App\Controller\Auth\CreateAccount',
+        'action' => 'create'
+    ],
+    [
+        'request_method' => \Core\Api\Router\RouterInterface::GET_REQUEST,
+        'path' => '/index',
+        'controller' => '\App\Controller\Index\Index',
+        'action' => 'index'
+    ],
 ];

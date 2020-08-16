@@ -45,8 +45,8 @@ class Dispatcher implements DispatcherInterface
 
         if ($request->getRequestMethod() === RouterInterface::POST_REQUEST) {
             echo $controller->{$action}($request, $response);
+        } else {
+            $controller->{$action}($request, $response);
         }
-
-        $controller->{$action}($request, $response);
     }
 }

@@ -6,6 +6,7 @@ use Core\Api\Router\RequestInterface;
 use Core\Api\Router\ResponseInterface;
 use Core\Api\View\ViewInterface;
 use Core\Controllers\Controller;
+use Core\Api\Messages\MessageManagerInterface;
 use App\Controller\Auth\Index;
 use App\Api\Geo\CountryInterface;
 
@@ -21,15 +22,23 @@ class Signup extends Controller
     private $country;
 
     /**
+     * @var MessageManagerInterface
+     */
+    private $messageManager;
+
+    /**
      * Signup constructor.
      *
      * @param ViewInterface $view
      * @param CountryInterface $country
+     * @param MessageManagerInterface $messageManager
      */
     public function __construct(
         ViewInterface $view,
-        CountryInterface $country
+        CountryInterface $country,
+        MessageManagerInterface $messageManager
     ) {
+        $this->messageManager = $messageManager;
         $this->country = $country;
         parent::__construct($view);
     }
@@ -43,6 +52,11 @@ class Signup extends Controller
     public function showForm(RequestInterface $request, ResponseInterface $response)
     {
         $countries = $this->country->getAll();
-        $this->view('auth/signup.php', ['countries' => $countries], Index::AUTH_TEMPLATE);
+        $messages = $this->messageManager->getMessages(true);
+        $this->view(
+            'auth/signup.php',
+            ['countries' => $countries, 'messages' => $messages],
+            Index::AUTH_TEMPLATE
+        );
     }
 }

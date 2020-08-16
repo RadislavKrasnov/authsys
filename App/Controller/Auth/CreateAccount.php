@@ -1,0 +1,161 @@
+<?php
+
+namespace App\Controller\Auth;
+
+use Core\Api\View\ViewInterface;
+use Core\Controllers\Controller;
+use Core\Api\Router\RequestInterface;
+use Core\Api\Router\ResponseInterface;
+use Core\Api\Url\RedirectInterface;
+use Core\Api\Validation\ValidatorInterface;
+use Core\Api\Messages\MessageManagerInterface;
+use App\Api\User\UserInterface;
+use Core\Api\Psr\Log\LoggerInterface;
+
+/**
+ * Class CreateAccount
+ * @package App\Controller\Auth
+ */
+class CreateAccount extends Controller
+{
+    /**
+     * @var RedirectInterface
+     */
+    private $redirect;
+
+    /**
+     * @var ValidatorInterface
+     */
+    private $validator;
+
+    /**
+     * @var MessageManagerInterface
+     */
+    private $messageManager;
+
+    /**
+     * @var UserInterface
+     */
+    private $user;
+
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
+     * CreateAccount constructor.
+     *
+     * @param ViewInterface $view
+     * @param RedirectInterface $redirect
+     * @param ValidatorInterface $validator
+     * @param MessageManagerInterface $messageManager
+     * @param UserInterface $user
+     * @param LoggerInterface $logger
+     */
+    public function __construct(
+        ViewInterface $view,
+        RedirectInterface $redirect,
+        ValidatorInterface $validator,
+        MessageManagerInterface $messageManager,
+        UserInterface $user,
+        LoggerInterface $logger
+    ) {
+        $this->logger = $logger;
+        $this->user = $user;
+        $this->messageManager = $messageManager;
+        $this->validator = $validator;
+        $this->redirect = $redirect;
+        parent::__construct($view);
+    }
+
+    /**
+     * Create an account
+     *
+     * @param RequestInterface $request
+     * @param ResponseInterface $response
+     */
+    public function create(RequestInterface $request, ResponseInterface $response)
+    {
+        $data = $request->getPostValues();
+
+        if (empty($data['submit'])) {
+            $this->redirect->redirect('/');
+        }
+
+        $rules = [
+            'first-name' => ['required', 'alphanumeric'],
+            'last-name' => ['required', 'alphanumeric'],
+            'email' => ['required', 'email'],
+            'password'  => ['required', 'password'],
+            'confirmation-password' => ['required', 'password'],
+            'birth-date' => ['required', 'usa_date_format'],
+            'country' => ['required', 'numeric'],
+            'region' => ['required', 'numeric'],
+            'city' => ['required', 'numeric'],
+        ];
+
+        $this->validator->validate($data, $rules);
+        $errors = $this->validator->errors();
+
+        if (!empty($errors)) {
+            $messages = [];
+
+            foreach ($errors as $error) {
+                foreach ($error as $message) {
+                    $messages[] = $message;
+                }
+            }
+
+            $this->messageManager->addMessages($messages);
+            $this->redirect->redirect('/signup');
+        }
+
+        $email = htmlspecialchars($data['email']);
+
+        $user = $this->user->getUserByEmail($email);
+
+        if (!empty($user)) {
+            $this->messageManager->addMessage('This email is already used');
+            $this->redirect->redirect('/signup');
+        }
+
+        $password = htmlspecialchars($data['password']);
+        $confirmationPassword = htmlspecialchars($data['confirmation-password']);
+
+        if ($password !== $confirmationPassword) {
+            $this->messageManager->addMessage('Password and confirmation password don\'t match');
+            $this->redirect->redirect('/signup');
+        }
+
+        $this->createUser($data);
+        $this->redirect->redirect('/index');
+    }
+
+    /**
+     * Create new user
+     *
+     * @param array $data
+     * @return void
+     */
+    private function createUser($data): void
+    {
+        $user = $this->user->newInstance();
+        $user->password = password_hash(htmlspecialchars($data['password']), PASSWORD_BCRYPT);
+        $user->firstName = htmlspecialchars($data['first-name']);
+        $user->lastName = htmlspecialchars($data['last-name']);
+        $user->email = htmlspecialchars($data['email']);
+        $user->birthDate = htmlspecialchars($data['birth-date']);
+        $user->countryId = htmlspecialchars($data['country']);
+        $user->regionId = htmlspecialchars($data['region']);
+        $user->cityId = htmlspecialchars($data['city']);
+
+        try {
+            $user->save();
+        } catch (\Exception $exception) {
+            $this->messageManager->addMessage($exception->getMessage());
+            $this->logger->error($exception->getMessage());
+            $this->redirect->redirect('/signup');
+        }
+    }
+}

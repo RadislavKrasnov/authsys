@@ -11,6 +11,7 @@ use Core\Api\Router\RouteListInterface;
 use Core\Api\Config\DevelopmentConfigInterface;
 use Core\Api\Database\Connection\MySqlConnectionInterface;
 use Core\Database\ConnectionResolver;
+use Core\Api\Session\SessionInterface;
 
 /**
  * Class Bootstrap
@@ -54,7 +55,12 @@ class Bootstrap implements BootstrapInterface
     private $mySqlConnection;
 
     /**
-     * Bootstrap constructor
+     * @var SessionInterface
+     */
+    private $session;
+
+    /**
+     * Bootstrap constructor.
      *
      * @param DispatcherInterface $dispatcher
      * @param RequestInterface $request
@@ -63,6 +69,7 @@ class Bootstrap implements BootstrapInterface
      * @param RouteListInterface $routeList
      * @param DevelopmentConfigInterface $developmentConfig
      * @param MySqlConnectionInterface $mySqlConnection
+     * @param SessionInterface $session
      */
     public function __construct(
         DispatcherInterface $dispatcher,
@@ -71,7 +78,8 @@ class Bootstrap implements BootstrapInterface
         RouterInterface $router,
         RouteListInterface $routeList,
         DevelopmentConfigInterface $developmentConfig,
-        MySqlConnectionInterface $mySqlConnection
+        MySqlConnectionInterface $mySqlConnection,
+        SessionInterface $session
     ) {
         $this->request = $request;
         $this->response = $response;
@@ -80,6 +88,7 @@ class Bootstrap implements BootstrapInterface
         $this->routeList = $routeList;
         $this->developmentConfig = $developmentConfig;
         $this->mySqlConnection = $mySqlConnection;
+        $this->session = $session;
     }
 
     /**
@@ -90,6 +99,7 @@ class Bootstrap implements BootstrapInterface
      */
     public function run(): void
     {
+        $this->session->start();
         ConnectionResolver::initializeConnections($this->developmentConfig, $this->mySqlConnection);
         $routes = $this->routeList->getRoutes();
         $this->router->setRoutes($routes);

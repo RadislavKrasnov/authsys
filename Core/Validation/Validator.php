@@ -62,7 +62,7 @@ class Validator implements ValidatorInterface
                         }
                         break;
                     case 'usa_date_format':
-                        $pattern = '/(0[1-9]|1[012])[- \/.](0[1-9]|[12][0-9]|3[01])[- \/.](19|20)\d\d/';
+                        $pattern = '/(19|20)\d\d[- \/.](0[1-9]|1[012])[- \/.](0[1-9]|[12][0-9]|3[01])/';
                         if (!preg_match($pattern, $itemValue)) {
                             $this->addError($item,
                                 ucwords($item) . ' should be in MM/DD/YYYY format'

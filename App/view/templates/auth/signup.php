@@ -1,9 +1,15 @@
+<?php
+if (isset($messages) && !empty($messages)):
+    foreach ($messages as $message): ?>
+    <p class="error"><?= $message ?></p>
+    <?php endforeach; ?>
+<?php endif; ?>
 <div class="auth-block">
     <div class="title">
         <h2>Sign Up</h2>
     </div>
     <div class="auth-form">
-        <form id="signup-form" action="#" method="post">
+        <form id="signup-form" action="/auth/account/create" method="post">
             <div class="fieldset">
                 <div class="label">
                     <label for="first-name">First name</label>
@@ -88,6 +94,8 @@
         </form>
     </div>
     <div class="create-account">
-        <button type="submit" form="signup-form">Create account</button>
+        <button type="submit" form="signup-form" name="submit" value="create_account">
+            Create account
+        </button>
     </div>
 </div>
