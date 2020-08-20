@@ -52,6 +52,12 @@ class Region extends Controller
         $country = $this->country->select()->where([['id', '=', $countryId]])->first();
         $regions = $country->getRegions();
         $html = '';
+        $firstRegion = $regions->offsetGet(0);
+        $result = [];
+
+        if (!empty($firstRegion)) {
+            $result['firstRegionId'] = $firstRegion->id;
+        }
 
         foreach ($regions as $region) {
 
@@ -65,6 +71,8 @@ class Region extends Controller
             $html .= "<option value=\"$id\">$name</option>";
         }
 
-        return $html;
+        $result['html'] = $html;
+
+        return json_encode($result);
     }
 }

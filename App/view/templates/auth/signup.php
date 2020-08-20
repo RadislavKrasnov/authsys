@@ -39,7 +39,7 @@ if (isset($messages) && !empty($messages)):
                     <label for="password">Password</label>
                 </div>
                 <div class="field">
-                    <input type="text" id="password" name="password" />
+                    <input type="password" id="password" name="password" />
                 </div>
             </div>
             <div class="fieldset">
@@ -47,7 +47,7 @@ if (isset($messages) && !empty($messages)):
                     <label for="confirmation-password">Confirmation password</label>
                 </div>
                 <div class="field">
-                    <input type="text" id="confirmation-password" name="confirmation-password" />
+                    <input type="password" id="confirmation-password" name="confirmation-password" />
                 </div>
             </div>
             <div class="fieldset">

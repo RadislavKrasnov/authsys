@@ -91,7 +91,7 @@ class CreateAccount extends Controller
             'confirmation-password' => ['required', 'password'],
             'birth-date' => ['required', 'usa_date_format'],
             'country' => ['required', 'numeric'],
-            'region' => ['required', 'numeric'],
+            'region' => ['numeric'],
             'city' => ['required', 'numeric'],
         ];
 
@@ -147,8 +147,11 @@ class CreateAccount extends Controller
         $user->email = htmlspecialchars($data['email']);
         $user->birthDate = htmlspecialchars($data['birth-date']);
         $user->countryId = htmlspecialchars($data['country']);
-        $user->regionId = htmlspecialchars($data['region']);
         $user->cityId = htmlspecialchars($data['city']);
+
+        if (array_key_exists('region', $data) && !empty($data['region'])) {
+            $user->regionId = htmlspecialchars($data['region']);
+        }
 
         try {
             $user->save();
