@@ -1,7 +1,7 @@
 <?php
 if (isset($messages) && !empty($messages)):
     foreach ($messages as $message): ?>
-    <p class="error"><?= $message ?></p>
+    <p class="error-message"><?= $message ?></p>
     <?php endforeach; ?>
 <?php endif; ?>
 <div class="auth-block">
