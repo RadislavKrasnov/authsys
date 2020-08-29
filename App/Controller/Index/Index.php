@@ -20,6 +20,8 @@ class Index extends Controller
      */
     public function index(RequestInterface $request, ResponseInterface $response)
     {
+        $this->isAuthorized();
+
         echo "Index page";
     }
 }

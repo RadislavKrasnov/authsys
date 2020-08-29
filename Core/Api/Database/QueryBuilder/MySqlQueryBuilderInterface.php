@@ -173,4 +173,11 @@ interface MySqlQueryBuilderInterface
      * @return \PDO
      */
     public function getPdo(): object;
+
+    /**
+     * Get last insert id
+     *
+     * @return string
+     */
+    public function getLastInsertId(): string;
 }

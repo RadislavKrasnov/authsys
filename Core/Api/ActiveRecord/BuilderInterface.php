@@ -140,4 +140,11 @@ interface BuilderInterface
         string $localModelKey,
         string $relatedModelKey
     );
+
+    /**
+     * Get last insert id
+     *
+     * @return string
+     */
+    public function getLastInsertId(): string;
 }

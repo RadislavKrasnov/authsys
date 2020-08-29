@@ -384,6 +384,16 @@ class MySqlQueryBuilder implements MySqlQueryBuilderInterface
     }
 
     /**
+     * Get last insert id
+     *
+     * @return string
+     */
+    public function getLastInsertId(): string
+    {
+        return $this->pdo->lastInsertId();
+    }
+
+    /**
      * Set Pdo instance
      *
      * @param \PDO

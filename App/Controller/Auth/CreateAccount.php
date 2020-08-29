@@ -2,11 +2,12 @@
 
 namespace App\Controller\Auth;
 
+use Core\Api\Session\SessionInterface;
+use Core\Api\Url\RedirectInterface;
 use Core\Api\View\ViewInterface;
 use Core\Controllers\Controller;
 use Core\Api\Router\RequestInterface;
 use Core\Api\Router\ResponseInterface;
-use Core\Api\Url\RedirectInterface;
 use Core\Api\Validation\ValidatorInterface;
 use Core\Api\Messages\MessageManagerInterface;
 use App\Api\User\UserInterface;
@@ -18,11 +19,6 @@ use Core\Api\Psr\Log\LoggerInterface;
  */
 class CreateAccount extends Controller
 {
-    /**
-     * @var RedirectInterface
-     */
-    private $redirect;
-
     /**
      * @var ValidatorInterface
      */
@@ -47,6 +43,7 @@ class CreateAccount extends Controller
      * CreateAccount constructor.
      *
      * @param ViewInterface $view
+     * @param SessionInterface $session
      * @param RedirectInterface $redirect
      * @param ValidatorInterface $validator
      * @param MessageManagerInterface $messageManager
@@ -55,6 +52,7 @@ class CreateAccount extends Controller
      */
     public function __construct(
         ViewInterface $view,
+        SessionInterface $session,
         RedirectInterface $redirect,
         ValidatorInterface $validator,
         MessageManagerInterface $messageManager,
@@ -65,8 +63,7 @@ class CreateAccount extends Controller
         $this->user = $user;
         $this->messageManager = $messageManager;
         $this->validator = $validator;
-        $this->redirect = $redirect;
-        parent::__construct($view);
+        parent::__construct($view, $session, $redirect);
     }
 
     /**
@@ -155,6 +152,8 @@ class CreateAccount extends Controller
 
         try {
             $user->save();
+            $id = $user->getLastInsertId();
+            $this->session->addData('user_id', $id);
         } catch (\Exception $exception) {
             $this->messageManager->addMessage($exception->getMessage());
             $this->logger->error($exception->getMessage());

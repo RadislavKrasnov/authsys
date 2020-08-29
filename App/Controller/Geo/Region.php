@@ -2,6 +2,8 @@
 
 namespace App\Controller\Geo;
 
+use Core\Api\Session\SessionInterface;
+use Core\Api\Url\RedirectInterface;
 use Core\Api\View\ViewInterface;
 use Core\Controllers\Controller;
 use Core\Api\Router\RequestInterface;
@@ -23,14 +25,18 @@ class Region extends Controller
      * Region constructor.
      *
      * @param ViewInterface $view
+     * @param SessionInterface $session
+     * @param RedirectInterface $redirect
      * @param CountryInterface $country
      */
     public function __construct(
         ViewInterface $view,
+        SessionInterface $session,
+        RedirectInterface $redirect,
         CountryInterface $country
     ) {
         $this->country = $country;
-        parent::__construct($view);
+        parent::__construct($view, $session, $redirect);
     }
 
     /**

@@ -4,6 +4,8 @@ namespace App\Controller\Auth;
 
 use Core\Api\Router\RequestInterface;
 use Core\Api\Router\ResponseInterface;
+use Core\Api\Session\SessionInterface;
+use Core\Api\Url\RedirectInterface;
 use Core\Api\View\ViewInterface;
 use Core\Controllers\Controller;
 use Core\Api\Messages\MessageManagerInterface;
@@ -30,17 +32,21 @@ class Signup extends Controller
      * Signup constructor.
      *
      * @param ViewInterface $view
+     * @param SessionInterface $session
+     * @param RedirectInterface $redirect
      * @param CountryInterface $country
      * @param MessageManagerInterface $messageManager
      */
     public function __construct(
         ViewInterface $view,
+        SessionInterface $session,
+        RedirectInterface $redirect,
         CountryInterface $country,
         MessageManagerInterface $messageManager
     ) {
         $this->messageManager = $messageManager;
         $this->country = $country;
-        parent::__construct($view);
+        parent::__construct($view, $session, $redirect);
     }
 
     /**

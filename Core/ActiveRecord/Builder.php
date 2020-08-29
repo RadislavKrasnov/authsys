@@ -317,4 +317,14 @@ class Builder implements BuilderInterface
             return $relatedModel->newInstance($model, true);
         }, $models));
     }
+
+    /**
+     * Get last insert id
+     *
+     * @return string
+     */
+    public function getLastInsertId(): string
+    {
+        return $this->model->getQuery()->getLastInsertId();
+    }
 }
