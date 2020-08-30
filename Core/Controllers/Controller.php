@@ -2,6 +2,7 @@
 
 namespace Core\Controllers;
 
+use Core\Api\Controllers\ControllerInterface;
 use Core\Api\View\ViewInterface;
 use Core\Api\Session\SessionInterface;
 use Core\Api\Url\RedirectInterface;
@@ -10,7 +11,7 @@ use Core\Api\Url\RedirectInterface;
  * Class Controller
  * @package Core\Controllers
  */
-class Controller
+class Controller implements ControllerInterface
 {
     /**
      * @var ViewInterface
@@ -62,7 +63,7 @@ class Controller
      *
      * @return void
      */
-    public function isAuthorized()
+    public function isAuthorized(): void
     {
         $userId = $this->session->getData('user_id');
 

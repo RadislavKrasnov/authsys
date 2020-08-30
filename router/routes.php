@@ -37,4 +37,10 @@ return [
         'controller' => '\App\Controller\Index\Index',
         'action' => 'index'
     ],
+    [
+        'request_method' => \Core\Api\Router\RouterInterface::POST_REQUEST,
+        'path' => '/auth/account/signin',
+        'controller' => '\App\Controller\Auth\Signin',
+        'action' => 'signIn'
+    ],
 ];

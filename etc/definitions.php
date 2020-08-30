@@ -51,6 +51,13 @@ return [
 
         return new \Core\View\View($diManager, $viewServiceProvider);
     },
+    \Core\Api\Controllers\ControllerInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
+        $view = $container->get(\Core\Api\View\ViewInterface::class);
+        $session = $container->get(\Core\Api\Url\RedirectInterface::class);
+        $redirect = $container->get(\Core\Api\Url\RedirectInterface::class);
+
+        return new \Core\Controllers\Controller($view, $session, $redirect);
+    },
     \Core\Api\ActiveRecord\BuilderInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
         $diManager = $container->get(\Core\Api\Di\DiManagerInterface::class);
 
