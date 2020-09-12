@@ -1,6 +1,15 @@
 <?php
 
 return [
+    \App\Api\Authtoken\TokenGeneratorInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
+        return new \App\Model\Authtoken\TokenGenerator();
+    },
+    \App\Api\Authtoken\AuthtokenInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
+        $diManager = $container->get(\Core\Api\Di\DiManagerInterface::class);
+        $builder = $container->get(\Core\Api\ActiveRecord\BuilderInterface::class);
+
+        return new \App\Model\Authtoken\Authtoken($diManager, $builder);
+    },
     \App\Api\User\UserInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
         $diManager = $container->get(\Core\Api\Di\DiManagerInterface::class);
         $builder = $container->get(\Core\Api\ActiveRecord\BuilderInterface::class);
@@ -29,6 +38,9 @@ return [
         $session = $container->get(\Core\Api\Session\SessionInterface::class);
 
         return new \Core\Messages\MessageManager($session);
+    },
+    \Core\Api\Cookie\CookieInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
+        return new \Core\Cookie\Cookie();
     },
     \Core\Api\Session\SessionInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
         return new \Core\Session\Session();

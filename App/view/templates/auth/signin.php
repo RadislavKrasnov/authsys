@@ -28,6 +28,12 @@ if (isset($messages) && !empty($messages)):?>
                     <input type="password" id="password" name="password" />
                 </div>
             </div>
+            <div class="fieldset">
+                <div class="field">
+                    <input type="checkbox" id="remember" name="remember" />
+                    <label for="remember">Remember me</label>
+                </div>
+            </div>
         </form>
     </div>
     <div class="signin-button-block">
