@@ -24,11 +24,4 @@ interface ControllerInterface
         string $template =
         ViewInterface::DEFAULT_TEMPLATE
     ): void;
-
-    /**
-     * Is user authorized
-     *
-     * @return void
-     */
-    public function isAuthorized(): void;
 }

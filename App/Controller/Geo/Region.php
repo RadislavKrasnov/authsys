@@ -36,7 +36,11 @@ class Region extends Controller
         CountryInterface $country
     ) {
         $this->country = $country;
-        parent::__construct($view, $session, $redirect);
+        parent::__construct(
+            $view,
+            $session,
+            $redirect
+        );
     }
 
     /**

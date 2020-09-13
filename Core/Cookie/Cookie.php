@@ -20,7 +20,7 @@ class Cookie implements CookieInterface
      */
     public function setCookie(string $name, $value, int $expires = 0): void
     {
-        setcookie($name, $value, $expires);
+        setcookie($name, $value, $expires, '/');
     }
 
     /**

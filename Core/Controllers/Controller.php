@@ -57,18 +57,4 @@ class Controller implements ControllerInterface
     {
         $this->view->render($view, $data, $template);
     }
-
-    /**
-     * Is user authorized
-     *
-     * @return void
-     */
-    public function isAuthorized(): void
-    {
-        $userId = $this->session->getData('user_id');
-
-        if (empty($userId)) {
-            $this->redirect->redirect('/');
-        }
-    }
 }

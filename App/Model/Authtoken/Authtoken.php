@@ -43,8 +43,8 @@ class Authtoken extends Model implements AuthtokenInterface
     public function getTokenByEmail(string $email, int $isExpired): ?object
     {
         $token = $this->select()->where([
-            ['email' => $email],
-            ['is_expired' => $isExpired]
+            ['email', '=', $email],
+            ['is_expired', '=', $isExpired]
         ])->first();
 
         if (!$token) {

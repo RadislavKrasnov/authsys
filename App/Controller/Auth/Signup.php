@@ -46,7 +46,11 @@ class Signup extends Controller
     ) {
         $this->messageManager = $messageManager;
         $this->country = $country;
-        parent::__construct($view, $session, $redirect);
+        parent::__construct(
+            $view,
+            $session,
+            $redirect
+        );
     }
 
     /**

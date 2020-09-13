@@ -1,6 +1,15 @@
 <?php
 
 return [
+    \App\Api\Authorization\AuthorizeInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
+        $cookie = $container->get(\Core\Api\Cookie\CookieInterface::class);
+        $session = $container->get(\Core\Api\Session\SessionInterface::class);
+        $authtoken = $container->get(\App\Api\Authtoken\AuthtokenInterface::class);
+        $tokenGenerator = $container->get(\App\Api\Authtoken\TokenGeneratorInterface::class);
+        $logger = $container->get(\Core\Api\Psr\Log\LoggerInterface::class);
+
+        return new \App\Model\Authorization\Authorize($cookie, $session, $authtoken, $tokenGenerator, $logger);
+    },
     \App\Api\Authtoken\TokenGeneratorInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
         return new \App\Model\Authtoken\TokenGenerator();
     },

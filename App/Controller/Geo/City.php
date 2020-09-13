@@ -36,7 +36,11 @@ class City extends Controller
         RegionInterface $region
     ) {
         $this->region = $region;
-        parent::__construct($view, $session, $redirect);
+        parent::__construct(
+            $view,
+            $session,
+            $redirect
+        );
     }
 
     /**

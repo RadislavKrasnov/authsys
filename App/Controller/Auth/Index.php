@@ -9,6 +9,7 @@ use Core\Api\Url\RedirectInterface;
 use Core\Api\View\ViewInterface;
 use Core\Controllers\Controller;
 use Core\Api\Messages\MessageManagerInterface;
+use App\Api\Authorization\AuthorizeInterface;
 
 /**
  * Class Index
@@ -23,14 +24,34 @@ class Index extends Controller
      */
     private $messageManager;
 
+    /**
+     * @var AuthorizeInterface
+     */
+    private $authorize;
+
+    /**
+     * Index constructor.
+     *
+     * @param ViewInterface $view
+     * @param SessionInterface $session
+     * @param RedirectInterface $redirect
+     * @param MessageManagerInterface $messageManager
+     * @param AuthorizeInterface $authorize
+     */
     public function __construct(
         ViewInterface $view,
         SessionInterface $session,
         RedirectInterface $redirect,
-        MessageManagerInterface $messageManager
+        MessageManagerInterface $messageManager,
+        AuthorizeInterface $authorize
     ) {
+        $this->authorize = $authorize;
         $this->messageManager = $messageManager;
-        parent::__construct($view, $session, $redirect);
+        parent::__construct(
+            $view,
+            $session,
+            $redirect
+        );
     }
 
     /**
@@ -41,7 +62,23 @@ class Index extends Controller
      */
     public function index(RequestInterface $request, ResponseInterface $response)
     {
+        $this->isAuthorized();
+
         $messages = $this->messageManager->getMessages(true);
         $this->view('auth/signin.php', ['messages' => $messages], self::AUTH_TEMPLATE);
+    }
+
+    /**
+     * Check if user authorized and redirects to account page
+     *
+     * @return void
+     */
+    private function isAuthorized(): void
+    {
+        $isAuthorized = $this->authorize->isAuthorized();
+
+        if ($isAuthorized) {
+            $this->redirect->redirect('/index');
+        }
     }
 }

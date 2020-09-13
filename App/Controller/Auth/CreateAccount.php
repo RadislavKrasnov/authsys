@@ -45,25 +45,29 @@ class CreateAccount extends Controller
      * @param ViewInterface $view
      * @param SessionInterface $session
      * @param RedirectInterface $redirect
+     * @param LoggerInterface $logger
      * @param ValidatorInterface $validator
      * @param MessageManagerInterface $messageManager
      * @param UserInterface $user
-     * @param LoggerInterface $logger
      */
     public function __construct(
         ViewInterface $view,
         SessionInterface $session,
         RedirectInterface $redirect,
+        LoggerInterface $logger,
         ValidatorInterface $validator,
         MessageManagerInterface $messageManager,
-        UserInterface $user,
-        LoggerInterface $logger
+        UserInterface $user
     ) {
         $this->logger = $logger;
         $this->user = $user;
         $this->messageManager = $messageManager;
         $this->validator = $validator;
-        parent::__construct($view, $session, $redirect);
+        parent::__construct(
+            $view,
+            $session,
+            $redirect
+        );
     }
 
     /**
