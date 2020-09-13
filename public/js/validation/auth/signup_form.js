@@ -19,7 +19,8 @@ $(function () {
             },
             'confirmation-password': {
                 required: true,
-                password: true
+                password: true,
+                equalTo: '#password'
             },
             'birth-date': {
                 required: true,
