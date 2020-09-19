@@ -49,7 +49,7 @@ class Index extends Controller
     {
         $this->isAuthorized();
 
-        echo "Index page";
+        $this->view('profile/index.php', [], ViewInterface::DEFAULT_TEMPLATE);
     }
 
     /**
