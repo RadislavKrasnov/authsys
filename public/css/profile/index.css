@@ -4,36 +4,59 @@ body {
     font-family: 'Freight Sans Bold', Helvetica, Arial, sans-serif;
 }
 
-header {
+header, footer {
     background-color: #8290f7;
-    padding: 10px;
+}
+
+main .user-info-section .user-info-center .info span,
+header .header-menu button, footer {
+    color: #ffff;
+}
+
+header, header .header-menu {
     display: flex;
-    justify-content: flex-end;
+}
+
+header, header .header-menu, main .user-info-section {
     position: relative;
 }
 
-header .header-menu {
-    display: flex;
-    position: relative;
+header .header-menu .dropdown-items,
+main .user-info-section .user-info-center {
+    position: absolute;
+}
+
+header .header-menu button,
+main .user-info-section .user-info-center .info span {
+    font-size: 16px;
+}
+
+header {
+    padding: 10px;
+    justify-content: flex-end;
 }
 
 header .header-menu, header .header-menu button {
     cursor: pointer;
 }
 
+header .header-menu button,
+header .header-menu .dropdown-items,
+header .header-avatar,
+main .user-info-section .user-info-center .avatar {
+    overflow: hidden;
+}
+
 header .header-menu button {
-    color: #ffff;
     border: none;
-    font-size: 16px;
     background: #8290f7;
     white-space:nowrap;
     text-overflow: ellipsis;
-    overflow: hidden;
     max-width: 200px;
 }
 
 header .header-menu button:focus {
-    outline:0;
+    outline: 0;
 }
 
 .arrow-down {
@@ -45,19 +68,22 @@ header .header-menu button:focus {
     margin-top: 22px;
 }
 
+header .header-menu .dropdown-items,
+header .header-menu .header-avatar img,
+main .user-info-section .user-info-center .avatar img,
+main .user-info-section {
+    width: 100%;
+}
+
 header .header-menu .dropdown-items {
     display: none;
-    position: absolute;
     top: 56px;
     background-color: #ffff;
-    width: 100%;
     border-radius: 6px;
-    overflow: hidden;
     z-index: 1;
 }
 
 header .header-menu .dropdown-items a {
-    display: block;
     padding: 10px;
     color: #8290f7;
     text-decoration: none;
@@ -71,15 +97,18 @@ header .header-menu .dropdown-items a:first-child {
     border-bottom: 1px solid #cccc;
 }
 
-header .header-avatar {
+header .header-avatar,
+main .user-info-section .user-info-center .avatar {
     border-radius: 50%;
-    height: 52px;
-    width: 52px;
-    overflow: hidden;
 }
 
-header .header-menu .header-avatar img, main .user-info-section .user-info-center .avatar img {
-    width: 100%;
+header .header-avatar {
+    height: 52px;
+    width: 52px;
+}
+
+header .header-menu .header-avatar img,
+main .user-info-section .user-info-center .avatar img {
     height: 100%;
 }
 
@@ -91,29 +120,26 @@ main .user-info-section {
     background-color: #bdbdbd;
     background-repeat: no-repeat;
     background-size: 100% 100%;
-    width: 100%;
     height: 402px;
     box-shadow: inset 0 1px 40px #a9a5a5, inset 0 -1px 40px #a9a5a5;
-    position: relative;
+}
+
+main .user-info-section .user-info-center, footer {
+    text-align: center;
 }
 
 main .user-info-section .user-info-center {
     width: 260px;
-    position: absolute;
     bottom: 0;
     left: calc(50% - 130px);
-    text-align: center;
 }
 
 main .user-info-section .user-info-center .avatar {
-    border-radius: 50%;
-    overflow: hidden;
     border: 3px solid #ffff;
 }
-main .user-info-section .user-info-center .info span {
+main .user-info-section .user-info-center .info span,
+header .header-menu .dropdown-items a {
     display: block;
-    color: #ffff;
-    font-size: 16px;
 }
 
 main .user-info-section .user-info-center .info .name {
@@ -123,7 +149,7 @@ main .user-info-section .user-info-center .info .name {
 
 section.content {
     width: 80%;
-    background: white;
+    background: #ffff;
     margin: 26px auto auto;
     border-left: 1px solid #d4d4d4;
     border-right: 1px solid #d4d4d4;
@@ -132,10 +158,7 @@ section.content {
 }
 
 footer {
-    background-color: #8290f7;
     height: 38px;
-    color: #fff;
-    text-align: center;
     padding-top: 20px;
     margin-top: 16px;
 }
