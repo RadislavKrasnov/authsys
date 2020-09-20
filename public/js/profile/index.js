@@ -14,3 +14,9 @@ window.onclick = function(event) {
         }
     }
 }
+
+function logout() {
+    $.post('/auth/account/logout').done(function () {
+        window.location.href = '/';
+    });
+}

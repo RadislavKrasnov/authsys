@@ -43,4 +43,16 @@ return [
         'controller' => '\App\Controller\Auth\Signin',
         'action' => 'signIn'
     ],
+    [
+        'request_method' => \Core\Api\Router\RouterInterface::POST_REQUEST,
+        'path' => '/auth/account/logout',
+        'controller' => '\App\Controller\Auth\Logout',
+        'action' => 'logout'
+    ],
+    [
+        'request_method' => \Core\Api\Router\RouterInterface::GET_REQUEST,
+        'path' => '/auth/account/settings',
+        'controller' => '\App\Controller\Settings\Form',
+        'action' => 'showForm'
+    ],
 ];
