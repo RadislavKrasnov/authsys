@@ -75,8 +75,12 @@ main .user-info-section {
     width: 100%;
 }
 
-header .header-menu .dropdown-items {
+header .header-menu .dropdown-items,
+header #mobile-links, header #mobile-burger-icon {
     display: none;
+}
+
+header .header-menu .dropdown-items {
     top: 56px;
     background-color: #ffff;
     border-radius: 6px;
@@ -165,8 +169,75 @@ footer {
 
 @media only screen and (min-width: 320px) and (max-width: 767px) {
 
+    body {
+        position: relative;
+    }
+
+    header {
+        overflow: hidden;
+        justify-content: flex-start;
+        position: initial;
+        padding: 0;
+    }
+
+    header .header-menu {
+        display: none;
+    }
+
+    header #mobile-burger-icon {
+        display: block;
+        margin: 10px 0 10px 10px;
+        cursor: pointer;
+        z-index: 2;
+    }
+
+    .bar-one, .bar-two, .bar-three {
+        width: 35px;
+        height: 5px;
+        background-color: #ffff;
+        margin: 6px 0;
+        transition: 0.4s;
+    }
+
+    .change .bar-one {
+        transform: rotate(-45deg) translate(-9px, 6px);
+    }
+
+    .change .bar-two {
+        opacity: 0;
+    }
+
+    .change .bar-three {
+        transform: rotate(45deg) translate(-8px, -8px);
+    }
+
+    header #mobile-links {
+        position: absolute;
+        background-color: #8290f7;
+        width: 78%;
+        top: 0;
+        bottom: 0;
+        z-index: 1;
+    }
+
+    #mobile-links a {
+        display: block;
+        border-bottom: 1px solid #ffff;
+        padding: 10px 32px 10px 10px;
+        font-size: 18px;
+        text-align: right;
+        color: #ffff;
+        text-decoration: none;
+    }
+
+    #mobile-links a:first-child {
+        margin-top: 58px;
+        border-top: 1px solid #ffff;;
+    }
 }
 
 @media only screen and (min-width: 768px) and (max-width: 1200px) {
-
+    section.content {
+        width: 94%;
+    }
 }

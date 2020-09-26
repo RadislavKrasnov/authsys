@@ -10,6 +10,15 @@
             <a onclick="logout()">Sign out</a>
         </div>
     </div>
+    <div id="mobile-links">
+        <a href="/auth/account/settings">Settings</a>
+        <a onclick="logout()">Sign out</a>
+    </div>
+    <div id="mobile-burger-icon" onclick="showBurgerMenu(this)">
+        <div class="bar-one"></div>
+        <div class="bar-two"></div>
+        <div class="bar-three"></div>
+    </div>
 </header>
 <main>
     <section class="user-info-section"
