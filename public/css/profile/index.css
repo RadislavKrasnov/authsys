@@ -212,12 +212,19 @@ footer {
     }
 
     header #mobile-links {
+        display: block;
+        visibility: hidden;
         position: absolute;
         background-color: #8290f7;
-        width: 78%;
+        width: 39%;
         top: 0;
         bottom: 0;
         z-index: 1;
+        transition: all 1s ease-out;
+    }
+
+    .mobile-menu-sidebar {
+        width: 78% !important;
     }
 
     #mobile-links a {
