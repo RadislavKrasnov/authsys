@@ -1,0 +1,42 @@
+.settings {
+    display: flex;
+    padding: 15px;
+}
+
+.left-col, .right-col {
+    width: 50%;
+}
+
+.left-col {
+    border-right: 1px solid #cccc;
+    padding-right: 15px;
+}
+
+.right-col {
+    margin-left: 15px;
+}
+
+hr {
+    width: 90%;
+}
+
+.fieldset {
+    margin-bottom: 15px;
+}
+
+.fieldset input, .fieldset select {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.fieldset input {
+    line-height: 32px;
+}
+
+.fieldset select {
+    height: 36px;
+}
+
+.fieldset .label {
+    margin-bottom: 5px;
+}

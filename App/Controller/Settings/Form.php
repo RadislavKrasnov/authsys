@@ -2,6 +2,7 @@
 
 namespace App\Controller\Settings;
 
+use Core\Api\View\ViewInterface;
 use Core\Controllers\Controller;
 use Core\Api\Router\RequestInterface;
 use Core\Api\Router\ResponseInterface;
@@ -19,6 +20,6 @@ class Form extends Controller
      */
     public function showForm(RequestInterface $request, ResponseInterface $response): void
     {
-
+        $this->view('profile/settings.php', [], ViewInterface::DEFAULT_TEMPLATE);
     }
 }
