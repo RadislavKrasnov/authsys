@@ -241,6 +241,27 @@ footer {
         margin-top: 58px;
         border-top: 1px solid #ffff;;
     }
+
+    main .user-info-section {
+        height: 268px;
+    }
+
+    main .user-info-section .user-info-center {
+        width: 136px;
+        left: calc(50% - 68px);
+    }
+
+    main .user-info-section .user-info-center .info .name {
+        font-size: 18px;
+    }
+
+    main .user-info-section .user-info-center .info span {
+        font-size: 14px;
+    }
+
+    section.content {
+        width: 94%;
+    }
 }
 
 @media only screen and (min-width: 768px) and (max-width: 1200px) {
