@@ -90,7 +90,7 @@
                             <input type="password" id="confirmation-password" name="confirmation-password" />
                         </div>
                     </div>
-                    <button type="submit" name="reset-password" value="reset_password">
+                    <button type="submit" class="primary-button" name="reset-password" value="reset_password">
                         Reset Password
                     </button>
                 </form>
@@ -98,7 +98,7 @@
         </div>
         <div class="bottom-row">
             <hr/>
-            <button type="submit" form="settings-form" name="submit" value="change_settings">
+            <button type="submit" form="settings-form" class="primary-button" name="submit" value="change_settings">
                 Save
             </button>
         </div>
