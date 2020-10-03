@@ -7,8 +7,10 @@
                 <img src="https://via.placeholder.com/200" alt="#" />
             </div>
             <div class="info">
-                <span class="name">John Smith</span>
-                <span class="location">Marseille, Provance-Alpes-Cote D'Azure, France</span>
+                <span class="name"><?= $user->firstName . ' ' . $user->lastName ?></span>
+                <span class="location">
+                    <?= $user->getCity()->name . ' ' . $user->getRegion()->name . ' ' . $user->getCountry()->name ?>
+                </span>
             </div>
         </div>
     </section>

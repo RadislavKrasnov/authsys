@@ -48,8 +48,9 @@ class Index extends Controller
     public function index(RequestInterface $request, ResponseInterface $response)
     {
         $this->isAuthorized();
+        $user = $this->authorize->getLoggedInUser();
 
-        $this->view('profile/index.php', [], ViewInterface::DEFAULT_TEMPLATE);
+        $this->view('profile/index.php', ['user' => $user], ViewInterface::DEFAULT_TEMPLATE);
     }
 
     /**

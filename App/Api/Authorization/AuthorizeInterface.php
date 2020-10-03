@@ -48,4 +48,11 @@ interface AuthorizeInterface
      * @return void
      */
     public function clearAuthCookie(): void;
+
+    /**
+     * Get logged in user
+     *
+     * @return UserInterface|null
+     */
+    public function getLoggedInUser(): ?object;
 }

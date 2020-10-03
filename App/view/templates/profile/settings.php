@@ -13,7 +13,7 @@
                             <label for="first-name">First name</label>
                         </div>
                         <div class="field">
-                            <input type="text" id="first-name" name="first-name" />
+                            <input type="text" id="first-name" name="first-name" value="<?= $user->firstName ?>"/>
                         </div>
                     </div>
                     <div class="fieldset">
@@ -21,7 +21,7 @@
                             <label for="last-name">Last name</label>
                         </div>
                         <div class="field">
-                            <input type="text" id="last-name" name="last-name" />
+                            <input type="text" id="last-name" name="last-name" value="<?= $user->lastName ?>"/>
                         </div>
                     </div>
                     <div class="fieldset">
@@ -29,7 +29,8 @@
                             <label for="email">Email</label>
                         </div>
                         <div class="field">
-                            <input type="email" id="email" name="email" placeholder="example@domain.com" />
+                            <input type="email" id="email" name="email" placeholder="example@domain.com"
+                                   value="<?= $user->email ?>"/>
                         </div>
                     </div>
                     <div class="fieldset">
@@ -37,7 +38,7 @@
                             <label for="birth-date">Birth date</label>
                         </div>
                         <div class="field">
-                            <input type="date" id="birth-date" name="birth-date" />
+                            <input type="date" id="birth-date" name="birth-date" value="<?= $user->birthDate ?>"/>
                         </div>
                     </div>
                     <div class="fieldset">
@@ -47,6 +48,11 @@
                         <div class="field">
                             <select name="country" id="country">
                                 <option value="">--Please choose an option--</option>
+                                <?php foreach ($countries as $country): ?>
+                                    <option value="<?= $country->id ?>"
+                                        <?= ($country->id == $user->countryId) ? 'selected' : ''; ?>>
+                                        <?= $country->name ?></option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
                     </div>
@@ -57,6 +63,11 @@
                         <div class="field">
                             <select name="region" id="region">
                                 <option value="">--Please choose an option--</option>
+                                <?php foreach ($regions as $region): ?>
+                                    <option value="<?= $region->id ?>"
+                                        <?= ($region->id == $user->regionId) ? 'selected' : ''; ?>>
+                                        <?= $region->name ?></option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
                     </div>
@@ -67,6 +78,11 @@
                         <div class="field">
                             <select name="city" id="city">
                                 <option value="">--Please choose an option--</option>
+                                <?php foreach ($cities as $city): ?>
+                                    <option value="<?= $city->id ?>"
+                                        <?= ($city->id == $user->cityId) ? 'selected' : ''; ?>>
+                                        <?= $city->name ?></option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
                     </div>

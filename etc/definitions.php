@@ -7,8 +7,16 @@ return [
         $authtoken = $container->get(\App\Api\Authtoken\AuthtokenInterface::class);
         $tokenGenerator = $container->get(\App\Api\Authtoken\TokenGeneratorInterface::class);
         $logger = $container->get(\Core\Api\Psr\Log\LoggerInterface::class);
+        $user = $container->get(\App\Api\User\UserInterface::class);
 
-        return new \App\Model\Authorization\Authorize($cookie, $session, $authtoken, $tokenGenerator, $logger);
+        return new \App\Model\Authorization\Authorize(
+            $cookie,
+            $session,
+            $authtoken,
+            $tokenGenerator,
+            $logger,
+            $user
+        );
     },
     \App\Api\Authtoken\TokenGeneratorInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
         return new \App\Model\Authtoken\TokenGenerator();

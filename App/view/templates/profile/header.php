@@ -3,7 +3,9 @@
         <div class="header-avatar">
             <img src="https://via.placeholder.com/150" alt="#" />
         </div>
-        <button class="dropdown-button">John Smith</button>
+        <button class="dropdown-button">
+            <?= $user->firstName . ' ' . $user->lastName ?>
+        </button>
         <span class="arrow-down"></span>
         <div id="header-menu-dropdown" class="dropdown-items">
             <a href="/auth/account/settings">Settings</a>

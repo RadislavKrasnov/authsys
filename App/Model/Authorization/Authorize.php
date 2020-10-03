@@ -42,6 +42,11 @@ class Authorize implements AuthorizeInterface
     private $logger;
 
     /**
+     * @var UserInterface
+     */
+    private $user;
+
+    /**
      * Authorize constructor.
      *
      * @param CookieInterface $cookie
@@ -49,19 +54,22 @@ class Authorize implements AuthorizeInterface
      * @param AuthtokenInterface $authtoken
      * @param TokenGeneratorInterface $tokenGenerator
      * @param LoggerInterface $logger
+     * @param UserInterface $user
      */
     public function __construct(
         CookieInterface $cookie,
         SessionInterface $session,
         AuthtokenInterface $authtoken,
         TokenGeneratorInterface $tokenGenerator,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        UserInterface $user
     ) {
         $this->cookie = $cookie;
         $this->session = $session;
         $this->authtoken = $authtoken;
         $this->tokenGenerator = $tokenGenerator;
         $this->logger = $logger;
+        $this->user = $user;
     }
 
     /**
@@ -201,5 +209,33 @@ class Authorize implements AuthorizeInterface
         $this->cookie->clearCookie('email');
         $this->cookie->clearCookie('random_password');
         $this->cookie->clearCookie('random_selector');
+    }
+
+    /**
+     * Get logged in user
+     *
+     * @return UserInterface|null
+     */
+    public function getLoggedInUser(): ?object
+    {
+        $user = null;
+
+        try {
+            if (!empty($this->session->getData('user_id'))) {
+                $userId = $this->session->getData('user_id');
+                $user = $this->user->find($userId);
+            }
+
+            if (!empty($this->cookie->getCookie('email'))) {
+                $email = $this->cookie->getCookie('email');
+                $user = $this->user->select()
+                    ->where([['email', '=', $email]])
+                    ->first();
+            }
+        } catch (\Exception $e) {
+            $this->logger->error($e->getMessage());
+        }
+
+        return $user;
     }
 }

@@ -3,7 +3,7 @@ $(document).ready(function(){
         var selectedCountryId = $("#country option:selected").val();
         $.ajax({
             type: "POST",
-            url: "regions",
+            url: "/regions",
             data: { country_id : selectedCountryId }
         }).done(function(regions){
             var regions = JSON.parse(regions);
@@ -26,7 +26,7 @@ $(document).ready(function(){
 function getCities(regionId) {
     $.ajax({
         type: "POST",
-        url: "cities",
+        url: "/cities",
         data: { region_id : regionId }
     }).done(function(data){
         $("#city").html(data);
