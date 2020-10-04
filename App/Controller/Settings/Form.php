@@ -12,6 +12,7 @@ use App\Api\Authorization\AuthorizeInterface;
 use App\Api\Geo\CountryInterface;
 use App\Api\Geo\RegionInterface;
 use App\Api\Geo\CityInterface;
+use Core\Api\Messages\MessageManagerInterface;
 
 /**
  * Class Form
@@ -40,6 +41,11 @@ class Form extends Controller
     private $city;
 
     /**
+     * @var MessageManagerInterface
+     */
+    private $messageManager;
+
+    /**
      * Form constructor.
      *
      * @param ViewInterface $view
@@ -49,6 +55,7 @@ class Form extends Controller
      * @param CountryInterface $country
      * @param RegionInterface $region
      * @param CityInterface $city
+     * @param MessageManagerInterface $messageManager
      */
     public function __construct(
         ViewInterface $view,
@@ -57,8 +64,10 @@ class Form extends Controller
         AuthorizeInterface $authorize,
         CountryInterface $country,
         RegionInterface $region,
-        CityInterface $city
+        CityInterface $city,
+        MessageManagerInterface $messageManager
     ) {
+        $this->messageManager = $messageManager;
         $this->city = $city;
         $this->region = $region;
         $this->country = $country;
@@ -84,13 +93,15 @@ class Form extends Controller
                 ['country_id', '=', $user->countryId],
                 ['region_id', '=', $user->regionId]
             ])->get();
+        $messages = $this->messageManager->getMessages(true);
 
         $this->view('profile/settings.php',
             [
                 'user' => $user,
                 'countries' => $countries,
                 'regions' => $regions,
-                'cities' => $cities
+                'cities' => $cities,
+                'messages' => $messages
             ],
             ViewInterface::DEFAULT_TEMPLATE
         );

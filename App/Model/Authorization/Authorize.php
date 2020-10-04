@@ -232,8 +232,8 @@ class Authorize implements AuthorizeInterface
                     ->where([['email', '=', $email]])
                     ->first();
             }
-        } catch (\Exception $e) {
-            $this->logger->error($e->getMessage());
+        } catch (\Exception $exception) {
+            $this->logger->error($exception->getMessage());
         }
 
         return $user;

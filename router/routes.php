@@ -55,4 +55,10 @@ return [
         'controller' => '\App\Controller\Settings\Form',
         'action' => 'showForm'
     ],
+    [
+        'request_method' => \Core\Api\Router\RouterInterface::POST_REQUEST,
+        'path' => '/auth/account/settings/save',
+        'controller' => '\App\Controller\Settings\Save',
+        'action' => 'save'
+    ],
 ];

@@ -1,4 +1,9 @@
 <?php $this->show('profile/header.php'); ?>
+<?php if (isset($messages) && !empty($messages)):
+    foreach ($messages as $message): ?>
+        <p class="error-message"><?= $message ?></p>
+    <?php endforeach; ?>
+<?php endif; ?>
 <main>
     <section class="content">
         <div class="title">
@@ -7,7 +12,7 @@
         </div>
         <div class="settings">
             <div class="left-col">
-                <form id="settings-form" action="#" method="post">
+                <form id="settings-form" action="/auth/account/settings/save" method="post">
                     <div class="fieldset">
                         <div class="label">
                             <label for="first-name">First name</label>
@@ -22,15 +27,6 @@
                         </div>
                         <div class="field">
                             <input type="text" id="last-name" name="last-name" value="<?= $user->lastName ?>"/>
-                        </div>
-                    </div>
-                    <div class="fieldset">
-                        <div class="label">
-                            <label for="email">Email</label>
-                        </div>
-                        <div class="field">
-                            <input type="email" id="email" name="email" placeholder="example@domain.com"
-                                   value="<?= $user->email ?>"/>
                         </div>
                     </div>
                     <div class="fieldset">
