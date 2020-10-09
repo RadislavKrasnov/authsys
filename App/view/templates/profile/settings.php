@@ -85,13 +85,21 @@
                 </form>
             </div>
             <div class="right-col">
-                <form id="reset-password-form" action="#" method="post">
+                <form id="reset-password-form" action="/auth/account/settings/password/reset" method="post">
                     <div class="fieldset">
                         <div class="label">
-                            <label for="password">Password</label>
+                            <label for="current-password">Current password</label>
                         </div>
                         <div class="field">
-                            <input type="password" id="password" name="password" />
+                            <input type="password" id="current-password" name="current-password" />
+                        </div>
+                    </div>
+                    <div class="fieldset">
+                        <div class="label">
+                            <label for="new-password">New Password</label>
+                        </div>
+                        <div class="field">
+                            <input type="password" id="new-password" name="new-password" />
                         </div>
                     </div>
                     <div class="fieldset">

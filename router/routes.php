@@ -61,4 +61,10 @@ return [
         'controller' => '\App\Controller\Settings\Save',
         'action' => 'save'
     ],
+    [
+        'request_method' => \Core\Api\Router\RouterInterface::POST_REQUEST,
+        'path' => '/auth/account/settings/password/reset',
+        'controller' => '\App\Controller\Settings\ResetPassword',
+        'action' => 'resetPassword'
+    ],
 ];

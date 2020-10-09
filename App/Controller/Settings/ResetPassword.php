@@ -10,14 +10,15 @@ use Core\Api\Router\RequestInterface;
 use Core\Api\Router\ResponseInterface;
 use Core\Api\Validation\ValidatorInterface;
 use Core\Api\Messages\MessageManagerInterface;
-use Core\Api\Psr\Log\LoggerInterface;
 use App\Api\Authorization\AuthorizeInterface;
+use Core\Api\Psr\Log\LoggerInterface;
+use App\Api\User\UserInterface;
 
 /**
- * Class Save
+ * Class ResetPassword
  * @package App\Controller\Settings
  */
-class Save extends Controller
+class ResetPassword extends Controller
 {
     /**
      * @var ValidatorInterface
@@ -40,7 +41,7 @@ class Save extends Controller
     private $logger;
 
     /**
-     * Save constructor.
+     * ResetPassword constructor.
      *
      * @param ViewInterface $view
      * @param SessionInterface $session
@@ -67,24 +68,21 @@ class Save extends Controller
     }
 
     /**
-     * Save user account settings
+     * Reset password
      *
      * @param RequestInterface $request
      * @param ResponseInterface $response
      * @return void
      */
-    public function save(RequestInterface $request, ResponseInterface $response): void
+    public function resetPassword(RequestInterface $request, ResponseInterface $response): void
     {
         $this->isAuthorized();
         $data = $request->getPostValues();
 
         $rules = [
-            'first-name' => ['required', 'alphanumeric'],
-            'last-name' => ['required', 'alphanumeric'],
-            'birth-date' => ['required', 'usa_date_format'],
-            'country' => ['required', 'numeric'],
-            'region' => ['numeric'],
-            'city' => ['required', 'numeric'],
+            'current-password'  => ['required', 'password'],
+            'new-password'  => ['required', 'password'],
+            'confirmation-password' => ['required', 'password'],
         ];
 
         $this->validator->validate($data, $rules);
@@ -103,35 +101,39 @@ class Save extends Controller
             $this->redirect->redirect('/auth/account/settings');
         }
 
-        $this->updateUserSettings($data);
-        $this->redirect->redirect('/auth/account/settings');
+        $currentPassword = htmlspecialchars($data['current-password']);
+        $newPassword = htmlspecialchars($data['new-password']);
+        $confirmationPassword = htmlspecialchars($data['confirmation-password']);
+        $user = $this->authorize->getLoggedInUser();
+
+        if (!password_verify($currentPassword, $user->password)) {
+            $this->messageManager->addMessage('You have input current password incorrectly');
+            $this->redirect->redirect('/auth/account/settings');
+        }
+
+        if ($newPassword !== $confirmationPassword) {
+            $this->messageManager->addMessage('Password and confirmation password don\'t match');
+            $this->redirect->redirect('/auth/account/settings');
+        }
+
+        $this->changePasswordInDd($data, $user);
     }
 
     /**
-     * Update user settings
+     * Update password in database
      *
      * @param array $data
+     * @param UserInterface $user
      * @return void
      */
-    private function updateUserSettings(array $data): void
+    private function changePasswordInDd(array $data, UserInterface $user): void
     {
         try {
-            $user = $this->authorize->getLoggedInUser();
-            $user->firstName = htmlspecialchars($data['first-name']);
-            $user->lastName = htmlspecialchars($data['last-name']);
-            $user->birthDate = htmlspecialchars($data['birth-date']);
-            $user->countryId = htmlspecialchars($data['country']);
-            $user->cityId = htmlspecialchars($data['city']);
-
-            if (array_key_exists('region', $data) && !empty($data['region'])) {
-                $user->regionId = htmlspecialchars($data['region']);
-            }
-
+            $user->password = password_hash(htmlspecialchars($data['new-password']), PASSWORD_BCRYPT);
             $user->save();
+            $this->messageManager->addMessage('Password has been changed successfully');
+            $this->redirect->redirect('/auth/account/settings');
         } catch (\Exception $exception) {
-            $this->messageManager->addMessage(
-                'Error: The data has not been updated because of error during the update process'
-            );
             $this->logger->error($exception->getMessage());
         }
     }
