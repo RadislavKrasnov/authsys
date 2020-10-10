@@ -31,12 +31,13 @@ class MessageManager implements MessageManagerInterface
      * Add collection of messages
      *
      * @param array $messages
+     * @param string $key
      * @return MessageManagerInterface
      */
-    public function addMessages(array $messages): object
+    public function addMessages(array $messages, $key = self::SESSION_DATA_NAME): object
     {
         foreach ($messages as $message) {
-            $this->addMessage($message);
+            $this->addMessage($message, $key);
         }
 
         return $this;
@@ -46,18 +47,19 @@ class MessageManager implements MessageManagerInterface
      * Add message into collection
      *
      * @param string $message
+     * @param string $key
      * @return MessageManagerInterface
      */
-    public function addMessage(string $message): object
+    public function addMessage(string $message, $key = self::SESSION_DATA_NAME): object
     {
-        $messages = $this->getMessages();
+        $messages = $this->getMessages($key);
 
         if (empty($messages)) {
             $messages = new Collection();
         }
 
         $messages->append($message);
-        $this->session->addData(MessageManagerInterface::SESSION_DATA_NAME, $messages);
+        $this->session->addData($key, $messages);
 
         return $this;
     }
@@ -66,21 +68,58 @@ class MessageManager implements MessageManagerInterface
      * Get collection of messages
      *
      * @param boolean $clear
+     * @param string $key
      * @return Collection|null
      */
-    public function getMessages($clear = false): ?object
+    public function getMessages($clear = false, $key = self::SESSION_DATA_NAME): ?object
     {
-        $messageCollection = $this->session->getData(MessageManagerInterface::SESSION_DATA_NAME);
+        $messageCollection = $this->session->getData($key);
 
         if (empty($messageCollection)) {
             return null;
         }
 
         if ($clear) {
-            $messageCollection = clone $this->session->getData(MessageManagerInterface::SESSION_DATA_NAME);
-            $this->session->getData(MessageManagerInterface::SESSION_DATA_NAME)->clear();
+            $messageCollection = clone $this->session->getData($key);
+            $this->session->getData($key)->clear();
         }
 
         return $messageCollection;
+    }
+
+    /**
+     * Add collection of success messages
+     *
+     * @param array $messages
+     * @param string $key
+     * @return MessageManagerInterface
+     */
+    public function addSuccessMessages(array $messages, $key = self::SESSION_SUCCESS_MESSAGES): object
+    {
+        return $this->getMessages($messages, $key);
+    }
+
+    /**
+     * Add success message into collection
+     *
+     * @param string $message
+     * @param string $key
+     * @return MessageManagerInterface
+     */
+    public function addSuccessMessage(string $message, $key = self::SESSION_SUCCESS_MESSAGES): object
+    {
+        return $this->addMessage($message, $key);
+    }
+
+    /**
+     * Get collection of success messages
+     *
+     * @param boolean $clear
+     * @param string $key
+     * @return Collection|null
+     */
+    public function getSuccessMessages($clear = false, $key = self::SESSION_SUCCESS_MESSAGES): ?object
+    {
+        return $this->getMessages($clear, $key);
     }
 }

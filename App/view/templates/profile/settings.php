@@ -1,4 +1,9 @@
 <?php $this->show('profile/header.php'); ?>
+<?php if (isset($successMessages) && !empty($successMessages)):
+    foreach ($successMessages as $successMessage): ?>
+        <p class="success-message"><?= $successMessage ?></p>
+    <?php endforeach; ?>
+<?php endif; ?>
 <?php if (isset($messages) && !empty($messages)):
     foreach ($messages as $message): ?>
         <p class="error-message"><?= $message ?></p>

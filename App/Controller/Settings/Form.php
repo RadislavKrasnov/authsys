@@ -94,6 +94,7 @@ class Form extends Controller
                 ['region_id', '=', $user->regionId]
             ])->get();
         $messages = $this->messageManager->getMessages(true);
+        $successMessages = $this->messageManager->getSuccessMessages(true);
 
         $this->view('profile/settings.php',
             [
@@ -101,7 +102,8 @@ class Form extends Controller
                 'countries' => $countries,
                 'regions' => $regions,
                 'cities' => $cities,
-                'messages' => $messages
+                'messages' => $messages,
+                'successMessages' => $successMessages
             ],
             ViewInterface::DEFAULT_TEMPLATE
         );

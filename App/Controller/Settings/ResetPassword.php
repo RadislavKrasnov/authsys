@@ -131,7 +131,7 @@ class ResetPassword extends Controller
         try {
             $user->password = password_hash(htmlspecialchars($data['new-password']), PASSWORD_BCRYPT);
             $user->save();
-            $this->messageManager->addMessage('Password has been changed successfully');
+            $this->messageManager->addSuccessMessage('Password has been changed successfully');
             $this->redirect->redirect('/auth/account/settings');
         } catch (\Exception $exception) {
             $this->logger->error($exception->getMessage());

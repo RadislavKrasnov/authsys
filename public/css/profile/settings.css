@@ -66,10 +66,18 @@ section.content .title {
     cursor: pointer;
 }
 
-p.error-message {
+p.success-message, p.error-message {
     color: black;
-    background: #e9271e;
-    border: 2px solid red;
     border-radius: 4px;
     padding: 10px;
+}
+
+p.error-message {
+    background: #e9271e;
+    border: 2px solid red;
+}
+
+p.success-message {
+    background: #4caf50;
+    border: 2px solid green;
 }
