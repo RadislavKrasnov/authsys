@@ -81,7 +81,7 @@ class ResetPassword extends Controller
 
         $rules = [
             'current-password'  => ['required', 'password'],
-            'new-password'  => ['required', 'password'],
+            'password'  => ['required', 'password'],
             'confirmation-password' => ['required', 'password'],
         ];
 
@@ -102,7 +102,7 @@ class ResetPassword extends Controller
         }
 
         $currentPassword = htmlspecialchars($data['current-password']);
-        $newPassword = htmlspecialchars($data['new-password']);
+        $password = htmlspecialchars($data['password']);
         $confirmationPassword = htmlspecialchars($data['confirmation-password']);
         $user = $this->authorize->getLoggedInUser();
 
@@ -111,7 +111,7 @@ class ResetPassword extends Controller
             $this->redirect->redirect('/auth/account/settings');
         }
 
-        if ($newPassword !== $confirmationPassword) {
+        if ($password !== $confirmationPassword) {
             $this->messageManager->addMessage('Password and confirmation password don\'t match');
             $this->redirect->redirect('/auth/account/settings');
         }
@@ -129,7 +129,7 @@ class ResetPassword extends Controller
     private function changePasswordInDd(array $data, UserInterface $user): void
     {
         try {
-            $user->password = password_hash(htmlspecialchars($data['new-password']), PASSWORD_BCRYPT);
+            $user->password = password_hash(htmlspecialchars($data['password']), PASSWORD_BCRYPT);
             $user->save();
             $this->messageManager->addSuccessMessage('Password has been changed successfully');
             $this->redirect->redirect('/auth/account/settings');

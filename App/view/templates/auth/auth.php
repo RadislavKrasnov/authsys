@@ -9,6 +9,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
         <script src="/js/validation/validation_rules.js"></script>
+        <script src="/js/validation/validate.js"></script>
         <?= $this->head($view) ?>
     </head>
     <body>

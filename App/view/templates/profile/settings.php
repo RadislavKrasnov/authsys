@@ -101,10 +101,10 @@
                     </div>
                     <div class="fieldset">
                         <div class="label">
-                            <label for="new-password">New Password</label>
+                            <label for="password">New Password</label>
                         </div>
                         <div class="field">
-                            <input type="password" id="new-password" name="new-password" />
+                            <input type="password" id="password" name="password" />
                         </div>
                     </div>
                     <div class="fieldset">
