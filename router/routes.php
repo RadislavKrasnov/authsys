@@ -67,4 +67,10 @@ return [
         'controller' => '\App\Controller\Settings\ResetPassword',
         'action' => 'resetPassword'
     ],
+    [
+        'request_method' => \Core\Api\Router\RouterInterface::POST_REQUEST,
+        'path' => '/auth/account/settings/email/change',
+        'controller' => '\App\Controller\Settings\ChangeEmail',
+        'action' => 'changeEmail'
+    ],
 ];

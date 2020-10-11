@@ -119,6 +119,20 @@
                         Reset Password
                     </button>
                 </form>
+                <form id="change-email-form" action="/auth/account/settings/email/change" method="post">
+                    <div class="fieldset">
+                        <div class="label">
+                            <label for="email">New email</label>
+                        </div>
+                        <div class="field">
+                            <input type="email" id="email" name="email" placeholder="example@domain.com"
+                                   value="<?= $user->email ?>"/>
+                        </div>
+                    </div>
+                    <button type="submit" class="primary-button" name="change-email" value="change_email">
+                        Change email
+                    </button>
+                </form>
             </div>
         </div>
         <div class="bottom-row">
