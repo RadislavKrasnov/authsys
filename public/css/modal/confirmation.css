@@ -1,0 +1,44 @@
+.modal-wrapper {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-top: 50vh;
+}
+
+.modal-wrapper .modal {
+    background-color: #ffff;
+    margin: auto;
+    width: 50%;
+}
+
+.modal-wrapper .modal .modal-header {
+    background-color: #8290f7;
+    color: #ffff;
+    padding: 10px;
+}
+
+.modal-wrapper .modal .modal-header,
+.modal-wrapper .modal .modal-content {
+    text-align: center;
+}
+
+.modal-wrapper .modal .modal-footer {
+    display: flex;
+    justify-content: center;
+    padding: 12px;
+}
+
+.modal-wrapper .modal .modal-footer button {
+    width: 90px;
+    padding: 5px;
+}
+
+.modal-wrapper .modal .modal-footer button.confirmation-button {
+    margin-right: 20px;
+}

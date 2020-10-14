@@ -115,7 +115,8 @@
                             <input type="password" id="confirmation-password" name="confirmation-password" />
                         </div>
                     </div>
-                    <button type="submit" class="primary-button" name="reset-password" value="reset_password">
+                    <button type="button" id="reset-password-button"
+                            class="button primary-button" name="reset-password" value="reset_password">
                         Reset Password
                     </button>
                 </form>
@@ -129,7 +130,8 @@
                                    value="<?= $user->email ?>"/>
                         </div>
                     </div>
-                    <button type="submit" class="primary-button" name="change-email" value="change_email">
+                    <button type="button" id="change-email-button"
+                            class="button primary-button" name="change-email" value="change_email">
                         Change email
                     </button>
                 </form>
@@ -137,9 +139,28 @@
         </div>
         <div class="bottom-row">
             <hr/>
-            <button type="submit" form="settings-form" class="primary-button" name="submit" value="change_settings">
+            <button type="button" form="settings-form" id="save-settings-button"
+                    class="button primary-button" name="submit-button" value="change_settings">
                 Save
             </button>
+        </div>
+        <div id="confirmation-modal" class="modal-wrapper">
+            <div class="modal">
+                <div class="modal-header">
+                    <span id="confirmation-modal-title"></span>
+                </div>
+                <div class="modal-content">
+                    <p id="confirmation-modal-text"></p>
+                </div>
+                <div class="modal-footer">
+                    <button class="confirmation-button button primary-button">
+                        Yes
+                    </button>
+                    <button class="cancellation-button button primary-button">
+                        No
+                    </button>
+                </div>
+            </div>
         </div>
     </section>
 </main>
