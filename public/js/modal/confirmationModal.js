@@ -20,3 +20,10 @@ $(document).ready(function () {
         modal.style.display = 'none';
     });
 });
+
+window.addEventListener('click', function (event) {
+    if (event.target.className === 'modal-wrapper') {
+        var modal = document.getElementById("confirmation-modal");
+        modal.style.display = 'none';
+    }
+});
