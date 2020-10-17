@@ -13,7 +13,9 @@
 
 .modal-wrapper .modal {
     background-color: #ffff;
-    margin: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -70px;
     width: 50%;
 }
 
@@ -41,4 +43,11 @@
 
 .modal-wrapper .modal .modal-footer button.confirmation-button {
     margin-right: 20px;
+}
+
+@media only screen and (min-width: 320px) and (max-width: 767px) {
+    .modal-wrapper .modal {
+        margin-top: -88px !important;
+        width: 94% !important;
+    }
 }

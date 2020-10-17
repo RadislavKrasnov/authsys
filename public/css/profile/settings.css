@@ -109,6 +109,33 @@ p.success-message {
     margin-right: 5px;
 }
 
-@media only screen and (min-width: 320px) and (max-width: 767px) {}
+@media only screen and (min-width: 320px) and (max-width: 767px) {
+    .settings {
+        display: flex;
+        flex-wrap: wrap;
+    }
 
-@media only screen and (min-width: 768px) and (max-width: 1200px) {}
+    .left-col, .right-col {
+        width: 100%;
+    }
+
+    .left-col {
+        border-right: none;
+        border-bottom: 1px solid #cccc;
+        padding-right: 0;
+    }
+
+    .right-col {
+        margin-left: 0;
+        margin-top: 15px;
+    }
+
+    .bottom-row {
+        text-align: end;
+    }
+
+    .bottom-row button {
+        position: static;
+        margin-bottom: 15px;
+    }
+}
