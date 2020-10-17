@@ -22,4 +22,12 @@ $(document).ready(function() {
             'Are you sure that you want to reset password?'
         );
     });
+
+    $('#delete-account-button').click(function() {
+        openConfirmationModal(
+            'delete-account-form',
+            'Delete account',
+            'Are you sure that you want to delete your account?'
+        );
+    });
 });

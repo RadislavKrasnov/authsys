@@ -1,5 +1,8 @@
-.settings {
+.settings, .delete-account-label {
     display: flex;
+}
+
+.settings {
     padding: 15px;
 }
 
@@ -37,7 +40,7 @@ hr {
     height: 36px;
 }
 
-.fieldset .label {
+.fieldset .label, .delete-account-label {
     margin-bottom: 5px;
 }
 
@@ -69,6 +72,10 @@ section.content .title {
     background-color: #8290f7;
 }
 
+.danger-button {
+    background-color: #fb1302;
+}
+
 p.success-message, p.error-message {
     color: black;
     border-radius: 4px;
@@ -85,6 +92,23 @@ p.success-message {
     border: 2px solid green;
 }
 
-#change-email-form {
+#change-email-form, .delete-account {
     margin-top: 15px;
 }
+
+.delete-account-label {
+    color: #e9271e;
+}
+
+.delete-account-label span {
+    margin-top: 8px;
+}
+
+.delete-account-icon {
+    height: 34px;
+    margin-right: 5px;
+}
+
+@media only screen and (min-width: 320px) and (max-width: 767px) {}
+
+@media only screen and (min-width: 768px) and (max-width: 1200px) {}
