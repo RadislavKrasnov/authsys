@@ -5,6 +5,7 @@ namespace App\Api\User;
 use App\Api\Geo\CityInterface;
 use App\Api\Geo\RegionInterface;
 use App\Api\Geo\CountryInterface;
+use App\Api\User\AvatarInterface;
 
 /**
  * Interface UserInterface
@@ -40,4 +41,11 @@ interface UserInterface
      * @return CountryInterface
      */
     public function getCountry();
+
+    /**
+     * Get user's avatar
+     *
+     * @return AvatarInterface|bool
+     */
+    public function getAvatar();
 }

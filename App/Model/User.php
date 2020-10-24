@@ -4,6 +4,7 @@ namespace App\Model;
 
 use Core\ActiveRecord\Model;
 use App\Api\User\UserInterface;
+use App\Api\User\AvatarInterface;
 
 /**
  * Class User
@@ -81,5 +82,15 @@ class User extends Model implements UserInterface
     public function getCountry()
     {
         return $this->hasOne(\App\Api\Geo\CountryInterface::class, 'country_id', 'id');
+    }
+
+    /**
+     * Get user's avatar
+     *
+     * @return AvatarInterface|bool
+     */
+    public function getAvatar()
+    {
+        return $this->hasOne(AvatarInterface::class, 'id', 'user_id');
     }
 }
