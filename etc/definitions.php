@@ -1,6 +1,12 @@
 <?php
 
 return [
+    \App\Api\Uploader\FileUploaderInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
+        $logger = $container->get(\Core\Api\Psr\Log\LoggerInterface::class);
+        $messageManager = $container->get(\Core\Api\Messages\MessageManagerInterface::class);
+
+        return new \App\Model\Uploader\FileUploader($logger, $messageManager);
+    },
     \App\Api\Authorization\AuthorizeInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
         $cookie = $container->get(\Core\Api\Cookie\CookieInterface::class);
         $session = $container->get(\Core\Api\Session\SessionInterface::class);

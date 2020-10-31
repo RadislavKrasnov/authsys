@@ -73,4 +73,10 @@ return [
         'controller' => '\App\Controller\Settings\ChangeEmail',
         'action' => 'changeEmail'
     ],
+    [
+        'request_method' => \Core\Api\Router\RouterInterface::POST_REQUEST,
+        'path' => '/user/avatar/upload',
+        'controller' => '\App\Controller\User\Avatar\Uploader',
+        'action' => 'upload'
+    ],
 ];

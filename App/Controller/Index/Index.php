@@ -8,6 +8,7 @@ use Core\Api\View\ViewInterface;
 use Core\Controllers\Controller;
 use Core\Api\Router\RequestInterface;
 use Core\Api\Router\ResponseInterface;
+use Core\Api\Messages\MessageManagerInterface;
 use App\Api\Authorization\AuthorizeInterface;
 
 /**
@@ -22,19 +23,27 @@ class Index extends Controller
     private $authorize;
 
     /**
+     * @var MessageManagerInterface
+     */
+    private $messageManager;
+
+    /**
      * Index constructor.
      *
      * @param ViewInterface $view
      * @param SessionInterface $session
      * @param RedirectInterface $redirect
      * @param AuthorizeInterface $authorize
+     * @param MessageManagerInterface $messageManager
      */
     public function __construct(
         ViewInterface $view,
         SessionInterface $session,
         RedirectInterface $redirect,
-        AuthorizeInterface $authorize
+        AuthorizeInterface $authorize,
+        MessageManagerInterface $messageManager
     ) {
+        $this->messageManager = $messageManager;
         $this->authorize = $authorize;
         parent::__construct($view, $session, $redirect);
     }
@@ -49,8 +58,18 @@ class Index extends Controller
     {
         $this->isAuthorized();
         $user = $this->authorize->getLoggedInUser();
+        $messages = $this->messageManager->getMessages(true);
+        $successMessages = $this->messageManager->getSuccessMessages(true);
 
-        $this->view('profile/index.php', ['user' => $user], ViewInterface::DEFAULT_TEMPLATE);
+        $this->view(
+            'profile/index.php',
+            [
+                'user' => $user,
+                'messages' => $messages,
+                'successMessages' => $successMessages
+            ],
+            ViewInterface::DEFAULT_TEMPLATE
+        );
     }
 
     /**
