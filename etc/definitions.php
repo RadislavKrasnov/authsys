@@ -1,6 +1,12 @@
 <?php
 
 return [
+    \App\Api\User\AvatarInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
+        $diManager = $container->get(\Core\Api\Di\DiManagerInterface::class);
+        $builder = $container->get(\Core\Api\ActiveRecord\BuilderInterface::class);
+
+        return new \App\Model\User\Avatar($diManager, $builder);
+    },
     \App\Api\Uploader\FileUploaderInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
         $logger = $container->get(\Core\Api\Psr\Log\LoggerInterface::class);
         $messageManager = $container->get(\Core\Api\Messages\MessageManagerInterface::class);

@@ -1,7 +1,7 @@
 <header>
     <div class="header-menu" onclick="showHeaderMenuDropdown()">
         <div class="header-avatar">
-            <img src="https://via.placeholder.com/150" alt="#" />
+            <img src="<?= $avatarPath ?>" alt="<?= $user->firstName . ' ' . $user->lastName ?> avatar" />
         </div>
         <button class="dropdown-button">
             <?= $user->firstName . ' ' . $user->lastName ?>

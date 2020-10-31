@@ -8,11 +8,12 @@ use Core\Api\View\ViewInterface;
 use Core\Controllers\Controller;
 use Core\Api\Router\RequestInterface;
 use Core\Api\Router\ResponseInterface;
+use Core\Api\Messages\MessageManagerInterface;
 use App\Api\Authorization\AuthorizeInterface;
 use App\Api\Geo\CountryInterface;
 use App\Api\Geo\RegionInterface;
 use App\Api\Geo\CityInterface;
-use Core\Api\Messages\MessageManagerInterface;
+use App\Controller\Index\Index;
 
 /**
  * Class Form
@@ -95,10 +96,12 @@ class Form extends Controller
             ])->get();
         $messages = $this->messageManager->getMessages(true);
         $successMessages = $this->messageManager->getSuccessMessages(true);
+        $avatarPath = (!empty($user->getAvatar())) ? $user->getAvatar()->path : Index::AVATAR_PLACEHOLDER_PATH;
 
         $this->view('profile/settings.php',
             [
                 'user' => $user,
+                'avatarPath' => $avatarPath,
                 'countries' => $countries,
                 'regions' => $regions,
                 'cities' => $cities,

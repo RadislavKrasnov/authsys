@@ -18,6 +18,11 @@ use App\Api\Authorization\AuthorizeInterface;
 class Index extends Controller
 {
     /**
+     * Avatar placeholder image path
+     */
+    const AVATAR_PLACEHOLDER_PATH = '/media/profile/placeholders/avatar_placeholder.png';
+
+    /**
      * @var AuthorizeInterface
      */
     private $authorize;
@@ -60,11 +65,13 @@ class Index extends Controller
         $user = $this->authorize->getLoggedInUser();
         $messages = $this->messageManager->getMessages(true);
         $successMessages = $this->messageManager->getSuccessMessages(true);
+        $avatarPath = (!empty($user->getAvatar())) ? $user->getAvatar()->path : self::AVATAR_PLACEHOLDER_PATH;
 
         $this->view(
             'profile/index.php',
             [
                 'user' => $user,
+                'avatarPath' => $avatarPath,
                 'messages' => $messages,
                 'successMessages' => $successMessages
             ],

@@ -70,6 +70,7 @@ header .header-menu button:focus {
 
 header .header-menu .dropdown-items,
 header .header-menu .header-avatar img,
+main .user-info-section .user-info-center .avatar,
 main .user-info-section .user-info-center .avatar img,
 main .user-info-section {
     width: 100%;
@@ -140,7 +141,14 @@ main .user-info-section .user-info-center {
 
 main .user-info-section .user-info-center .avatar {
     border: 3px solid #ffff;
+    box-sizing: border-box;
+    height: 260px;
 }
+
+main .user-info-section .user-info-center .avatar img {
+    vertical-align: middle;
+}
+
 main .user-info-section .user-info-center .info span,
 header .header-menu .dropdown-items a {
     display: block;
@@ -254,6 +262,10 @@ footer {
     main .user-info-section .user-info-center {
         width: 136px;
         left: calc(50% - 68px);
+    }
+
+    main .user-info-section .user-info-center .avatar {
+        height: 136px;
     }
 
     main .user-info-section .user-info-center .info .name {

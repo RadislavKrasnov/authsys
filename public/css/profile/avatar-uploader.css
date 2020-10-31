@@ -29,6 +29,7 @@
 .avatar .uploader a#avatar-uploader-button {
     display: inline-block;
     margin-top: 10%;
+    color: #ffff;
     font-weight: bold;
     cursor: pointer;
 }
