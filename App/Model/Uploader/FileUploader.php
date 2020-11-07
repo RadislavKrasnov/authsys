@@ -112,6 +112,12 @@ class FileUploader implements FileUploaderInterface
             return false;
         }
 
+        $pathInfo = pathinfo($path);
+
+        if (!is_dir($pathInfo['dirname'])) {
+            mkdir($pathInfo['dirname'], 0775, true);
+        }
+
         move_uploaded_file($fileTempName, $path);
     }
 
