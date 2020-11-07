@@ -12,6 +12,7 @@ use Core\Api\Psr\Log\LoggerInterface;
 use App\Api\Uploader\FileUploaderInterface;
 use App\Api\Authorization\AuthorizeInterface;
 use App\Api\User\AvatarInterface;
+use App\Api\Image\ImageOptimizerInterface;
 
 /**
  * Class Uploader
@@ -53,6 +54,13 @@ class Uploader extends Controller
     private $logger;
 
     /**
+     * Image Optimizer
+     *
+     * @var ImageOptimizerInterface
+     */
+    private $imageOptimizer;
+
+    /**
      * Uploader constructor.
      *
      * @param ViewInterface $view
@@ -62,6 +70,7 @@ class Uploader extends Controller
      * @param AuthorizeInterface $authorize
      * @param AvatarInterface $avatar
      * @param LoggerInterface $logger
+     * @param ImageOptimizerInterface $imageOptimizer
      */
     public function __construct(
         ViewInterface $view,
@@ -70,8 +79,10 @@ class Uploader extends Controller
         FileUploaderInterface $fileUploader,
         AuthorizeInterface $authorize,
         AvatarInterface $avatar,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        ImageOptimizerInterface $imageOptimizer
     ) {
+        $this->imageOptimizer = $imageOptimizer;
         $this->logger = $logger;
         $this->avatar = $avatar;
         $this->authorize = $authorize;
@@ -84,6 +95,7 @@ class Uploader extends Controller
      *
      * @param RequestInterface $request
      * @param ResponseInterface $response
+     * @return void
      */
     public function upload(RequestInterface $request, ResponseInterface $response): void
     {
@@ -115,6 +127,7 @@ class Uploader extends Controller
             $this->fileUploader->upload('image', $avatarLocation);
             $avatar->save();
             $this->deleteOldAvatarImageFile($oldAvatarPath);
+            $this->deleteResizedAvatarImage($oldAvatarPath);
             $this->redirect->redirect('/index');
         } catch (\Exception $exception) {
             $this->logger->error($exception->getMessage());
@@ -150,5 +163,16 @@ class Uploader extends Controller
         $avatarLocation = $_SERVER['DOCUMENT_ROOT'] . $avatarPath;
 
         return unlink($avatarLocation);
+    }
+
+    /**
+     * Delete resized avatar image
+     *
+     * @param string $avatarPath
+     * @return bool|void
+     */
+    private function deleteResizedAvatarImage(string $avatarPath)
+    {
+        return $this->imageOptimizer->deleteResizeImage($avatarPath);
     }
 }

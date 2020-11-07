@@ -4,7 +4,8 @@
              style="background-image: url('/media/profile/background/calanques-marseille-istock-johansjolander.jpg')">
         <div class="user-info-center">
             <div class="avatar">
-                <img src="<?= $avatarPath ?>" alt="<?= $user->firstName . ' ' . $user->lastName ?> avatar" />
+                <img src="<?= $imageOptimizer->resizeImage($avatarPath, 260, 260) ?>"
+                     alt="<?= $user->firstName . ' ' . $user->lastName ?> avatar" />
                 <div class="uploader">
                     <a id="avatar-uploader-button">
                         <img src="/media/profile/buttons/download-arrow.png" id="uploader-image" />

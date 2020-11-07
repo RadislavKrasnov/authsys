@@ -14,6 +14,7 @@ use App\Api\Geo\CountryInterface;
 use App\Api\Geo\RegionInterface;
 use App\Api\Geo\CityInterface;
 use App\Controller\Index\Index;
+use App\Api\Image\ImageOptimizerInterface;
 
 /**
  * Class Form
@@ -22,29 +23,46 @@ use App\Controller\Index\Index;
 class Form extends Controller
 {
     /**
+     * Authorize
+     *
      * @var AuthorizeInterface
      */
     private $authorize;
 
     /**
+     * Country
+     *
      * @var CountryInterface
      */
     private $country;
 
     /**
+     * Region
+     *
      * @var RegionInterface
      */
     private $region;
 
     /**
+     * City
+     *
      * @var CityInterface
      */
     private $city;
 
     /**
+     * Message Manager
+     *
      * @var MessageManagerInterface
      */
     private $messageManager;
+
+    /**
+     * Image Optimizer
+     *
+     * @var ImageOptimizerInterface
+     */
+    private $imageOptimizer;
 
     /**
      * Form constructor.
@@ -57,6 +75,7 @@ class Form extends Controller
      * @param RegionInterface $region
      * @param CityInterface $city
      * @param MessageManagerInterface $messageManager
+     * @param ImageOptimizerInterface $imageOptimizer
      */
     public function __construct(
         ViewInterface $view,
@@ -66,8 +85,10 @@ class Form extends Controller
         CountryInterface $country,
         RegionInterface $region,
         CityInterface $city,
-        MessageManagerInterface $messageManager
+        MessageManagerInterface $messageManager,
+        ImageOptimizerInterface $imageOptimizer
     ) {
+        $this->imageOptimizer = $imageOptimizer;
         $this->messageManager = $messageManager;
         $this->city = $city;
         $this->region = $region;
@@ -106,7 +127,8 @@ class Form extends Controller
                 'regions' => $regions,
                 'cities' => $cities,
                 'messages' => $messages,
-                'successMessages' => $successMessages
+                'successMessages' => $successMessages,
+                'imageOptimizer' => $this->imageOptimizer,
             ],
             ViewInterface::DEFAULT_TEMPLATE
         );

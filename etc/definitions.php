@@ -1,6 +1,9 @@
 <?php
 
 return [
+    \App\Api\Image\ImageOptimizerInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
+        return new \App\Model\Image\ImageOptimizer();
+    },
     \App\Api\User\AvatarInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
         $diManager = $container->get(\Core\Api\Di\DiManagerInterface::class);
         $builder = $container->get(\Core\Api\ActiveRecord\BuilderInterface::class);
