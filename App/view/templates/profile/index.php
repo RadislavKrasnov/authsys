@@ -1,6 +1,6 @@
 <?php $this->show('profile/header.php'); ?>
 <main>
-    <section class="user-info-section"
+    <section class="user-info-section" id="user-info-section"
              style="background-image: url('/media/profile/background/calanques-marseille-istock-johansjolander.jpg')">
         <div class="user-info-center">
             <div class="avatar">
@@ -23,6 +23,9 @@
                     <?= $user->getCity()->name . ' ' . $user->getRegion()->name . ' ' . $user->getCountry()->name ?>
                 </span>
             </div>
+        </div>
+        <div id="background-photo-popup">
+            Upload photo
         </div>
     </section>
     <?php if (isset($successMessages) && !empty($successMessages)):

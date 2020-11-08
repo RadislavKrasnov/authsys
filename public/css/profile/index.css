@@ -22,7 +22,7 @@ header, header .header-menu, main .user-info-section {
 }
 
 header .header-menu .dropdown-items,
-main .user-info-section .user-info-center {
+main .user-info-section .user-info-center, #background-photo-popup {
     position: absolute;
 }
 
@@ -31,13 +31,21 @@ main .user-info-section .user-info-center .info span {
     font-size: 16px;
 }
 
-header {
+header, #background-photo-popup, header .header-menu .dropdown-items a {
     padding: 10px;
+}
+
+header {
     justify-content: flex-end;
 }
 
-header .header-menu, header .header-menu button {
+header .header-menu, header .header-menu button,
+main section#user-info-section {
     cursor: pointer;
+}
+
+main .user-info-section .user-info-center {
+    cursor: initial;
 }
 
 header .header-menu button,
@@ -77,19 +85,22 @@ main .user-info-section {
 }
 
 header .header-menu .dropdown-items,
-header #mobile-links, header #mobile-burger-icon {
+header #mobile-links, header #mobile-burger-icon,
+#background-photo-popup {
     display: none;
+}
+
+header .header-menu .dropdown-items, #background-photo-popup {
+    background-color: #ffff;
 }
 
 header .header-menu .dropdown-items {
     top: 56px;
-    background-color: #ffff;
     border-radius: 6px;
     z-index: 1;
 }
 
 header .header-menu .dropdown-items a {
-    padding: 10px;
     color: #8290f7;
     text-decoration: none;
 }
@@ -129,7 +140,8 @@ main .user-info-section {
     box-shadow: inset 0 1px 40px #a9a5a5, inset 0 -1px 40px #a9a5a5;
 }
 
-main .user-info-section .user-info-center, footer {
+main .user-info-section .user-info-center, footer,
+#background-photo-popup {
     text-align: center;
 }
 
@@ -178,6 +190,11 @@ footer {
 .error {
     color: #e9271e;
     font-size: 12px;
+}
+
+#background-photo-popup {
+    width: 150px;
+    box-shadow: inset -1px -1px 5px #8e8787;
 }
 
 @media only screen and (min-width: 320px) and (max-width: 767px) {
