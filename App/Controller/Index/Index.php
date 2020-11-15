@@ -82,12 +82,14 @@ class Index extends Controller
         $messages = $this->messageManager->getMessages(true);
         $successMessages = $this->messageManager->getSuccessMessages(true);
         $avatarPath = (!empty($user->getAvatar())) ? $user->getAvatar()->path : self::AVATAR_PLACEHOLDER_PATH;
+        $backgroundPhoto = $user->getBackgroundPhoto();
 
         $this->view(
             'profile/index.php',
             [
                 'user' => $user,
                 'avatarPath' => $avatarPath,
+                'backgroundPhoto' => $backgroundPhoto,
                 'imageOptimizer' => $this->imageOptimizer,
                 'messages' => $messages,
                 'successMessages' => $successMessages

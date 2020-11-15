@@ -139,7 +139,10 @@ class ImageOptimizer implements ImageOptimizerInterface
             $resizedImagesFolder = self::RESIZED_IMAGES_FOLDER . $directory . DIRECTORY_SEPARATOR;
             $resizedImagePath = preg_replace('/\/media\//', $resizedImagesFolder, $imagePath);
             $resizedImageLocation = $_SERVER['DOCUMENT_ROOT'] . $resizedImagePath;
-            unlink($resizedImageLocation);
+
+            if (file_exists($resizedImageLocation)) {
+                unlink($resizedImageLocation);
+            }
         }
     }
 }

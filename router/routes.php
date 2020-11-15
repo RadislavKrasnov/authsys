@@ -79,4 +79,10 @@ return [
         'controller' => '\App\Controller\User\Avatar\Uploader',
         'action' => 'upload'
     ],
+    [
+        'request_method' => \Core\Api\Router\RouterInterface::POST_REQUEST,
+        'path' => '/user/background/upload',
+        'controller' => '\App\Controller\User\Background\Uploader',
+        'action' => 'upload'
+    ],
 ];

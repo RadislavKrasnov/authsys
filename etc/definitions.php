@@ -1,6 +1,12 @@
 <?php
 
 return [
+    \App\Api\User\BackgroundPhotoInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
+        $diManager = $container->get(\Core\Api\Di\DiManagerInterface::class);
+        $builder = $container->get(\Core\Api\ActiveRecord\BuilderInterface::class);
+
+        return new \App\Model\User\BackgroundPhoto($diManager, $builder);
+    },
     \App\Api\Image\ImageOptimizerInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
         return new \App\Model\Image\ImageOptimizer();
     },

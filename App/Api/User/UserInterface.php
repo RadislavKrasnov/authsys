@@ -6,6 +6,7 @@ use App\Api\Geo\CityInterface;
 use App\Api\Geo\RegionInterface;
 use App\Api\Geo\CountryInterface;
 use App\Api\User\AvatarInterface;
+use App\Api\User\BackgroundPhotoInterface;
 
 /**
  * Interface UserInterface
@@ -48,4 +49,11 @@ interface UserInterface
      * @return AvatarInterface|bool
      */
     public function getAvatar();
+
+    /**
+     * Get user's background photo
+     *
+     * @return BackgroundPhotoInterface|bool
+     */
+    public function getBackgroundPhoto();
 }

@@ -5,6 +5,7 @@ namespace App\Model;
 use Core\ActiveRecord\Model;
 use App\Api\User\UserInterface;
 use App\Api\User\AvatarInterface;
+use App\Api\User\BackgroundPhotoInterface;
 
 /**
  * Class User
@@ -92,5 +93,15 @@ class User extends Model implements UserInterface
     public function getAvatar()
     {
         return $this->hasOne(AvatarInterface::class, 'id', 'user_id');
+    }
+
+    /**
+     * Get user's background photo
+     *
+     * @return BackgroundPhotoInterface|bool
+     */
+    public function getBackgroundPhoto()
+    {
+        return $this->hasOne(BackgroundPhotoInterface::class, 'id', 'user_id');
     }
 }

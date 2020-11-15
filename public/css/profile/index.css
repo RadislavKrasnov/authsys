@@ -194,6 +194,10 @@ footer {
 
 #background-photo-popup {
     width: 150px;
+    border-radius: 5px;
+}
+
+#background-photo-popup:active {
     box-shadow: inset -1px -1px 5px #8e8787;
 }
 

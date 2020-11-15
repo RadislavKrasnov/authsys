@@ -111,7 +111,7 @@ class Uploader extends Controller
         $this->fileUploader->setValidExtensions(['png', 'jpg', 'jpeg']);
         $this->fileUploader->setValidMimeTypes(['image/png', 'image/jpeg']);
 
-        $avatar = $oldAvatar = $user->getAvatar();
+        $avatar = $user->getAvatar();
         $oldAvatarPath = '';
 
         if (!empty($avatar)) {

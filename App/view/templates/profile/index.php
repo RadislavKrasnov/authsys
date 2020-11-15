@@ -1,7 +1,9 @@
 <?php $this->show('profile/header.php'); ?>
 <main>
     <section class="user-info-section" id="user-info-section"
-             style="background-image: url('/media/profile/background/calanques-marseille-istock-johansjolander.jpg')">
+             <?php if ($backgroundPhoto): ?>
+             style="background-image: url(<?= $imageOptimizer->resizeImage($backgroundPhoto->path, 1000, 400) ?>)"
+             <?php endif; ?>>
         <div class="user-info-center">
             <div class="avatar">
                 <img src="<?= $imageOptimizer->resizeImage($avatarPath, 260, 260) ?>"
@@ -25,7 +27,11 @@
             </div>
         </div>
         <div id="background-photo-popup">
-            Upload photo
+            <a id="background-uploader-button">Upload photo</a>
+            <form id="background-uploader-form" action="/user/background/upload" method="post" enctype="multipart/form-data">
+                <input type="file" name="background-image" />
+                <input type="submit"/>
+            </form>
         </div>
     </section>
     <?php if (isset($successMessages) && !empty($successMessages)):
