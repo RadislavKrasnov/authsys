@@ -140,7 +140,7 @@
                         <img src="/media/profile/settings/danger-icon.png" class="delete-account-icon" />
                         <span>Warning! Clicking on this button you will delete your account</span>
                     </div>
-                    <form id="delete-account-form" action="#" method="post">
+                    <form id="delete-account-form" action="/user/settings/deleteAccount" method="post">
                         <button type="button" id="delete-account-button"
                                 class="button danger-button"
                                 name="delete-account"

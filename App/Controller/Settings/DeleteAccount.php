@@ -9,6 +9,7 @@ use Core\Controllers\Controller;
 use Core\Api\Router\RequestInterface;
 use Core\Api\Router\ResponseInterface;
 use App\Api\Authorization\AuthorizeInterface;
+use App\Controller\Auth\Logout;
 
 /**
  * Class DeleteAccount
@@ -17,25 +18,53 @@ use App\Api\Authorization\AuthorizeInterface;
 class DeleteAccount extends Controller
 {
     /**
+     * Authorize
+     *
      * @var AuthorizeInterface
      */
     private $authorize;
 
+    /**
+     * Logout Controller
+     *
+     * @var Logout
+     */
+    private $logout;
+
+    /**
+     * DeleteAccount constructor.
+     *
+     * @param ViewInterface $view
+     * @param SessionInterface $session
+     * @param RedirectInterface $redirect
+     * @param AuthorizeInterface $authorize
+     * @param Logout $logout
+     */
     public function __construct(
         ViewInterface $view,
         SessionInterface $session,
         RedirectInterface $redirect,
-        AuthorizeInterface $authorize
+        AuthorizeInterface $authorize,
+        Logout $logout
     ) {
+        $this->logout = $logout;
         $this->authorize = $authorize;
         parent::__construct($view, $session, $redirect);
     }
 
+    /**
+     * Delete account
+     *
+     * @param RequestInterface $request
+     * @param ResponseInterface $response
+     */
     public function delete(RequestInterface $request, ResponseInterface $response)
     {
         $this->isAuthorized();
-
         $user = $this->authorize->getLoggedInUser();
+        $user->delete();
+        $this->logout->logout($request, $response);
+        $this->redirect->redirect('/');
     }
 
     /**

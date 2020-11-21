@@ -85,4 +85,10 @@ return [
         'controller' => '\App\Controller\User\Background\Uploader',
         'action' => 'upload'
     ],
+    [
+        'request_method' => \Core\Api\Router\RouterInterface::POST_REQUEST,
+        'path' => '/user/settings/deleteAccount',
+        'controller' => '\App\Controller\Settings\DeleteAccount',
+        'action' => 'delete'
+    ],
 ];
