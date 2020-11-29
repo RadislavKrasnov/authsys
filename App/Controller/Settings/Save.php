@@ -125,6 +125,8 @@ class Save extends Controller
 
             if (array_key_exists('region', $data) && !empty($data['region'])) {
                 $user->regionId = htmlspecialchars($data['region']);
+            } else {
+                $user->regionId = null;
             }
 
             $user->save();

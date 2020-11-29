@@ -13,6 +13,7 @@ if (isset($messages) && !empty($messages)):
             <div class="fieldset">
                 <div class="label">
                     <label for="first-name">First name</label>
+                    <span class="required-field-asterisk">*</span>
                 </div>
                 <div class="field">
                     <input type="text" id="first-name" name="first-name" />
@@ -21,6 +22,7 @@ if (isset($messages) && !empty($messages)):
             <div class="fieldset">
                 <div class="label">
                     <label for="last-name">Last name</label>
+                    <span class="required-field-asterisk">*</span>
                 </div>
                 <div class="field">
                     <input type="text" id="last-name" name="last-name" />
@@ -29,6 +31,7 @@ if (isset($messages) && !empty($messages)):
             <div class="fieldset">
                 <div class="label">
                     <label for="email">Email</label>
+                    <span class="required-field-asterisk">*</span>
                 </div>
                 <div class="field">
                     <input type="email" id="email" name="email" placeholder="example@domain.com" />
@@ -37,6 +40,7 @@ if (isset($messages) && !empty($messages)):
             <div class="fieldset">
                 <div class="label">
                     <label for="password">Password</label>
+                    <span class="required-field-asterisk">*</span>
                 </div>
                 <div class="field">
                     <input type="password" id="password" name="password" />
@@ -45,6 +49,7 @@ if (isset($messages) && !empty($messages)):
             <div class="fieldset">
                 <div class="label">
                     <label for="confirmation-password">Confirmation password</label>
+                    <span class="required-field-asterisk">*</span>
                 </div>
                 <div class="field">
                     <input type="password" id="confirmation-password" name="confirmation-password" />
@@ -53,6 +58,7 @@ if (isset($messages) && !empty($messages)):
             <div class="fieldset">
                 <div class="label">
                     <label for="birth-date">Birth date</label>
+                    <span class="required-field-asterisk">*</span>
                 </div>
                 <div class="field">
                     <input type="date" id="birth-date" name="birth-date" />
@@ -61,6 +67,7 @@ if (isset($messages) && !empty($messages)):
             <div class="fieldset">
                 <div class="label">
                     <label for="country">Country</label>
+                    <span class="required-field-asterisk">*</span>
                 </div>
                 <div class="field">
                     <select name="country" id="country">
@@ -84,6 +91,7 @@ if (isset($messages) && !empty($messages)):
             <div class="fieldset">
                 <div class="label">
                     <label for="city">City, Town</label>
+                    <span class="required-field-asterisk">*</span>
                 </div>
                 <div class="field">
                     <select name="city" id="city">

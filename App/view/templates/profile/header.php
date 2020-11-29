@@ -9,11 +9,13 @@
         </button>
         <span class="arrow-down"></span>
         <div id="header-menu-dropdown" class="dropdown-items">
+            <a href="/index">Home page</a>
             <a href="/auth/account/settings">Settings</a>
             <a onclick="logout()">Sign out</a>
         </div>
     </div>
     <div id="mobile-links">
+        <a href="/index">Home page</a>
         <a href="/auth/account/settings">Settings</a>
         <a onclick="logout()">Sign out</a>
     </div>

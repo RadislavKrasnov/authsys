@@ -1,3 +1,3 @@
 <footer>
-    <span>Authsys.local 2020</span>
+    <span>Authsys.local <?= date('Y') ?></span>
 </footer>

@@ -100,8 +100,11 @@ body, h2 {
     border-radius: 5px;
 }
 
-.error {
+.error, .required-field-asterisk {
     color: #e9271e;
+}
+
+.error {
     font-size: 12px;
 }
 

@@ -106,7 +106,12 @@ class MySqlQueryBuilder implements MySqlQueryBuilderInterface
         $updates = [];
 
         for ($i = 0; $i < count($columns); $i++) {
-            $updates[] = "`$columns[$i]` = '$values[$i]'";
+
+            if ($values[$i] == null) {
+                $updates[] = "`$columns[$i]` = NULL";
+            } else {
+                $updates[] = "`$columns[$i]` = '$values[$i]'";
+            }
         }
 
         $updates = implode(', ', $updates);

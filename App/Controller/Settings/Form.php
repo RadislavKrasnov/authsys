@@ -115,6 +115,14 @@ class Form extends Controller
                 ['country_id', '=', $user->countryId],
                 ['region_id', '=', $user->regionId]
             ])->get();
+
+        if ($cities->count() === 0) {
+            $cities = $this->city->select()
+                ->where([
+                    ['country_id', '=', $user->countryId]
+                ])->get();
+        }
+
         $messages = $this->messageManager->getMessages(true);
         $successMessages = $this->messageManager->getSuccessMessages(true);
         $avatarPath = (!empty($user->getAvatar())) ? $user->getAvatar()->path : Index::AVATAR_PLACEHOLDER_PATH;

@@ -1,11 +1,19 @@
-$(document).ready(function(){
-    $("select#country").change(function(){
+$(document).ready(function() {
+    $("select#country").change(function() {
         var selectedCountryId = $("#country option:selected").val();
+
+        if (!selectedCountryId) {
+            clearOptions('#region');
+            clearOptions('#city');
+
+            return;
+        }
+
         $.ajax({
             type: "POST",
             url: "/regions",
             data: { country_id : selectedCountryId }
-        }).done(function(regions){
+        }).done(function(regions) {
             var regions = JSON.parse(regions);
             $("#region").html(regions.html);
 
@@ -16,7 +24,7 @@ $(document).ready(function(){
     });
 });
 
-$(document).ready(function(){
+$(document).ready(function() {
     $("select#region").change(function(){
         var regionId = $("#region option:selected").val();
         getCities(regionId);
@@ -31,4 +39,12 @@ function getCities(regionId) {
     }).done(function(data){
         $("#city").html(data);
     });
+}
+
+function clearOptions(fieldIdentifier) {
+    $(fieldIdentifier)
+        .find('option')
+        .remove()
+        .end()
+        .append('<option value="">--Please choose an option--</option>');
 }

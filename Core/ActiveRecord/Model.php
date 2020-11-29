@@ -180,15 +180,10 @@ class Model
      *
      * @param string $key
      * @return mixed
-     * @throws \Exception
      */
     public function __get(string $key)
     {
         $key = $this->toSnakeCase($key);
-
-        if (!isset($this->attributes[$key])) {
-            throw new \Exception("{$key} is not valid property");
-        }
 
         return $this->attributes[$key];
     }

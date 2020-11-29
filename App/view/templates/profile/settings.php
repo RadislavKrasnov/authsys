@@ -21,6 +21,7 @@
                     <div class="fieldset">
                         <div class="label">
                             <label for="first-name">First name</label>
+                            <span class="required-field-asterisk">*</span>
                         </div>
                         <div class="field">
                             <input type="text" id="first-name" name="first-name" value="<?= $user->firstName ?>"/>
@@ -29,6 +30,7 @@
                     <div class="fieldset">
                         <div class="label">
                             <label for="last-name">Last name</label>
+                            <span class="required-field-asterisk">*</span>
                         </div>
                         <div class="field">
                             <input type="text" id="last-name" name="last-name" value="<?= $user->lastName ?>"/>
@@ -37,6 +39,7 @@
                     <div class="fieldset">
                         <div class="label">
                             <label for="birth-date">Birth date</label>
+                            <span class="required-field-asterisk">*</span>
                         </div>
                         <div class="field">
                             <input type="date" id="birth-date" name="birth-date" value="<?= $user->birthDate ?>"/>
@@ -45,6 +48,7 @@
                     <div class="fieldset">
                         <div class="label">
                             <label for="country">Country</label>
+                            <span class="required-field-asterisk">*</span>
                         </div>
                         <div class="field">
                             <select name="country" id="country">
@@ -75,6 +79,7 @@
                     <div class="fieldset">
                         <div class="label">
                             <label for="city">City, Town</label>
+                            <span class="required-field-asterisk">*</span>
                         </div>
                         <div class="field">
                             <select name="city" id="city">
@@ -94,6 +99,7 @@
                     <div class="fieldset">
                         <div class="label">
                             <label for="current-password">Current password</label>
+                            <span class="required-field-asterisk">*</span>
                         </div>
                         <div class="field">
                             <input type="password" id="current-password" name="current-password" />
@@ -102,6 +108,7 @@
                     <div class="fieldset">
                         <div class="label">
                             <label for="password">New Password</label>
+                            <span class="required-field-asterisk">*</span>
                         </div>
                         <div class="field">
                             <input type="password" id="password" name="password" />
@@ -110,6 +117,7 @@
                     <div class="fieldset">
                         <div class="label">
                             <label for="confirmation-password">Confirmation password</label>
+                            <span class="required-field-asterisk">*</span>
                         </div>
                         <div class="field">
                             <input type="password" id="confirmation-password" name="confirmation-password" />
@@ -124,6 +132,7 @@
                     <div class="fieldset">
                         <div class="label">
                             <label for="email">New email</label>
+                            <span class="required-field-asterisk">*</span>
                         </div>
                         <div class="field">
                             <input type="email" id="email" name="email" placeholder="example@domain.com"
@@ -153,6 +162,7 @@
         </div>
         <div class="bottom-row">
             <hr/>
+            <a href="/index" class="button primary-button">Back</a>
             <button type="button" form="settings-form" id="save-settings-button"
                     class="button primary-button" name="submit-button" value="change_settings">
                 Save

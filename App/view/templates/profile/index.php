@@ -22,7 +22,9 @@
             <div class="info">
                 <span class="name"><?= $user->firstName . ' ' . $user->lastName ?></span>
                 <span class="location">
-                    <?= $user->getCity()->name . ' ' . $user->getRegion()->name . ' ' . $user->getCountry()->name ?>
+                    <?= $user->getCity()->name . ', ' ?>
+                    <?= ($user->getRegion()->name) ? $user->getRegion()->name . ', ' : '' ?>
+                    <?= $user->getCountry()->name ?>
                 </span>
             </div>
         </div>

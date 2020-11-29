@@ -109,8 +109,12 @@ header .header-menu .dropdown-items a:hover {
     background-color: #dddd;
 }
 
-header .header-menu .dropdown-items a:first-child {
+header .header-menu .dropdown-items a {
     border-bottom: 1px solid #cccc;
+}
+
+header .header-menu .dropdown-items a:last-child {
+    border-bottom: none;
 }
 
 header .header-avatar,
@@ -187,8 +191,11 @@ footer {
     margin-top: 16px;
 }
 
-.error {
+.error, .required-field-asterisk {
     color: #e9271e;
+}
+
+.error {
     font-size: 12px;
 }
 
@@ -250,7 +257,7 @@ footer {
         visibility: hidden;
         position: absolute;
         background-color: #8290f7;
-        width: 39%;
+        width: 44%;
         top: 0;
         bottom: 0;
         z-index: 1;

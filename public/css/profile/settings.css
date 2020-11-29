@@ -15,7 +15,8 @@
     padding-right: 15px;
 }
 
-.right-col, section.content .title h1 {
+.right-col, section.content .title h1,
+.bottom-row a {
     margin-left: 15px;
 }
 
@@ -52,6 +53,19 @@ section.content .title {
     position: relative;
 }
 
+.bottom-row a, .button,
+p.success-message, p.error-message {
+    padding: 10px;
+}
+
+.bottom-row a {
+    width: 74px;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    float: left;
+}
+
 .bottom-row button {
     position: absolute;
     right: 0;
@@ -60,7 +74,6 @@ section.content .title {
 }
 
 .button {
-    padding: 10px;
     font-size: 16px;
     color: white;
     border: none;
@@ -79,7 +92,6 @@ section.content .title {
 p.success-message, p.error-message {
     color: black;
     border-radius: 4px;
-    padding: 10px;
 }
 
 p.error-message {
