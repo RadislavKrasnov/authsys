@@ -49,8 +49,8 @@ class Definitions implements DefinitionsInterface
     {
         $definitions = $this->developmentConfig->loadConfigFile(DefinitionsInterface::DEFINITIONS_CONFIG_FILE);
 
-        foreach ($definitions as $definition => $closure) {
-            $container->set($definition, $closure);
+        foreach ($definitions as $interface => $class) {
+            $container->set($interface, $class);
         }
 
         return $container;

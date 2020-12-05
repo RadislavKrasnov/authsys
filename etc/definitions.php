@@ -1,202 +1,41 @@
 <?php
 
 return [
-    \App\Api\User\BackgroundPhotoInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
-        $diManager = $container->get(\Core\Api\Di\DiManagerInterface::class);
-        $builder = $container->get(\Core\Api\ActiveRecord\BuilderInterface::class);
-
-        return new \App\Model\User\BackgroundPhoto($diManager, $builder);
-    },
-    \App\Api\Image\ImageOptimizerInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
-        return new \App\Model\Image\ImageOptimizer();
-    },
-    \App\Api\User\AvatarInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
-        $diManager = $container->get(\Core\Api\Di\DiManagerInterface::class);
-        $builder = $container->get(\Core\Api\ActiveRecord\BuilderInterface::class);
-
-        return new \App\Model\User\Avatar($diManager, $builder);
-    },
-    \App\Api\Uploader\FileUploaderInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
-        $logger = $container->get(\Core\Api\Psr\Log\LoggerInterface::class);
-        $messageManager = $container->get(\Core\Api\Messages\MessageManagerInterface::class);
-
-        return new \App\Model\Uploader\FileUploader($logger, $messageManager);
-    },
-    \App\Api\Authorization\AuthorizeInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
-        $cookie = $container->get(\Core\Api\Cookie\CookieInterface::class);
-        $session = $container->get(\Core\Api\Session\SessionInterface::class);
-        $authtoken = $container->get(\App\Api\Authtoken\AuthtokenInterface::class);
-        $tokenGenerator = $container->get(\App\Api\Authtoken\TokenGeneratorInterface::class);
-        $logger = $container->get(\Core\Api\Psr\Log\LoggerInterface::class);
-        $user = $container->get(\App\Api\User\UserInterface::class);
-
-        return new \App\Model\Authorization\Authorize(
-            $cookie,
-            $session,
-            $authtoken,
-            $tokenGenerator,
-            $logger,
-            $user
-        );
-    },
-    \App\Api\Authtoken\TokenGeneratorInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
-        return new \App\Model\Authtoken\TokenGenerator();
-    },
-    \App\Api\Authtoken\AuthtokenInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
-        $diManager = $container->get(\Core\Api\Di\DiManagerInterface::class);
-        $builder = $container->get(\Core\Api\ActiveRecord\BuilderInterface::class);
-
-        return new \App\Model\Authtoken\Authtoken($diManager, $builder);
-    },
-    \App\Api\User\UserInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
-        $diManager = $container->get(\Core\Api\Di\DiManagerInterface::class);
-        $builder = $container->get(\Core\Api\ActiveRecord\BuilderInterface::class);
-
-        return new \App\Model\User($diManager, $builder);
-    },
-    \App\Api\Geo\CityInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
-        $diManager = $container->get(\Core\Api\Di\DiManagerInterface::class);
-        $builder = $container->get(\Core\Api\ActiveRecord\BuilderInterface::class);
-
-        return new \App\Model\Geo\City($diManager, $builder);
-    },
-    \App\Api\Geo\RegionInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
-        $diManager = $container->get(\Core\Api\Di\DiManagerInterface::class);
-        $builder = $container->get(\Core\Api\ActiveRecord\BuilderInterface::class);
-
-        return new \App\Model\Geo\Region($diManager, $builder);
-    },
-    \App\Api\Geo\CountryInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
-        $diManager = $container->get(\Core\Api\Di\DiManagerInterface::class);
-        $builder = $container->get(\Core\Api\ActiveRecord\BuilderInterface::class);
-
-        return new \App\Model\Geo\Country($diManager, $builder);
-    },
-    \Core\Api\Messages\MessageManagerInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
-        $session = $container->get(\Core\Api\Session\SessionInterface::class);
-
-        return new \Core\Messages\MessageManager($session);
-    },
-    \Core\Api\Cookie\CookieInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
-        return new \Core\Cookie\Cookie();
-    },
-    \Core\Api\Session\SessionInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
-        return new \Core\Session\Session();
-    },
-    \Core\Api\Url\RedirectInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
-        return new \Core\Url\Redirect();
-    },
-    \Core\Api\Psr\Log\LoggerInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
-        return new \Core\Psr\Log\Logger();
-    },
-    \Core\Api\Validation\ValidatorInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
-        return new \Core\Validation\Validator();
-    },
-    \Core\Api\View\ViewServiceProviderInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
-        return new \App\Provider\View\ViewServiceProvider();
-    },
-    \Core\Api\View\ViewInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
-        $diManager = $container->get(\Core\Api\Di\DiManagerInterface::class);
-        $viewServiceProvider = $container->get(\Core\Api\View\ViewServiceProviderInterface::class);
-
-        return new \Core\View\View($diManager, $viewServiceProvider);
-    },
-    \Core\Api\Controllers\ControllerInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
-        $view = $container->get(\Core\Api\View\ViewInterface::class);
-        $session = $container->get(\Core\Api\Url\RedirectInterface::class);
-        $redirect = $container->get(\Core\Api\Url\RedirectInterface::class);
-
-        return new \Core\Controllers\Controller($view, $session, $redirect);
-    },
-    \Core\Api\ActiveRecord\BuilderInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
-        $diManager = $container->get(\Core\Api\Di\DiManagerInterface::class);
-
-        return new \Core\ActiveRecord\Builder($diManager);
-    },
-    \Core\Api\Database\QueryBuilder\MySqlQueryBuilderInterface::class => function () {
-        return new \Core\Database\QueryBuilder\MySqlQueryBuilder();
-    },
-    \Core\Api\Database\Connection\MySqlConnectionInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
-        $mySqlQueryBuilder = $container->get(\Core\Api\Database\QueryBuilder\MySqlQueryBuilderInterface::class);
-
-        return new \Core\Database\Connection\MySqlConnection($mySqlQueryBuilder);
-    },
-    \Core\Api\Config\DevelopmentConfigInterface::class => function () {
-        return new \Core\Config\DevelopmentConfig();
-    },
-    \Core\Api\Router\RouteListInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
-        $developmentConfig = $container->get(\Core\Api\Config\DevelopmentConfigInterface::class);
-
-        return new \Core\Router\RouteList($developmentConfig);
-    },
-    \Core\Api\Di\DefinitionsInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
-        $developmentConfig = $container->get(\Core\Api\Config\DevelopmentConfigInterface::class);
-
-        return new \Core\Di\Definitions($developmentConfig);
-    },
-    \Core\Api\Url\UrlInterface::class => function () {
-        return new \Core\Url\Url();
-    },
-    \Core\Api\Di\NotFoundExceptionInterface::class => function () {
-        return new \Core\Di\NotFoundException();
-    },
-    \Core\Api\Router\DispatcherInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
-        $diManager = $container->get(\Core\Api\Di\DiManagerInterface::class);
-
-        return new \Core\Router\Dispatcher($diManager);
-    },
-    \Core\Api\Router\RouteInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
-        $urlParser = $container->get(\Core\Api\Url\UrlInterface::class);
-
-        return new \Core\Router\Route($urlParser);
-    },
-    \Core\Api\Router\RouteFactoryInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
-        $route = $container->get(\Core\Api\Router\RouteInterface::class);
-        $urlParser = $container->get(\Core\Api\Url\UrlInterface::class);
-
-        return new \Core\Router\RouteFactory($route, $urlParser);
-    },
-    \Core\Api\Router\RouterInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
-        $routeFactory = $container->get(\Core\Api\Router\RouteFactoryInterface::class);
-
-        return new \Core\Router\Router($routeFactory);
-    },
-    \Core\Api\BootstrapInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
-        $dispatcher = $container->get(\Core\Api\Router\DispatcherInterface::class);
-        $request = $container->get(\Core\Api\Router\RequestInterface::class);
-        $response = $container->get(\Core\Api\Router\ResponseInterface::class);
-        $router = $container->get(\Core\Api\Router\RouterInterface::class);
-        $routeList = $container->get(\Core\Api\Router\RouteListInterface::class);
-        $developmentConfig = $container->get(\Core\Api\Config\DevelopmentConfigInterface::class);
-        $mySqlConnection = $container->get(\Core\Api\Database\Connection\MySqlConnectionInterface::class);
-        $session = $container->get(\Core\Api\Session\SessionInterface::class);
-
-        return new \Core\Bootstrap(
-            $dispatcher,
-            $request,
-            $response,
-            $router,
-            $routeList,
-            $developmentConfig,
-            $mySqlConnection,
-            $session
-        );
-    },
-    \Core\Api\Di\ContainerInterface::class => function () {
-        return new \Core\Di\Container();
-    },
-    \Core\Api\Router\RequestInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
-        $urlParser = $container->get(\Core\Api\Url\UrlInterface::class);
-
-        return new \Core\Router\Request($urlParser);
-    },
-    \Core\Api\Router\ResponseInterface::class => function () {
-        return new \Core\Router\Response();
-    },
-    \Core\Api\Di\DiManagerInterface::class => function (\Core\Api\Di\ContainerInterface $container) {
-        $definitions = $container->get(\Core\Api\Di\DefinitionsInterface::class);
-        $container = $container->get(\Core\Api\Di\ContainerInterface::class);
-
-        return new \Core\Di\DiManager($definitions, $container);
-    }
+    \App\Api\User\BackgroundPhotoInterface::class => \App\Model\User\BackgroundPhoto::class,
+    \App\Api\Image\ImageOptimizerInterface::class => \App\Model\Image\ImageOptimizer::class,
+    \App\Api\User\AvatarInterface::class => \App\Model\User\Avatar::class,
+    \App\Api\Uploader\FileUploaderInterface::class => \App\Model\Uploader\FileUploader::class,
+    \App\Api\Authorization\AuthorizeInterface::class => \App\Model\Authorization\Authorize::class,
+    \App\Api\Authtoken\TokenGeneratorInterface::class => \App\Model\Authtoken\TokenGenerator::class,
+    \App\Api\Authtoken\AuthtokenInterface::class => \App\Model\Authtoken\Authtoken::class,
+    \App\Api\User\UserInterface::class => \App\Model\User::class,
+    \App\Api\Geo\CityInterface::class => \App\Model\Geo\City::class,
+    \App\Api\Geo\RegionInterface::class => \App\Model\Geo\Region::class,
+    \App\Api\Geo\CountryInterface::class => \App\Model\Geo\Country::class,
+    \Core\Api\Messages\MessageManagerInterface::class => \Core\Messages\MessageManager::class,
+    \Core\Api\Cookie\CookieInterface::class => \Core\Cookie\Cookie::class,
+    \Core\Api\Session\SessionInterface::class => \Core\Session\Session::class,
+    \Core\Api\Url\RedirectInterface::class => \Core\Url\Redirect::class,
+    \Core\Api\Psr\Log\LoggerInterface::class => \Core\Psr\Log\Logger::class,
+    \Core\Api\Validation\ValidatorInterface::class => \Core\Validation\Validator::class,
+    \Core\Api\View\ViewServiceProviderInterface::class => \App\Provider\View\ViewServiceProvider::class,
+    \Core\Api\View\ViewInterface::class => \Core\View\View::class,
+    \Core\Api\Controllers\ControllerInterface::class => \Core\Controllers\Controller::class,
+    \Core\Api\ActiveRecord\BuilderInterface::class => \Core\ActiveRecord\Builder::class,
+    \Core\Api\Database\QueryBuilder\MySqlQueryBuilderInterface::class => \Core\Database\QueryBuilder\MySqlQueryBuilder::class,
+    \Core\Api\Database\Connection\MySqlConnectionInterface::class => \Core\Database\Connection\MySqlConnection::class,
+    \Core\Api\Config\DevelopmentConfigInterface::class => \Core\Config\DevelopmentConfig::class,
+    \Core\Api\Router\RouteListInterface::class => \Core\Router\RouteList::class,
+    \Core\Api\Di\DefinitionsInterface::class => \Core\Di\Definitions::class,
+    \Core\Api\Url\UrlInterface::class => \Core\Url\Url::class,
+    \Core\Api\Di\NotFoundExceptionInterface::class => \Core\Di\NotFoundException::class,
+    \Core\Api\Router\DispatcherInterface::class => \Core\Router\Dispatcher::class,
+    \Core\Api\Router\RouteInterface::class => \Core\Router\Route::class,
+    \Core\Api\Router\RouteFactoryInterface::class => \Core\Router\RouteFactory::class,
+    \Core\Api\Router\RouterInterface::class => \Core\Router\Router::class,
+    \Core\Api\BootstrapInterface::class => \Core\Bootstrap::class,
+    \Core\Api\Di\ContainerInterface::class => \Core\Di\Container::class,
+    \Core\Api\Router\RequestInterface::class => \Core\Router\Request::class,
+    \Core\Api\Router\ResponseInterface::class => \Core\Router\Response::class,
+    \Core\Api\Di\DiManagerInterface::class => \Core\Di\DiManager::class
 ];

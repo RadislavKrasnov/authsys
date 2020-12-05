@@ -44,7 +44,7 @@ class Container implements ContainerInterface, \ArrayAccess
         if ($this->has($id)) {
             $class = $this->definitions[$id];
         } else {
-            throw NotFoundException::create($id);
+            $class = $id;
         }
 
         if (!class_exists($class)) {
@@ -67,7 +67,7 @@ class Container implements ContainerInterface, \ArrayAccess
         $dependencies = array_map(function (\ReflectionParameter $dependency) use ($class) {
 
             if (is_null($dependency->getClass())) {
-                throw NotFoundException::create($class);
+                return $dependency->getDefaultValue();
             }
 
             return $this->get($dependency->getClass()->name);
