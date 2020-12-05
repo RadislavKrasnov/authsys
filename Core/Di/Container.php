@@ -39,15 +39,19 @@ class Container implements ContainerInterface, \ArrayAccess
      */
     public function get($id)
     {
+        $class = null;
+
         if ($this->has($id)) {
-            return $this->definitions[$id]($this);
+            $class = $this->definitions[$id];
+        } else {
+            $class = $id;
         }
 
-        if (!class_exists($id)) {
+        if (!class_exists($class)) {
             throw NotFoundException::create($id);
         }
 
-        $reflector = new \ReflectionClass($id);
+        $reflector = new \ReflectionClass($class);
 
         if (!$reflector->isInstantiable()) {
             throw NotFoundException::create($id);
@@ -56,14 +60,14 @@ class Container implements ContainerInterface, \ArrayAccess
         $constructor = $reflector->getConstructor();
 
         if (is_null($constructor)) {
-            return new $id();
+            return new $class();
         }
 
         $dependencies = $constructor->getParameters();
-        $dependencies = array_map(function (\ReflectionParameter $dependency) use ($id) {
+        $dependencies = array_map(function (\ReflectionParameter $dependency) use ($class) {
 
             if (is_null($dependency->getClass())) {
-                throw NotFoundException::create($id);
+                return $dependency->getDefaultValue();
             }
 
             return $this->get($dependency->getClass()->name);
@@ -73,32 +77,36 @@ class Container implements ContainerInterface, \ArrayAccess
     }
 
     /**
+     * Set definition
+     *
      * @param string $id
-     * @param \Closure $value
+     * @param string $value
      */
-    public function set($id, \Closure $value)
+    public function set($id, $value)
     {
         $this->definitions[$id] = $value;
     }
 
     /**
+     * Get singletone
+     *
      * @param string $id
-     * @param \Closure $value
+     * @return object
      */
-    public function share($id, \Closure $value)
+    public function share($id)
     {
-        $this->definitions[$id] = function ($container) use ($value) {
-            static $object;
+        static $object;
 
-            if (is_null($object)) {
-                $object = $value($container);
-            }
+        if (is_null($object)) {
+            $object = $this->get($id);
+        }
 
-            return $object;
-        };
+        return $object;
     }
 
     /**
+     * Remove definition
+     *
      * @param string $id
      */
     public function remove($id)
